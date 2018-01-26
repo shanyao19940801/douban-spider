@@ -1,7 +1,6 @@
 package com.yao.test.httptest;
 
 import com.yao.douban.core.util.Constants;
-import com.yao.douban.core.util.HttpClientUtil;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.config.RequestConfig;
