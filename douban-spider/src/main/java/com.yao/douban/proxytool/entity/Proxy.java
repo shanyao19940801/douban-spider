@@ -1,4 +1,4 @@
-package com.yao.douban.proxy.entity;
+package com.yao.douban.proxytool.entity;
 
 /**
  * Created by 单耀 on 2018/1/26.

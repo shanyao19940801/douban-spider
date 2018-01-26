@@ -1,9 +1,14 @@
-package com.yao.douban.proxy.proxyutil;
+package com.yao.douban.proxytool.proxyutil;
 
 /**
  * Created by 单耀 on 2018/1/26.
  */
 public class ProxyConstants {
+    public static final String STANDARD = "standard";
+    public static int SocketTimeout = 5000;
+    public static int ConnectionTimeout = 5000;
+    public static int TIMEOUT = 10000;
+
     public final static String[] userAgentArray = new String[]{
             "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36",
             "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2623.110 Safari/537.36",

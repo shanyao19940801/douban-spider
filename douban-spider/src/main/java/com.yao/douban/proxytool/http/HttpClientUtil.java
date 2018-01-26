@@ -1,6 +1,6 @@
-package com.yao.douban.http.util;
+package com.yao.douban.proxytool.http;
 
-import com.yao.douban.proxy.proxyutil.ProxyConstants;
+import com.yao.douban.proxytool.proxyutil.ProxyConstants;
 import org.apache.http.Consts;
 import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpHost;
@@ -70,7 +70,7 @@ public class HttpClientUtil {
             //配备连接池管理器
             PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
             //
-            SocketConfig socketConfig = SocketConfig.custom().setSoTimeout(Constants.SocketTimeout).setTcpNoDelay(true).build();
+            SocketConfig socketConfig = SocketConfig.custom().setSoTimeout(ProxyConstants.SocketTimeout).setTcpNoDelay(true).build();
             connectionManager.setDefaultSocketConfig(socketConfig);
             ConnectionConfig connectionConfig =
                     ConnectionConfig.custom().setMalformedInputAction(CodingErrorAction.IGNORE)
@@ -93,10 +93,10 @@ public class HttpClientUtil {
 
             httpClient = httpClientBuilder.build();
 
-            requestConfig = RequestConfig.custom().setConnectionRequestTimeout(Constants.ConnectionTimeout)
-                    .setSocketTimeout(Constants.SocketTimeout)
-                    .setConnectTimeout(Constants.TIMEOUT)
-                    .setCookieSpec(Constants.STANDARD)
+            requestConfig = RequestConfig.custom().setConnectionRequestTimeout(ProxyConstants.ConnectionTimeout)
+                    .setSocketTimeout(ProxyConstants.SocketTimeout)
+                    .setConnectTimeout(ProxyConstants.TIMEOUT)
+                    .setCookieSpec(ProxyConstants.STANDARD)
                     .build();
             
         } catch (NoSuchAlgorithmException e) {
