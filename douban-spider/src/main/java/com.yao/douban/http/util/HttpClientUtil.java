@@ -1,11 +1,16 @@
 package com.yao.douban.http.util;
 
+import com.yao.douban.proxy.proxyutil.ProxyConstants;
 import org.apache.http.Consts;
 import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpRequest;
+import org.apache.http.client.CookieStore;
 import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.config.ConnectionConfig;
 import org.apache.http.config.Registry;
@@ -36,6 +41,7 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.Random;
 
 /**
  * Created by 单耀 on 2018/1/25.
@@ -47,6 +53,7 @@ public class HttpClientUtil {
     private static RequestConfig requestConfig;
     private final static String userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36";
     private static CloseableHttpClient httpClient;
+    private static CookieStore cookieStore = new BasicCookieStore();
     static {
         initHttpClient();
     }
@@ -137,10 +144,27 @@ public class HttpClientUtil {
                 if (request instanceof HttpEntityEnclosingRequest) {
                     return true;
                 }
+
                 return false;
             }
         };
         return httpRequestRetryHandler;
+    }
+
+    public CloseableHttpResponse getResponse(HttpRequestBase request) throws IOException {
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            if (request.getConfig() == null) {
+                request.setConfig(requestConfig);
+            }
+            request.setHeader("User-Agent", ProxyConstants.userAgentArray[new Random().nextInt(ProxyConstants.userAgentArray.length)]);
+            HttpClientContext context = HttpClientContext.create();
+            context.setCookieStore(cookieStore);
+            return httpClient.execute(request, context);
+    }
+
+    public CloseableHttpResponse getResponse(String url) throws IOException {
+        HttpGet request = new HttpGet(url);
+        return getResponse(request);
     }
 
 }
