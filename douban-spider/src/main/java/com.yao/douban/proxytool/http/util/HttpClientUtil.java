@@ -1,4 +1,4 @@
-package com.yao.douban.proxytool.http;
+package com.yao.douban.proxytool.http.util;
 
 import com.yao.douban.proxytool.proxyutil.ProxyConstants;
 import org.apache.http.Consts;
@@ -151,7 +151,7 @@ public class HttpClientUtil {
         return httpRequestRetryHandler;
     }
 
-    public CloseableHttpResponse getResponse(HttpRequestBase request) throws IOException {
+    public static CloseableHttpResponse getResponse(HttpRequestBase request) throws IOException {
             CloseableHttpClient httpClient = HttpClients.createDefault();
             if (request.getConfig() == null) {
                 request.setConfig(requestConfig);
@@ -162,9 +162,16 @@ public class HttpClientUtil {
             return httpClient.execute(request, context);
     }
 
-    public CloseableHttpResponse getResponse(String url) throws IOException {
+    public static CloseableHttpResponse getResponse(String url) throws IOException {
         HttpGet request = new HttpGet(url);
         return getResponse(request);
+    }
+
+    public static RequestConfig.Builder getRequestConfigBuilder() {
+        return RequestConfig.custom().setConnectionRequestTimeout(ProxyConstants.ConnectionTimeout)
+                .setSocketTimeout(ProxyConstants.SocketTimeout)
+                .setConnectTimeout(ProxyConstants.TIMEOUT)
+                .setCookieSpec(ProxyConstants.STANDARD);
     }
 
 }
