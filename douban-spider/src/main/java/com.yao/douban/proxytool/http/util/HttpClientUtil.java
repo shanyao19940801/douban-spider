@@ -86,8 +86,7 @@ public class HttpClientUtil {
                     .setRetryHandler(retryHandler)
                     .setUserAgent(userAgent);
 
-            if (proxy == null) {
-                //DefaultProxyRoutePlanner通常通过默认代理来计算路由信息
+            if (proxy != null) {
                 httpClientBuilder.setRoutePlanner(new DefaultProxyRoutePlanner(proxy)).build();
             }
 
