@@ -2,6 +2,7 @@ package com.yao.douban.proxytool.parses.xicidaili;
 
 import com.yao.douban.proxytool.entity.Proxy;
 import com.yao.douban.proxytool.parses.ProxyListPageParser;
+import com.yao.douban.proxytool.proxyutil.ProxyConstants;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -23,7 +24,7 @@ public class XicidailiProxyListPageParser implements ProxyListPageParser {
             String port  = element.select("td:eq(2)").first().text();
             String isAnonymous = element.select("td:eq(4)").first().text();
             if(!anonymousFlag || isAnonymous.contains("匿")){
-                proxyList.add(new Proxy(ip, Integer.valueOf(port)));
+                proxyList.add(new Proxy(ip, Integer.valueOf(port), ProxyConstants.TIME_INTERVAL, "xicidaili"));
             }
         }
         return proxyList;

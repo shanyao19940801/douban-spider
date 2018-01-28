@@ -2,6 +2,7 @@ package com.yao.douban.proxytool.parses.ip181;
 
 import com.yao.douban.proxytool.entity.Proxy;
 import com.yao.douban.proxytool.parses.ProxyListPageParser;
+import com.yao.douban.proxytool.proxyutil.ProxyConstants;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -24,7 +25,7 @@ public class Ip181ProxyListPageParser implements ProxyListPageParser {
             String port  = element.select("td:eq(1)").first().text();
             String isAnonymous = element.select("td:eq(2)").first().text();
             if(!anonymousFlag || isAnonymous.contains("匿")){
-                proxyList.add(new Proxy(ip, Integer.valueOf(port)));
+                proxyList.add(new Proxy(ip, Integer.valueOf(port), ProxyConstants.TIME_INTERVAL, "ip181"));
             }
         }
         return proxyList;

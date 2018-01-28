@@ -2,6 +2,7 @@ package com.yao.douban.proxytool.ip66;
 
 import com.yao.douban.proxytool.entity.Proxy;
 import com.yao.douban.proxytool.parses.ProxyListPageParser;
+import com.yao.douban.proxytool.proxyutil.ProxyConstants;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -26,7 +27,7 @@ public class Ip66ProxyListPageParser implements ProxyListPageParser {
             String port  = element.select("td:eq(1)").first().text();
             String isAnonymous = element.select("td:eq(3)").first().text();
 //            if(!anonymousFlag || isAnonymous.contains("匿")){
-            proxyList.add(new Proxy(ip, Integer.valueOf(port)));
+            proxyList.add(new Proxy(ip, Integer.valueOf(port), ProxyConstants.TIME_INTERVAL, "ip66"));
 //            }
         }
         return proxyList;
