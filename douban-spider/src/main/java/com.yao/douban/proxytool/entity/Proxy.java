@@ -72,4 +72,9 @@ public class Proxy implements Delayed {
     public int compareTo(Delayed o) {
         return 0;
     }
+
+    public String getProxyStr() {
+        return ip + ":" + port;
+    }
+
 }
