@@ -20,6 +20,7 @@ import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -27,6 +28,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.DefaultProxyRoutePlanner;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.protocol.HttpContext;
+import org.apache.http.ssl.SSLContexts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +40,8 @@ import java.io.InterruptedIOException;
 import java.net.UnknownHostException;
 import java.nio.charset.CodingErrorAction;
 import java.security.KeyManagementException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -58,10 +62,16 @@ public class HttpClientUtil {
         initHttpClient();
     }
 
-    private static void initHttpClient() {
+    private static void initHttpClient()  {
         try {
             //采用绕过验证的方式处理https请求
-            SSLContext sslContext= createIgnoreVerifySSL();
+            SSLContext sslContext= SSLContexts.custom()
+                    .loadTrustMaterial(KeyStore.getInstance(KeyStore.getDefaultType()), new TrustStrategy() {
+                        public boolean isTrusted(X509Certificate[] x509Certificates, String s)
+                                throws CertificateException {
+                            return true;
+                        }
+                    }).build();
             // 设置协议http和https对应的处理socket链接工厂的对象
             Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create().
                     register("http", PlainConnectionSocketFactory.INSTANCE)
@@ -74,7 +84,7 @@ public class HttpClientUtil {
             connectionManager.setDefaultSocketConfig(socketConfig);
             ConnectionConfig connectionConfig =
                     ConnectionConfig.custom().setMalformedInputAction(CodingErrorAction.IGNORE)
-                    .setUnmappableInputAction(CodingErrorAction.IGNORE).setCharset(Consts.UTF_8).build();
+                            .setUnmappableInputAction(CodingErrorAction.IGNORE).setCharset(Consts.UTF_8).build();
             connectionManager.setDefaultConnectionConfig(connectionConfig);
             connectionManager.setMaxTotal(500);
             connectionManager.setDefaultMaxPerRoute(300);
@@ -82,9 +92,9 @@ public class HttpClientUtil {
 
             HttpClientBuilder httpClientBuilder =
                     HttpClients.custom().setConnectionManager(connectionManager)
-                    .setDefaultCookieStore(new BasicCookieStore())
-                    .setRetryHandler(retryHandler)
-                    .setUserAgent(userAgent);
+                            .setDefaultCookieStore(new BasicCookieStore())
+                            .setRetryHandler(retryHandler)
+                            .setUserAgent(userAgent);
 
             if (proxy != null) {
                 httpClientBuilder.setRoutePlanner(new DefaultProxyRoutePlanner(proxy)).build();
@@ -97,16 +107,31 @@ public class HttpClientUtil {
                     .setConnectTimeout(ProxyConstants.TIMEOUT)
                     .setCookieSpec(ProxyConstants.STANDARD)
                     .build();
-            
+
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (KeyStoreException e) {
             e.printStackTrace();
         }
     }
 
     private static SSLContext createIgnoreVerifySSL() throws NoSuchAlgorithmException, KeyManagementException {
-        SSLContext sslContext = SSLContext.getInstance("SSLv3");
+        try {
+            return SSLContexts.custom()
+                    .loadTrustMaterial(KeyStore.getInstance(KeyStore.getDefaultType()), new TrustStrategy() {
+                        public boolean isTrusted(X509Certificate[] x509Certificates, String s)
+                                throws CertificateException {
+                            return true;
+                        }
+                    }).build();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+      /*  SSLContext sslContext = SSLContext.getInstance("SSLv3");
         X509TrustManager trustManager = new X509TrustManager() {
             public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
 
@@ -121,7 +146,7 @@ public class HttpClientUtil {
             }
         };
         sslContext.init(null, new TrustManager[] { trustManager}, null);
-        return sslContext;
+        return sslContext;*/
     }
 
     //自定义重试次数以及重试业务处理
@@ -140,7 +165,7 @@ public class HttpClientUtil {
 
                 HttpRequest request = HttpClientContext.adapt(httpContext).getRequest();
                 // 如果请求被认为是幂等的，那么就重试。即重复执行不影响程序其他效果的
-                if (request instanceof HttpEntityEnclosingRequest) {
+                if (!(request instanceof HttpEntityEnclosingRequest)) {
                     return true;
                 }
 
@@ -151,14 +176,14 @@ public class HttpClientUtil {
     }
 
     public static CloseableHttpResponse getResponse(HttpRequestBase request) throws IOException {
-            CloseableHttpClient httpClient = HttpClients.createDefault();
-            if (request.getConfig() == null) {
-                request.setConfig(requestConfig);
-            }
-            request.setHeader("User-Agent", ProxyConstants.userAgentArray[new Random().nextInt(ProxyConstants.userAgentArray.length)]);
-            HttpClientContext context = HttpClientContext.create();
-            context.setCookieStore(cookieStore);
-            return httpClient.execute(request, context);
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        if (request.getConfig() == null) {
+            request.setConfig(requestConfig);
+        }
+        request.setHeader("User-Agent", ProxyConstants.userAgentArray[new Random().nextInt(ProxyConstants.userAgentArray.length)]);
+        HttpClientContext context = HttpClientContext.create();
+        context.setCookieStore(cookieStore);
+        return httpClient.execute(request, context);
     }
 
     public static CloseableHttpResponse getResponse(String url) throws IOException {

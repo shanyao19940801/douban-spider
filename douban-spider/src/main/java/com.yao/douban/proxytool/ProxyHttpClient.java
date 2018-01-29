@@ -1,4 +1,9 @@
-package com.yao.douban.proxytool.http.client;
+package com.yao.douban.proxytool;
+
+import com.yao.douban.proxytool.http.client.AbstractHttpClient;
+import com.yao.douban.proxytool.task.ProxyPageTask;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
@@ -8,7 +13,9 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by 单耀 on 2018/1/27.
  */
-public class ProxyHttpClient extends AbstractHttpClient{
+public class ProxyHttpClient extends AbstractHttpClient {
+    private static Logger logger = LoggerFactory.getLogger(ProxyHttpClient.class);
+    public static volatile boolean isContinue = true;
     private volatile static ProxyHttpClient instance;
     //下载代理页面的线程池
     private ThreadPoolExecutor proxyDoloadThreadExector;
@@ -63,5 +70,27 @@ public class ProxyHttpClient extends AbstractHttpClient{
 
     public void setProxyProxyTestExector(ThreadPoolExecutor proxyProxyTestExector) {
         this.proxyProxyTestExector = proxyProxyTestExector;
+    }
+
+    public void startProxy() {
+        new Thread(new Runnable() {
+            public void run() {
+                while(isContinue) {
+                    for (String url : ProxyPool.proxyMap.keySet()) {
+                        proxyDoloadThreadExector.execute(new ProxyPageTask(url, false));
+                        try {
+                            Thread.sleep(5000);
+                        } catch (InterruptedException e) {
+                            logger.error(e.getMessage(),e);
+                        }
+                    }
+                    try {
+                        Thread.sleep(1000*60*60);
+                    } catch (InterruptedException e) {
+                        logger.error(e.getMessage(), e);
+                    }
+                }
+            }
+        }).start();
     }
 }
