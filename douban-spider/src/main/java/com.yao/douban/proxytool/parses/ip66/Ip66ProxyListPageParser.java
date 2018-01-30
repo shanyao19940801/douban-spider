@@ -1,4 +1,4 @@
-package com.yao.douban.proxytool.ip66;
+package com.yao.douban.proxytool.parses.ip66;
 
 import com.yao.douban.proxytool.entity.Proxy;
 import com.yao.douban.proxytool.parses.ProxyListPageParser;

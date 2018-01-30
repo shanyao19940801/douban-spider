@@ -2,9 +2,9 @@ package com.yao.douban.douban.task;
 
 /**
  * Created by 单耀 on 2018/1/28.
- * 下载电影信息列表页面
+ * 电影详细信息下载任务
  */
-public class ListPageTask implements Runnable{
+public class DouBanDetailInfoDownLoadTask implements Runnable {
     public void run() {
 
     }
