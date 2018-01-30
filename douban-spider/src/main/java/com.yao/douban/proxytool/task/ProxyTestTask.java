@@ -1,9 +1,9 @@
 package com.yao.douban.proxytool.task;
 
+import com.yao.douban.proxytool.ProxyHttpClient;
 import com.yao.douban.proxytool.ProxyPool;
 import com.yao.douban.proxytool.entity.Page;
 import com.yao.douban.proxytool.entity.Proxy;
-import com.yao.douban.proxytool.http.client.ProxyHttpClient;
 import com.yao.douban.proxytool.http.util.HttpClientUtil;
 import com.yao.douban.proxytool.proxyutil.ProxyConstants;
 import org.apache.http.HttpHost;
