@@ -1,7 +1,7 @@
 package com.yao.douban.proxytool;
 
 import com.yao.douban.proxytool.entity.Proxy;
-import com.yao.douban.proxytool.ip66.Ip66ProxyListPageParser;
+import com.yao.douban.proxytool.parses.ip66.Ip66ProxyListPageParser;
 import com.yao.douban.proxytool.parses.ip181.Ip181ProxyListPageParser;
 import com.yao.douban.proxytool.parses.mimiip.MimiipProxyListPageParser;
 import com.yao.douban.proxytool.parses.xicidaili.XicidailiProxyListPageParser;
