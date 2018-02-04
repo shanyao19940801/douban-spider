@@ -5,6 +5,7 @@ package com.yao.douban.douban.task;
  * 下载电影信息列表页面
  */
 public class DouBanInfoListPageTask implements Runnable{
+
     public void run() {
 
     }
