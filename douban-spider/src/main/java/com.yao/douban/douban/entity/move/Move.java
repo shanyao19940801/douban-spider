@@ -9,15 +9,15 @@ public class Move {
     private String otherName;//又名
     private String director;//导演
     private String screenWriter;//编剧
-    private String mainaAtion;//主演
+    private String mainaActors;//主演
     private String type;//类型
     private String flakingArea;//制片国家、地区
     private String language;//语言
     private String showDate;//上映日期
-    private String length;//片长
+    private String runTime;//片长
     private String imdb;//IMDb链接
-    private Double doubanScore;//豆瓣评分
-    private Integer evaluationNumbe;//评价人数
+    private Double rating;//豆瓣评分
+    private Integer ratingSum;//评价人数
     private Integer evaluationTotal;//评价总数
 
     public String getId() {
@@ -60,12 +60,12 @@ public class Move {
         this.screenWriter = screenWriter;
     }
 
-    public String getMainaAtion() {
-        return mainaAtion;
+    public String getMainaActors() {
+        return mainaActors;
     }
 
-    public void setMainaAtion(String mainaAtion) {
-        this.mainaAtion = mainaAtion;
+    public void setMainaActors(String mainaActors) {
+        this.mainaActors = mainaActors;
     }
 
     public String getType() {
@@ -100,12 +100,12 @@ public class Move {
         this.showDate = showDate;
     }
 
-    public String getLength() {
-        return length;
+    public String getRunTime() {
+        return runTime;
     }
 
-    public void setLength(String length) {
-        this.length = length;
+    public void setRunTime(String runTime) {
+        this.runTime = runTime;
     }
 
     public String getImdb() {
@@ -116,20 +116,20 @@ public class Move {
         this.imdb = imdb;
     }
 
-    public Double getDoubanScore() {
-        return doubanScore;
+    public Double getRating() {
+        return rating;
     }
 
-    public void setDoubanScore(Double doubanScore) {
-        this.doubanScore = doubanScore;
+    public void setRating(Double rating) {
+        this.rating = rating;
     }
 
-    public Integer getEvaluationNumbe() {
-        return evaluationNumbe;
+    public Integer getRatingSum() {
+        return ratingSum;
     }
 
-    public void setEvaluationNumbe(Integer evaluationNumbe) {
-        this.evaluationNumbe = evaluationNumbe;
+    public void setRatingSum(Integer ratingSum) {
+        this.ratingSum = ratingSum;
     }
 
     public Integer getEvaluationTotal() {

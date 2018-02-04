@@ -31,7 +31,7 @@ public class ParserTest {
         }
 
     }
-
+    //获取电影列表
     private static List<ListMove> moveListTest() {
         DoubanPageParser parser = DoubanParserFactory.getDoubanParserFactory(MoveListParser.class);
 //        List<ListMove> list = parser.parser("");
