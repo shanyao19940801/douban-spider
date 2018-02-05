@@ -139,4 +139,25 @@ public class Move {
     public void setEvaluationTotal(Integer evaluationTotal) {
         this.evaluationTotal = evaluationTotal;
     }
+
+    @Override
+    public String toString() {
+        return "Move{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", otherName='" + otherName + '\'' +
+                ", director='" + director + '\'' +
+                ", screenWriter='" + screenWriter + '\'' +
+                ", mainaActors='" + mainaActors + '\'' +
+                ", type='" + type + '\'' +
+                ", flakingArea='" + flakingArea + '\'' +
+                ", language='" + language + '\'' +
+                ", showDate='" + showDate + '\'' +
+                ", runTime='" + runTime + '\'' +
+                ", imdb='" + imdb + '\'' +
+                ", rating=" + rating +
+                ", ratingSum=" + ratingSum +
+                ", evaluationTotal=" + evaluationTotal +
+                '}';
+    }
 }

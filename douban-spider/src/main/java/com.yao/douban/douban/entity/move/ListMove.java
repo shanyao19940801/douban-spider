@@ -1,13 +1,18 @@
 package com.yao.douban.douban.entity.move;
 
+import com.yao.douban.douban.entity.BaseInfo;
+
 /**
  * Created by 单耀 on 2018/2/2.
  */
-public class ListMove {
+public class ListMove{
+
     private String id;
-    private String rate;
+    private Double rate;
     private String title;
     private String url;
+
+    //TODO
 
     public String getId() {
         return id;
@@ -17,11 +22,11 @@ public class ListMove {
         this.id = id;
     }
 
-    public String getRate() {
+    public Double getRate() {
         return rate;
     }
 
-    public void setRate(String rate) {
+    public void setRate(Double rate) {
         this.rate = rate;
     }
 
@@ -39,5 +44,15 @@ public class ListMove {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    @Override
+    public String toString() {
+        return "ListMove{" +
+                "id='" + id + '\'' +
+                ", rate='" + rate + '\'' +
+                ", title='" + title + '\'' +
+                ", url='" + url + '\'' +
+                '}';
     }
 }

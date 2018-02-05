@@ -14,8 +14,8 @@ import java.io.IOException;
 public class GetDouBanPageTest {
     public static void main(String[] args) {
         try {
-            Page page = ProxyHttpClient.getInstance().getPage(Constants.STRTY_URL);
-            HttpGet request = new HttpGet(Constants.STRTY_URL);
+            Page page = ProxyHttpClient.getInstance().getPage(Constants.STRTY_URL_MOVE);
+            HttpGet request = new HttpGet(Constants.STRTY_URL_MOVE);
             HttpClientUtil.getResponse(request);
             System.out.println(page.getHtml());
         } catch (IOException e) {

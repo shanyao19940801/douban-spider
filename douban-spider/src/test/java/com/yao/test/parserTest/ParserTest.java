@@ -3,12 +3,10 @@ package com.yao.test.parserTest;
 import com.yao.douban.core.util.Constants;
 import com.yao.douban.douban.DoubanHttpClient;
 import com.yao.douban.douban.entity.move.ListMove;
-import com.yao.douban.douban.entity.move.Move;
 import com.yao.douban.douban.parsers.DoubanPageParser;
 import com.yao.douban.douban.parsers.DoubanParserFactory;
 import com.yao.douban.douban.parsers.move.MoveListParser;
 import com.yao.douban.douban.parsers.move.MoveParser;
-import com.yao.douban.proxytool.ProxyHttpClient;
 import com.yao.douban.proxytool.entity.Page;
 
 import java.io.IOException;
@@ -36,7 +34,7 @@ public class ParserTest {
         DoubanPageParser parser = DoubanParserFactory.getDoubanParserFactory(MoveListParser.class);
 //        List<ListMove> list = parser.parser("");
         try {
-            Page page = DoubanHttpClient.getInstance().getPage(Constants.STRTY_URL);
+            Page page = DoubanHttpClient.getInstance().getPage(Constants.STRTY_URL_MOVE);
             List<ListMove> listMoves = parser.parser(page.getHtml());
             return listMoves;
 

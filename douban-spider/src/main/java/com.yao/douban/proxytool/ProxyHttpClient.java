@@ -1,10 +1,13 @@
 package com.yao.douban.proxytool;
 
+import com.yao.douban.core.util.Constants;
+import com.yao.douban.douban.task.DouBanInfoListPageTask;
 import com.yao.douban.proxytool.http.client.AbstractHttpClient;
 import com.yao.douban.proxytool.task.ProxyPageTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.URLEncoder;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -92,5 +95,21 @@ public class ProxyHttpClient extends AbstractHttpClient {
                 }
             }
         }).start();
+        /*new Thread(new Runnable() {
+            public void run() {
+                while (true) {
+                    //TODO 后期改成可拓展，即可以查询其他信息
+                    try {
+                        String url = String.format(Constants.STRTY_URL_MOVE, Constants.TYPE, URLEncoder.encode(Constants.TAG, "UTF-8"), Constants.LIMIT, 0);
+                        proxyDoloadThreadExector.execute(new DouBanInfoListPageTask(url, true));
+//                        MOVE_START += Constants.LIMIT;
+                        Thread.sleep(2000);
+
+                    } catch (Exception e) {
+                        logger.error(e.getMessage(), e);
+                    }
+                }
+            }
+        }).start();*/
     }
 }
