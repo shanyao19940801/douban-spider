@@ -22,7 +22,7 @@ import java.util.List;
  * Created by 单耀 on 2018/1/28.
  * 下载电影信息列表页面
  */
-public class DouBanInfoListPageTask implements Runnable{
+public class DouBanInfoListPageTask extends AbstractTask implements Runnable{
     private String url;
     private boolean isUserProxy;
     private Proxy currentProxy;
@@ -56,11 +56,14 @@ public class DouBanInfoListPageTask implements Runnable{
                page = doubanHttpClient.getPage(url);
             }
             if (page != null && page.getStatusCode() == 200) {
+                currentProxy.setSuccessfulTimes(currentProxy.getSuccessfulTimes() + 1);
                 handle(page);
             } else {
+                currentProxy.setFailureTimes(currentProxy.getFailureTimes() + 1);
                 retry();
             }
         } catch (Exception e) {
+            currentProxy.setFailureTimes(currentProxy.getFailureTimes() + 1);
 //            e.printStackTrace();
 //            logger.error(e.getMessage(), e);
             retry();
@@ -71,13 +74,15 @@ public class DouBanInfoListPageTask implements Runnable{
 
             if (currentProxy != null && !ProxyUtil.isDiscardProxy(currentProxy)){
                 ProxyPool.proxyQueue.add(currentProxy);
+            } else {
+                logger.info("丢弃代理：" + currentProxy.getProxyStr());
             }
         }
     }
 
 
     private void retry() {
-        logger.info("重试次数=" + retryTime + "--开始编号：" + startNumber + "---重试代理：" + currentProxy.getProxyStr());
+        logger.info("重试次数=" + retryTime + "--开始编号：" + startNumber + "---重试代理：" + currentProxy.getProxyStr() + "---代理失败/成功次数：" + currentProxy.getFailureTimes()+ "/" + currentProxy.getSuccessfulTimes());
         doubanHttpClient.getDownLoadMoveListExector().execute(new DouBanInfoListPageTask(url, true, retryTime + 1, startNumber));
     }
 

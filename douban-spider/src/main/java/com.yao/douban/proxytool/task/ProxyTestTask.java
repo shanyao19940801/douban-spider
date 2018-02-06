@@ -1,5 +1,6 @@
 package com.yao.douban.proxytool.task;
 
+import com.yao.douban.douban.task.AbstractTask;
 import com.yao.douban.proxytool.ProxyHttpClient;
 import com.yao.douban.proxytool.ProxyPool;
 import com.yao.douban.proxytool.entity.Page;

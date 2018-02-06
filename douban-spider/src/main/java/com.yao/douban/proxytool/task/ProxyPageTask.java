@@ -64,6 +64,7 @@ public class ProxyPageTask implements Runnable{
 
         } catch (Exception e) {
 //            logger.error(e.getMessage(), e);
+            retry();
         }  finally {
 
             if (currentProxy != null && !ProxyUtil.isDiscardProxy(currentProxy)){

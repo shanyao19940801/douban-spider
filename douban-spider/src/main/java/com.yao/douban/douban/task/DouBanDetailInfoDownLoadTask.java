@@ -10,6 +10,7 @@ import com.yao.douban.proxytool.ProxyPool;
 import com.yao.douban.proxytool.entity.Page;
 import com.yao.douban.proxytool.entity.Proxy;
 import com.yao.douban.proxytool.http.util.HttpClientUtil;
+import com.yao.douban.proxytool.proxyutil.ProxyUtil;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
@@ -52,17 +53,19 @@ public class DouBanDetailInfoDownLoadTask implements Runnable {
                 }
 
                 if (page!= null && page.getStatusCode() == 200) {
+                    currentProxy.setSuccessfulTimes(currentProxy.getSuccessfulTimes() + 1);
                     handle(page);
                 } else {
+                    currentProxy.setFailureTimes(currentProxy.getFailureTimes() + 1);
                     retry();
                 }
             } catch (Exception e) {
-
+                currentProxy.setFailureTimes(currentProxy.getFailureTimes() + 1);
             } finally {
                 if (request != null) {
                     request.releaseConnection();
                 }
-                if (currentProxy != null) {
+                if (currentProxy != null && !ProxyUtil.isDiscardProxy(currentProxy)) {
                     ProxyPool.proxyQueue.add(currentProxy);
                 }
             }
