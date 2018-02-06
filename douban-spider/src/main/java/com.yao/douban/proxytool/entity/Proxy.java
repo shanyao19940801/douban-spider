@@ -17,6 +17,8 @@ public class Proxy implements Delayed {
     private String dataSource;
 
     private long timeIntervsl;//任务间隔时间
+    private int failureTimes;//请求失败次数
+    private int successfulTimes;//请求成功次数
 
     public Proxy(String ip, Integer port, long delayTime, String dataSource) {
         this.ip = ip;
@@ -71,6 +73,22 @@ public class Proxy implements Delayed {
 
     public int compareTo(Delayed o) {
         return 0;
+    }
+
+    public int getFailureTimes() {
+        return failureTimes;
+    }
+
+    public void setFailureTimes(int failureTimes) {
+        this.failureTimes = failureTimes;
+    }
+
+    public int getSuccessfulTimes() {
+        return successfulTimes;
+    }
+
+    public void setSuccessfulTimes(int successfulTimes) {
+        this.successfulTimes = successfulTimes;
     }
 
     public String getProxyStr() {

@@ -6,6 +6,7 @@ import com.yao.douban.proxytool.entity.Page;
 import com.yao.douban.proxytool.entity.Proxy;
 import com.yao.douban.proxytool.http.util.HttpClientUtil;
 import com.yao.douban.proxytool.proxyutil.ProxyConstants;
+import com.yao.douban.proxytool.proxyutil.ProxyUtil;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -56,6 +57,10 @@ public class ProxyTestTask implements Runnable {
         } finally {
             if (request != null) {
                 request.releaseConnection();
+            }
+
+            if (proxy != null && !ProxyUtil.isDiscardProxy(proxy)){
+                ProxyPool.proxyQueue.add(proxy);
             }
         }
     }

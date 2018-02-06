@@ -7,6 +7,7 @@ import com.yao.douban.proxytool.ProxyHttpClient;
 import com.yao.douban.proxytool.http.util.HttpClientUtil;
 import com.yao.douban.proxytool.parses.ParserFactory;
 import com.yao.douban.proxytool.parses.ProxyListPageParser;
+import com.yao.douban.proxytool.proxyutil.ProxyUtil;
 import org.apache.http.HttpHost;
 import org.apache.http.client.methods.HttpGet;
 import org.slf4j.Logger;
@@ -61,13 +62,11 @@ public class ProxyPageTask implements Runnable{
                 retry();
             }
 
-        } catch (IOException e) {
-            logger.error(e.getMessage(), e);
-        } catch (InterruptedException e) {
-            logger.error(e.getMessage(), e);
-        } finally {
+        } catch (Exception e) {
+//            logger.error(e.getMessage(), e);
+        }  finally {
 
-            if (currentProxy != null) {
+            if (currentProxy != null && !ProxyUtil.isDiscardProxy(currentProxy)){
                 ProxyPool.proxyQueue.add(currentProxy);
             }
 
@@ -77,9 +76,8 @@ public class ProxyPageTask implements Runnable{
         }
     }
 
-    //TODO
     private void retry() {
-
+        proxyHttpClient.getProxyDoloadThreadExector().execute(new ProxyPageTask(url, true));
     }
 
     //T处理下载页面

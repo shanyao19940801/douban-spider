@@ -10,12 +10,12 @@ import com.yao.douban.proxytool.ProxyPool;
 import com.yao.douban.proxytool.entity.Page;
 import com.yao.douban.proxytool.entity.Proxy;
 import com.yao.douban.proxytool.http.util.HttpClientUtil;
+import com.yao.douban.proxytool.proxyutil.ProxyUtil;
 import org.apache.http.HttpHost;
 import org.apache.http.client.methods.HttpGet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -39,7 +39,7 @@ public class DouBanInfoListPageTask implements Runnable{
         this.url = url;
         this.isUserProxy = isUserProxy;
         this.startNumber = startNumber;
-        retryTime = retryTime;
+        this.retryTime = retryTime;
     }
 
     public void run() {
@@ -68,7 +68,8 @@ public class DouBanInfoListPageTask implements Runnable{
             if (request != null) {
                 request.releaseConnection();
             }
-            if (currentProxy != null) {
+
+            if (currentProxy != null && !ProxyUtil.isDiscardProxy(currentProxy)){
                 ProxyPool.proxyQueue.add(currentProxy);
             }
         }
@@ -76,7 +77,7 @@ public class DouBanInfoListPageTask implements Runnable{
 
 
     private void retry() {
-        logger.info("重试次数=" + retryTime + "--开始编号：" + startNumber);
+        logger.info("重试次数=" + retryTime + "--开始编号：" + startNumber + "---重试代理：" + currentProxy.getProxyStr());
         doubanHttpClient.getDownLoadMoveListExector().execute(new DouBanInfoListPageTask(url, true, retryTime + 1, startNumber));
     }
 
@@ -89,7 +90,7 @@ public class DouBanInfoListPageTask implements Runnable{
         if (moveList != null && moveList.size() > 0) {
             for (ListMove move : moveList) {
                 logger.info(move.toString());
-                doubanHttpClient.getDownLoadMoveInfoExector().execute(new DouBanDetailInfoDownLoadTask(move, true));
+//                doubanHttpClient.getDownLoadMoveInfoExector().execute(new DouBanDetailInfoDownLoadTask(move, true));
             }
         }
     }
