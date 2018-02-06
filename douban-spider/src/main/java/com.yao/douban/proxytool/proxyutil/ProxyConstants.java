@@ -8,8 +8,8 @@ public class ProxyConstants {
     public static int SocketTimeout = 10000;
     public static int ConnectionTimeout = 10000;
     public static int TIMEOUT = 10000;
-//    public static String INDEX_URL = "https://movie.douban.com/";
-    public static String INDEX_URL = "https://www.zhihu.com";
+    public static String INDEX_URL = "https://movie.douban.com";
+//    public static String INDEX_URL = "https://www.zhihu.com";
     public static final long TIME_INTERVAL = 1000;
 
     public final static String[] userAgentArray = new String[]{

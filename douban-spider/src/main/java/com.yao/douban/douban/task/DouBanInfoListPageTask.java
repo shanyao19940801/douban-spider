@@ -28,14 +28,22 @@ public class DouBanInfoListPageTask implements Runnable{
     private Proxy currentProxy;
     private DoubanHttpClient doubanHttpClient = DoubanHttpClient.getInstance();
     private static Logger logger = LoggerFactory.getLogger(DouBanInfoListPageTask.class);
+    private int retryTime;
+    private int startNumber;
 
     public DouBanInfoListPageTask(String url, boolean isUserProxy) {
         this.url = url;
         this.isUserProxy = isUserProxy;
     }
+    public DouBanInfoListPageTask(String url, boolean isUserProxy, int retryTime, int startNumber) {
+        this.url = url;
+        this.isUserProxy = isUserProxy;
+        this.startNumber = startNumber;
+        retryTime = retryTime;
+    }
 
     public void run() {
-        System.out.println("kaishi");
+
         HttpGet request = new HttpGet(url);
         try {
             Page page = null;
@@ -54,7 +62,7 @@ public class DouBanInfoListPageTask implements Runnable{
             }
         } catch (Exception e) {
 //            e.printStackTrace();
-            logger.error(e.getMessage(), e);
+//            logger.error(e.getMessage(), e);
             retry();
         } finally {
             if (request != null) {
@@ -68,7 +76,8 @@ public class DouBanInfoListPageTask implements Runnable{
 
 
     private void retry() {
-        doubanHttpClient.getDownLoadMoveListExector().execute(new DouBanInfoListPageTask(url, true));
+        logger.info("重试次数=" + retryTime + "--开始编号：" + startNumber);
+        doubanHttpClient.getDownLoadMoveListExector().execute(new DouBanInfoListPageTask(url, true, retryTime + 1, startNumber));
     }
 
     private void handle(Page page) {
@@ -79,7 +88,7 @@ public class DouBanInfoListPageTask implements Runnable{
         List<ListMove> moveList = parser.parser(page.getHtml());
         if (moveList != null && moveList.size() > 0) {
             for (ListMove move : moveList) {
-                System.out.println(move.toString());
+                logger.info(move.toString());
                 doubanHttpClient.getDownLoadMoveInfoExector().execute(new DouBanDetailInfoDownLoadTask(move, true));
             }
         }

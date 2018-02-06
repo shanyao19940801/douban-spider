@@ -32,9 +32,9 @@ public class DoubanHttpClient extends AbstractHttpClient{
     }
     private void init () {
 
-        downLoadMoveListExector = new ThreadPoolExecutor(60, 60, 0L,
+        downLoadMoveListExector = new ThreadPoolExecutor(100, 100, 0L,
                 TimeUnit.SECONDS,
-                new LinkedBlockingQueue<Runnable>(600),
+                new LinkedBlockingQueue<Runnable>(),
                 new ThreadFactory() {
                     public Thread newThread(Runnable r) {
                         return new Thread(r, "downLoadMoveListExector " + r.hashCode());
@@ -80,23 +80,23 @@ public class DoubanHttpClient extends AbstractHttpClient{
     }
 
     public void startDouBan() {
-//        new Thread(new SpiderDouBanInfo()).start();
-        new Thread(new Runnable() {
-            public void run() {
-                while (true) {
-                    //TODO 后期改成可拓展，即可以查询其他信息
-                    try {
-                        String url = String.format(Constants.STRTY_URL_MOVE, Constants.TYPE, URLEncoder.encode(Constants.TAG, "UTF-8"), Constants.LIMIT, MOVE_START);
-                        downLoadMoveListExector.execute(new DouBanInfoListPageTask(url, true));
-                        MOVE_START += Constants.LIMIT;
-                        Thread.sleep(2000);
-
-                    } catch (Exception e) {
-                        logger.error(e.getMessage(), e);
-                    }
-                }
-            }
-        }).start();;
+        new Thread(new SpiderDouBanInfo()).start();
+//        new Thread(new Runnable() {
+//            public void run() {
+//                while (true) {
+//                    //TODO 后期改成可拓展，即可以查询其他信息
+//                    try {
+//                        String url = String.format(Constants.STRTY_URL_MOVE, Constants.TYPE, URLEncoder.encode(Constants.TAG, "UTF-8"), Constants.LIMIT, MOVE_START);
+//                        downLoadMoveListExector.execute(new DouBanInfoListPageTask(url, true));
+//                        MOVE_START += Constants.LIMIT;
+//                        Thread.sleep(2000);
+//
+//                    } catch (Exception e) {
+//                        logger.error(e.getMessage(), e);
+//                    }
+//                }
+//            }
+//        }).start();;
     }
 
 
