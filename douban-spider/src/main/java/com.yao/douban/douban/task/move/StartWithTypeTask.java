@@ -14,12 +14,13 @@ public class StartWithTypeTask implements Runnable{
     private static DoubanHttpClient doubanHttpClient = DoubanHttpClient.getInstance();
     private static volatile boolean SUCCESS = true;
     public void run() {
-        while (Constants.ISCONTINUE) {
+//        while (Constants.ISCONTINUE) {
             Map<String,String> mapTpe = DBUtil.getType("move");
             for (String name : mapTpe.keySet()) {
                 doubanHttpClient.getDownLoadMoveListExector().execute(new SpiderWithTypeTask(name, mapTpe.get(name), true));
+                break;
             }
-        }
+//        }
     }
 
 

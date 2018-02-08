@@ -3,6 +3,7 @@ package com.yao.douban.douban;
 import com.yao.douban.core.util.Constants;
 import com.yao.douban.core.util.ThreadConstants;
 import com.yao.douban.douban.task.DouBanInfoListPageTask;
+import com.yao.douban.douban.task.move.StartWithTypeTask;
 import com.yao.douban.proxytool.http.client.AbstractHttpClient;
 import com.yao.douban.douban.task.SpiderDouBanInfo;
 import org.slf4j.Logger;
@@ -80,23 +81,8 @@ public class DoubanHttpClient extends AbstractHttpClient{
     }
 
     public void startDouBan() {
-        new Thread(new SpiderDouBanInfo()).start();
-//        new Thread(new Runnable() {
-//            public void run() {
-//                while (true) {
-//                    //TODO 后期改成可拓展，即可以查询其他信息
-//                    try {
-//                        String url = String.format(Constants.STRTY_URL_MOVE, Constants.TYPE, URLEncoder.encode(Constants.TAG, "UTF-8"), Constants.LIMIT, MOVE_START);
-//                        downLoadMoveListExector.execute(new DouBanInfoListPageTask(url, true));
-//                        MOVE_START += Constants.LIMIT;
-//                        Thread.sleep(2000);
-//
-//                    } catch (Exception e) {
-//                        logger.error(e.getMessage(), e);
-//                    }
-//                }
-//            }
-//        }).start();;
+//        new Thread(new SpiderDouBanInfo()).start();
+        new Thread(new StartWithTypeTask()).start();
     }
 
 

@@ -16,20 +16,19 @@ import org.slf4j.LoggerFactory;
  * Created by 单耀 on 2018/2/6.
  * TODO
  */
-public abstract class AbstractTask<T> implements Runnable {//TODO 改成泛型，这样打印日志会更佳明显有助排查错误
+public abstract class AbstractTask implements Runnable {//TODO 改成泛型，这样打印日志会更佳明显有助排查错误
     private static Logger logger = LoggerFactory.getLogger(AbstractTask.class);
     protected static DoubanHttpClient doubanHttpClient = DoubanHttpClient.getInstance();
     protected boolean isUseProxy;
-    private String url;
+    protected String url;
     protected Proxy currentProxy;
     protected int retryTimes;
 
-    public Page getPage(String url) {
-        return this.getPage(url, isUseProxy);
+    public void getPage(String url) {
+        this.getPage(url, isUseProxy);
     }
 
-    public Page getPage(String url, boolean isUseProxy) {
-        System.out.println("parent run");
+    public void getPage(String url, boolean isUseProxy) {
         this.url = url;
         this.isUseProxy = isUseProxy;
 
@@ -48,7 +47,7 @@ public abstract class AbstractTask<T> implements Runnable {//TODO 改成泛型�
                 if (currentProxy != null)
                     currentProxy.setSuccessfulTimes(currentProxy.getSuccessfulTimes() + 1);
                 handle(page);
-                return page;
+//                return page;
             } else {
                 currentProxy.setFailureTimes(currentProxy.getFailureTimes() + 1);
                 retry();
@@ -70,7 +69,7 @@ public abstract class AbstractTask<T> implements Runnable {//TODO 改成泛型�
                     logger.info("丢弃代理：" + currentProxy.getProxyStr());
             }
         }
-        return null;
+//        return null;
     }
 
     public abstract void retry();

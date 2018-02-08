@@ -10,6 +10,13 @@ public class StartClass {
     public static void main(String[] args) {
 
         ProxyHttpClient.getInstance().startProxy();
+//        DoubanHttpClient.getInstance().startDouBan();
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         DoubanHttpClient.getInstance().startDouBan();
+
     }
 }

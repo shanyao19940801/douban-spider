@@ -6,8 +6,9 @@ package com.yao.test.test;
 public class OtherTest {
     public static void main(String[] args) {
         int i = 534;
-        for ( int j = 0; j < i; j += 20) {
-            System.out.println(j);
+        for (int persent = 100; persent > 0; persent -= 10) {
+            System.out.println(persent);
+            System.out.println(persent - 10);
         }
     }
 }
