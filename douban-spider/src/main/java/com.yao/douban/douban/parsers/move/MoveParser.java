@@ -16,7 +16,7 @@ import java.util.List;
 public class MoveParser implements DoubanPageParser<Move>{
     public  List<Move> parser(String html) {
         List<Move> list = new ArrayList<Move>();
-        System.out.println(html);
+//        System.out.println(html);
         Move move = new Move();
         try {
             Document document = Jsoup.parse(html);

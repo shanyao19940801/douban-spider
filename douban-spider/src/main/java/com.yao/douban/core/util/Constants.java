@@ -17,4 +17,6 @@ public class Constants {
     //信息类别
     public static String TYPE = "move";
 
+    public static boolean ISCONTINUE = true;
+
 }
