@@ -22,7 +22,7 @@ import java.util.List;
  * Created by 单耀 on 2018/1/28.
  * 下载电影信息列表页面
  */
-public class DouBanInfoListPageTask extends AbstractTask implements Runnable{
+public class DouBanInfoListPageTask implements Runnable{
     private String url;
     private boolean isUserProxy;
     private Proxy currentProxy;
