@@ -14,7 +14,8 @@ import java.io.IOException;
 public class GetDouBanPageTest {
     public static void main(String[] args) {
         try {
-            Page page = ProxyHttpClient.getInstance().getPage(Constants.STRTY_URL_MOVE);
+            String url = "https://movie.douban.com/j/chart/top_list_count?type=11&interval_id=100:90";
+            Page page = ProxyHttpClient.getInstance().getPage(url);
             HttpGet request = new HttpGet(Constants.STRTY_URL_MOVE);
             HttpClientUtil.getResponse(request);
             System.out.println(page.getHtml());
