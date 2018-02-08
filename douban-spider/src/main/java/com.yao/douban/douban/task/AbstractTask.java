@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * Created by 单耀 on 2018/2/6.
  * TODO
  */
-public abstract class AbstractTask implements Runnable {//TODO 改成泛型，这样打印日志会更佳明显有助排查错误
+public abstract class AbstractTask<T> implements Runnable {//TODO 改成泛型，这样打印日志会更佳明显有助排查错误
     private static Logger logger = LoggerFactory.getLogger(AbstractTask.class);
     protected static DoubanHttpClient doubanHttpClient = DoubanHttpClient.getInstance();
     protected boolean isUseProxy;

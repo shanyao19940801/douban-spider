@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by user on 2018/2/8.
  */
-public class SpiderWithTypeTask extends AbstractTask implements Runnable {
+public class SpiderWithTypeTask extends AbstractTask<SpiderWithTypeTask> implements Runnable {
     private static Logger logger = LoggerFactory.getLogger(SpiderWithTypeTask.class);
     private String typeName;
     private String typeValue;
@@ -53,7 +53,7 @@ public class SpiderWithTypeTask extends AbstractTask implements Runnable {
     }
 
     public void retry() {
-        logger.info("重试次数=" + retryTimes + "--开始编号：" + startNumber + "---重试代理：" + currentProxy.getProxyStr() + "---代理失败/成功次数：" + currentProxy.getFailureTimes()+ "/" + currentProxy.getSuccessfulTimes());
+        logger.info("重试次数=" + retryTimes + "--开始编号/百分比：" + startNumber + "/" + persentRecoder+ "---重试代理：" + currentProxy.getProxyStr() + "---代理失败/成功次数：" + currentProxy.getFailureTimes()+ "/" + currentProxy.getSuccessfulTimes());
         doubanHttpClient.getDownLoadMoveListExector().execute(new SpiderWithTypeTask(typeName, typeValue, true));
     }
 

@@ -1,0 +1,12 @@
+2018-02-08 21:22:41 下午 [Thread: main][ Class:com.yao.test.logtest.SonLog >> Method: com.yao.test.logtest.SonLog.printLogSon(SonLog.java:14) ]
+INFO:son
+2018-02-08 21:22:41 下午 [Thread: main][ Class:com.yao.test.logtest.AbstractLog >> Method: com.yao.test.logtest.AbstractLog.printLog(AbstractLog.java:13) ]
+INFO:parent
+2018-02-08 21:23:38 下午 [Thread: main][ Class:com.yao.test.logtest.SonLog >> Method: com.yao.test.logtest.SonLog.printLogSon(SonLog.java:14) ]
+INFO:son
+2018-02-08 21:23:38 下午 [Thread: main][ Class:com.yao.test.logtest.AbstractLog >> Method: com.yao.test.logtest.AbstractLog.printLog(AbstractLog.java:13) ]
+INFO:parent
+2018-02-08 21:24:24 下午 [Thread: main][ Class:com.yao.test.logtest.SonLog >> Method: com.yao.test.logtest.SonLog.printLogSon(SonLog.java:14) ]
+INFO:son
+2018-02-08 21:24:24 下午 [Thread: main][ Class:com.yao.test.logtest.AbstractLog >> Method: com.yao.test.logtest.AbstractLog.printLog(AbstractLog.java:13) ]
+INFO:parent
