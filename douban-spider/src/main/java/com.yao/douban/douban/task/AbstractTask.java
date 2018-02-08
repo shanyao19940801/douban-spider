@@ -14,64 +14,67 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Created by 单耀 on 2018/2/6.
- TODO
+ * TODO
  */
-public abstract class AbstractTask implements Runnable{//TODO 改成泛型，这样打印日志会更佳明显有助排查错误
+public abstract class AbstractTask implements Runnable {//TODO 改成泛型，这样打印日志会更佳明显有助排查错误
     private static Logger logger = LoggerFactory.getLogger(AbstractTask.class);
     protected static DoubanHttpClient doubanHttpClient = DoubanHttpClient.getInstance();
     protected boolean isUseProxy;
     private String url;
-    private Proxy currentProxy;
+    protected Proxy currentProxy;
+    protected int retryTimes;
 
     public Page getPage(String url) {
-       return this.getPage(url, isUseProxy);
+        return this.getPage(url, isUseProxy);
     }
 
     public Page getPage(String url, boolean isUseProxy) {
-     System.out.println("parent run");
-     this.url = url;
-     this.isUseProxy = isUseProxy;
+        System.out.println("parent run");
+        this.url = url;
+        this.isUseProxy = isUseProxy;
 
-     HttpGet request = new HttpGet(url);
-     try {
-      Page page = null;
-      if (isUseProxy) {
-       currentProxy = ProxyPool.proxyQueue.take();
-       HttpHost proxy =new HttpHost(currentProxy.getIp(), currentProxy.getPort());
-       request.setConfig(HttpClientUtil.getRequestConfigBuilder().setProxy(proxy).build());
-       page = doubanHttpClient.getPage(request);
-      } else {
-       page = doubanHttpClient.getPage(url);
-      }
-      if (page != null && page.getStatusCode() == 200) {
-       if (currentProxy != null)
-         currentProxy.setSuccessfulTimes(currentProxy.getSuccessfulTimes() + 1);
-       return page;
-//       handle(page);
-      } else {
-       currentProxy.setFailureTimes(currentProxy.getFailureTimes() + 1);
-       retry();
-      }
-     } catch (Exception e) {
-      currentProxy.setFailureTimes(currentProxy.getFailureTimes() + 1);
+        HttpGet request = new HttpGet(url);
+        try {
+            Page page = null;
+            if (isUseProxy) {
+                currentProxy = ProxyPool.proxyQueue.take();
+                HttpHost proxy = new HttpHost(currentProxy.getIp(), currentProxy.getPort());
+                request.setConfig(HttpClientUtil.getRequestConfigBuilder().setProxy(proxy).build());
+                page = doubanHttpClient.getPage(request);
+            } else {
+                page = doubanHttpClient.getPage(url);
+            }
+            if (page != null && page.getStatusCode() == 200) {
+                if (currentProxy != null)
+                    currentProxy.setSuccessfulTimes(currentProxy.getSuccessfulTimes() + 1);
+                handle(page);
+                return page;
+            } else {
+                currentProxy.setFailureTimes(currentProxy.getFailureTimes() + 1);
+                retry();
+            }
+        } catch (Exception e) {
+            currentProxy.setFailureTimes(currentProxy.getFailureTimes() + 1);
 //            e.printStackTrace();
 //            logger.error(e.getMessage(), e);
-      retry();
-     } finally {
-      if (request != null) {
-       request.releaseConnection();
-      }
+            retry();
+        } finally {
+            if (request != null) {
+                request.releaseConnection();
+            }
 
-      if (currentProxy != null && !ProxyUtil.isDiscardProxy(currentProxy)){
-       ProxyPool.proxyQueue.add(currentProxy);
-      } else {
-       if (currentProxy != null)
-         logger.info("丢弃代理：" + currentProxy.getProxyStr());
-      }
-     }
-     return null;
+            if (currentProxy != null && !ProxyUtil.isDiscardProxy(currentProxy)) {
+                ProxyPool.proxyQueue.add(currentProxy);
+            } else {
+                if (currentProxy != null)
+                    logger.info("丢弃代理：" + currentProxy.getProxyStr());
+            }
+        }
+        return null;
     }
 
     public abstract void retry();
+
+    public abstract void handle(Page page);
 
 }
