@@ -1,29 +1,32 @@
 package com.yao.douban.douban.parsers.move;
 
-import com.yao.douban.douban.entity.move.ListMove;
 import com.yao.douban.douban.entity.move.Move;
 import com.yao.douban.douban.parsers.DoubanPageParser;
 import net.sf.json.JSONArray;
+import net.sf.json.JsonConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by 单耀 on 2018/2/8.
+ * Created by user on 2018/2/9.
  */
-public class MoveParser implements DoubanPageParser<Move> {
+public class MoveParser implements DoubanPageParser{
     private static Logger logger = LoggerFactory.getLogger(MoveParser.class);
+
     public List<Move> parser(String html) {
         try {
-            JSONArray jsonArray = JSONArray.fromObject(html);
-//            JSONObject jsonObject = JSONObject.fromObject(html);
-//            JSONArray jsonArray = jsonObject.getJSONArray("subjects");
-            List<Move> listMoves = (List<Move>) JSONArray.toCollection(jsonArray, Move.class);
-            return listMoves;
+            String[] excludes = new String[]{"rating", "rank","cover_url","cover_url"};
+            JsonConfig jsonConfig = new JsonConfig();
+            jsonConfig.setExcludes(excludes);
+            JSONArray jsonArray = JSONArray.fromObject(html, jsonConfig);
+            List<Move> list = (List<Move>) jsonArray.toCollection(jsonArray, Move.class);
+            return list;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
-        return null;
+        return new ArrayList<Move>();
     }
 }
