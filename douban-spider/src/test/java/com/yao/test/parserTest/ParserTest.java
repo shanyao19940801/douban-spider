@@ -6,7 +6,7 @@ import com.yao.douban.douban.entity.move.ListMove;
 import com.yao.douban.douban.parsers.DoubanPageParser;
 import com.yao.douban.douban.parsers.DoubanParserFactory;
 import com.yao.douban.douban.parsers.move.MoveListParser;
-import com.yao.douban.douban.parsers.move.MoveParser;
+import com.yao.douban.douban.parsers.move.MoveParserDeprecated;
 import com.yao.douban.proxytool.entity.Page;
 
 import java.io.IOException;
@@ -21,7 +21,7 @@ public class ParserTest {
         String url = listMoves.get(0).getUrl();
         url += "?tag=%E7%83%AD%E9%97%A8&from=gaia";
         try {
-            DoubanPageParser parser = DoubanParserFactory.getDoubanParserFactory(MoveParser.class);
+            DoubanPageParser parser = DoubanParserFactory.getDoubanParserFactory(MoveParserDeprecated.class);
             Page page = DoubanHttpClient.getInstance().getPage(url);
             parser.parser(page.getHtml());
         } catch (IOException e) {
