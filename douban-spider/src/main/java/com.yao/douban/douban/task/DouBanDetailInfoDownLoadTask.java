@@ -5,20 +5,18 @@ import com.yao.douban.douban.entity.move.ListMove;
 import com.yao.douban.douban.entity.move.Move;
 import com.yao.douban.douban.parsers.DoubanPageParser;
 import com.yao.douban.douban.parsers.DoubanParserFactory;
-import com.yao.douban.douban.parsers.move.MoveParser;
+import com.yao.douban.douban.parsers.move.MoveParserDeprecated;
 import com.yao.douban.proxytool.ProxyPool;
 import com.yao.douban.proxytool.entity.Page;
 import com.yao.douban.proxytool.entity.Proxy;
 import com.yao.douban.proxytool.http.util.HttpClientUtil;
 import com.yao.douban.proxytool.proxyutil.ProxyUtil;
 import org.apache.http.HttpHost;
-import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.Properties;
 
 /**
  * Created by 单耀 on 2018/1/28.
@@ -78,13 +76,13 @@ public class DouBanDetailInfoDownLoadTask implements Runnable {
     }
 
     private void handle(Page page) {
-        DoubanPageParser parser = DoubanParserFactory.getDoubanParserFactory(MoveParser.class);
+        DoubanPageParser parser = DoubanParserFactory.getDoubanParserFactory(MoveParserDeprecated.class);
         List<Move> list = parser.parser(page.getHtml());
         if (list != null && list.size() > 0) {
             Move _move = list.get(0);
             _move.setName(move.getTitle());
             _move.setId(move.getId());
-            _move.setRating(move.getRate());
+            _move.setScore(move.getRate());
             //保存到数据库
 //            logger.info(_move.toString());
         }
