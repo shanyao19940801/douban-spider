@@ -11,8 +11,7 @@ public class ListMove{
     private Double rate;
     private String title;
     private String url;
-
-    //TODO
+    
 
     public String getId() {
         return id;
