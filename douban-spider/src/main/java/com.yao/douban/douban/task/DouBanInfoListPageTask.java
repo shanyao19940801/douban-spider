@@ -1,7 +1,7 @@
 package com.yao.douban.douban.task;
 
+import com.yao.douban.core.util.Constants;
 import com.yao.douban.douban.DoubanHttpClient;
-import com.yao.douban.douban.entity.move.ListMove;
 import com.yao.douban.douban.entity.move.Move;
 import com.yao.douban.douban.parsers.DoubanPageParser;
 import com.yao.douban.douban.parsers.DoubanParserFactory;
@@ -47,6 +47,7 @@ public class DouBanInfoListPageTask implements Runnable{
         HttpGet request = new HttpGet(url);
         try {
             Page page = null;
+            //下面这段代码是一段重复代码，之所以没有抽离出来是因为我发现多线程运行下代码过分重用会导致很难排查出错点
             if (isUserProxy) {
                 currentProxy = ProxyPool.proxyQueue.take();
                 HttpHost proxy =new HttpHost(currentProxy.getIp(), currentProxy.getPort());
@@ -91,11 +92,14 @@ public class DouBanInfoListPageTask implements Runnable{
             return;
         }
         DoubanPageParser parser = DoubanParserFactory.getDoubanParserFactory(MoveListParser.class);
-        List<ListMove> moveList = parser.parser(page.getHtml());
-        if (moveList != null && moveList.size() > 0) {
-            for (ListMove move : moveList) {
-                logger.info(move.toString());
+        List<Move> moveList = parser.parser(page.getHtml());
+        //深度爬虫获取电影详细信息
+        if (Constants.ISDEEP) {
+            if (moveList != null && moveList.size() > 0) {
+                for (Move move : moveList) {
+                    logger.info(move.toString());
 //                doubanHttpClient.getDownLoadMoveInfoExector().execute(new DouBanDetailInfoDownLoadTask(move, true));
+                }
             }
         }
     }

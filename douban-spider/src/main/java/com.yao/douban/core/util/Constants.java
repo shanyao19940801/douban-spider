@@ -16,7 +16,8 @@ public class Constants {
     public static String TAG = "豆瓣高分";
     //信息类别
     public static String TYPE = "move";
-
+    //是否进行深度爬虫
+    public static boolean ISDEEP = false;
     public static boolean ISCONTINUE = true;
 
 }

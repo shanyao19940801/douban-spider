@@ -1,6 +1,6 @@
 package com.yao.douban.douban.parsers.move;
 
-import com.yao.douban.douban.entity.move.ListMove;
+import com.yao.douban.douban.entity.move.Move;
 import com.yao.douban.douban.parsers.DoubanPageParser;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -12,14 +12,14 @@ import java.util.List;
 /**
  * Created by 单耀 on 2018/2/4.
  */
-public class MoveListParser implements DoubanPageParser<ListMove>{
+public class MoveListParser implements DoubanPageParser<Move>{
     private static Logger logger = LoggerFactory.getLogger(MoveListParser.class);
-    public List<ListMove> parser(String html) {
+    public List<Move> parser(String html) {
         try {
             JSONObject jsonObject = JSONObject.fromObject(html);
             JSONArray jsonArray = jsonObject.getJSONArray("subjects");
-            List<ListMove> listMoves = (List<ListMove>) JSONArray.toCollection(jsonArray, ListMove.class);
-            return listMoves;
+            List<Move> moves = (List<Move>) JSONArray.toCollection(jsonArray, Move.class);
+            return moves;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }

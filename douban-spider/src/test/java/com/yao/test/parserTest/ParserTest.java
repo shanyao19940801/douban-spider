@@ -2,7 +2,7 @@ package com.yao.test.parserTest;
 
 import com.yao.douban.core.util.Constants;
 import com.yao.douban.douban.DoubanHttpClient;
-import com.yao.douban.douban.entity.move.ListMove;
+import com.yao.douban.douban.entity.move.Move;
 import com.yao.douban.douban.parsers.DoubanPageParser;
 import com.yao.douban.douban.parsers.DoubanParserFactory;
 import com.yao.douban.douban.parsers.move.MoveListParser;
@@ -17,8 +17,8 @@ import java.util.List;
  */
 public class ParserTest {
     public static void main(String[] args) {
-        List<ListMove> listMoves = moveListTest();
-        String url = listMoves.get(0).getUrl();
+        List<Move> moves = moveListTest();
+        String url = moves.get(0).getUrl();
         url += "?tag=%E7%83%AD%E9%97%A8&from=gaia";
         try {
             DoubanPageParser parser = DoubanParserFactory.getDoubanParserFactory(MoveParserDeprecated.class);
@@ -30,13 +30,13 @@ public class ParserTest {
 
     }
     //获取电影列表
-    private static List<ListMove> moveListTest() {
+    private static List<Move> moveListTest() {
         DoubanPageParser parser = DoubanParserFactory.getDoubanParserFactory(MoveListParser.class);
-//        List<ListMove> list = parser.parser("");
+//        List<Move> list = parser.parser("");
         try {
             Page page = DoubanHttpClient.getInstance().getPage(Constants.STRTY_URL_MOVE);
-            List<ListMove> listMoves = parser.parser(page.getHtml());
-            return listMoves;
+            List<Move> moves = parser.parser(page.getHtml());
+            return moves;
 
         } catch (IOException e) {
             e.printStackTrace();

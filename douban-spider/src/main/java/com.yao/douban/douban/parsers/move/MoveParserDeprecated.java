@@ -1,6 +1,6 @@
 package com.yao.douban.douban.parsers.move;
 
-import com.yao.douban.douban.entity.move.Move;
+import com.yao.douban.douban.entity.move.MoveDeprecated;
 import com.yao.douban.douban.parsers.DoubanPageParser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -14,11 +14,11 @@ import java.util.List;
  * Created by 单耀 on 2018/1/30.
  */
 @Deprecated
-public class MoveParserDeprecated implements DoubanPageParser<Move>{
-    public  List<Move> parser(String html) {
-        List<Move> list = new ArrayList<Move>();
+public class MoveParserDeprecated implements DoubanPageParser<MoveDeprecated>{
+    public  List<MoveDeprecated> parser(String html) {
+        List<MoveDeprecated> list = new ArrayList<MoveDeprecated>();
 //        System.out.println(html);
-        Move move = new Move();
+        MoveDeprecated move = new MoveDeprecated();
         try {
             Document document = Jsoup.parse(html);
             Elements elements = document.select("div#info");

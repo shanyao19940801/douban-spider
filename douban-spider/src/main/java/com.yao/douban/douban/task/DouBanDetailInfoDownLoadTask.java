@@ -1,8 +1,8 @@
 package com.yao.douban.douban.task;
 
 import com.yao.douban.douban.DoubanHttpClient;
-import com.yao.douban.douban.entity.move.ListMove;
 import com.yao.douban.douban.entity.move.Move;
+import com.yao.douban.douban.entity.move.MoveDeprecated;
 import com.yao.douban.douban.parsers.DoubanPageParser;
 import com.yao.douban.douban.parsers.DoubanParserFactory;
 import com.yao.douban.douban.parsers.move.MoveParserDeprecated;
@@ -24,12 +24,12 @@ import java.util.List;
  */
 public class DouBanDetailInfoDownLoadTask implements Runnable {
     private static Logger logger = LoggerFactory.getLogger(DouBanInfoListPageTask.class);
-    private ListMove move;
+    private Move move;
     private boolean isUseProxy;
     private Proxy currentProxy;
     private DoubanHttpClient doubanHttpClient = DoubanHttpClient.getInstance();
 
-    public DouBanDetailInfoDownLoadTask(ListMove move, boolean isUseProxy) {
+    public DouBanDetailInfoDownLoadTask(Move move, boolean isUseProxy) {
         this.move = move;
         this.isUseProxy = isUseProxy;
     }
@@ -77,9 +77,9 @@ public class DouBanDetailInfoDownLoadTask implements Runnable {
 
     private void handle(Page page) {
         DoubanPageParser parser = DoubanParserFactory.getDoubanParserFactory(MoveParserDeprecated.class);
-        List<Move> list = parser.parser(page.getHtml());
+        List<MoveDeprecated> list = parser.parser(page.getHtml());
         if (list != null && list.size() > 0) {
-            Move _move = list.get(0);
+            MoveDeprecated _move = list.get(0);
             _move.setName(move.getTitle());
             _move.setId(move.getId());
             _move.setScore(move.getRate());
