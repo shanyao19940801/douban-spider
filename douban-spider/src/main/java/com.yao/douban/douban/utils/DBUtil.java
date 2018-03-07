@@ -16,6 +16,7 @@ import java.util.Map;
 
 /**
  * Created by user on 2018/2/8.
+ * 获取电影类型
  */
 public class DBUtil {
     public static Map<String, String> getType(String type) {
