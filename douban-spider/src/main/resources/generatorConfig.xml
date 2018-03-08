@@ -16,8 +16,8 @@
 
         <!-- 数据库连接 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://127.0.0.1:3306/douban"
-                        userId="root"
+                        connectionURL="jdbc:mysql://122.112.245.251:3306/douban"
+                        userId="shanyao"
                         password="shanyao">
         </jdbcConnection>
 
