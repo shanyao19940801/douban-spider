@@ -1,6 +1,6 @@
 package com.yao.test.jsontest;
 
-import com.yao.douban.douban.entity.move.MoveDeprecated;
+import com.yao.douban.douban.entity.move.Move;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
@@ -36,7 +36,7 @@ public class JsonTest {
         for (String par : listPar) {
 
         }
-        List<MoveDeprecated> list = (List<MoveDeprecated>) jsonArray.toCollection(jsonArray, MoveDeprecated.class);
+        List<Move> list = (List<Move>) jsonArray.toCollection(jsonArray, Move.class);
         System.out.println(list);
 //        System.out.println(object);
     }

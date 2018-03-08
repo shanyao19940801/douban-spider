@@ -1,12 +1,12 @@
 package com.yao.test.parserTest;
 
-import com.yao.douban.core.util.Constants;
 import com.yao.douban.douban.DoubanHttpClient;
 import com.yao.douban.douban.entity.move.Move;
 import com.yao.douban.douban.parsers.DoubanPageParser;
 import com.yao.douban.douban.parsers.DoubanParserFactory;
-import com.yao.douban.douban.parsers.move.MoveListParser;
+import com.yao.douban.douban.parsers.move.MoveParser;
 import com.yao.douban.douban.parsers.move.MoveParserDeprecated;
+import com.yao.douban.douban.parsers.move.TestConsant;
 import com.yao.douban.proxytool.entity.Page;
 
 import java.io.IOException;
@@ -31,14 +31,14 @@ public class ParserTest {
     }
     //获取电影列表
     private static List<Move> moveListTest() {
-        DoubanPageParser parser = DoubanParserFactory.getDoubanParserFactory(MoveListParser.class);
-//        List<Move> list = parser.parser("");
+        DoubanPageParser parser = DoubanParserFactory.getDoubanParserFactory(MoveParser.class);
+//        List<MoveList> list = parser.parser("");
         try {
-            Page page = DoubanHttpClient.getInstance().getPage(Constants.STRTY_URL_MOVE);
-            List<Move> moves = parser.parser(page.getHtml());
+//            Page page = DoubanHttpClient.getInstance().getPage(Constants.STRTY_URL_MOVE);
+            List<Move> moves = parser.parser(TestConsant.movelist);
             return moves;
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

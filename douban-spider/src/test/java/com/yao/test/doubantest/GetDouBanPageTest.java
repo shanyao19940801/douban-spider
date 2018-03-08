@@ -1,6 +1,5 @@
 package com.yao.test.doubantest;
 
-import com.yao.douban.core.util.Constants;
 import com.yao.douban.douban.DoubanHttpClient;
 import com.yao.douban.douban.entity.move.Move;
 import com.yao.douban.douban.parsers.DoubanPageParser;
@@ -8,7 +7,6 @@ import com.yao.douban.douban.parsers.DoubanParserFactory;
 import com.yao.douban.douban.parsers.move.MoveListParser;
 import com.yao.douban.proxytool.ProxyPool;
 import com.yao.douban.proxytool.entity.Page;
-import com.yao.douban.proxytool.ProxyHttpClient;
 import com.yao.douban.proxytool.entity.Proxy;
 import com.yao.douban.proxytool.http.util.HttpClientUtil;
 import org.apache.http.HttpHost;

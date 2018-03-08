@@ -1,6 +1,6 @@
 package com.yao.douban.douban.parsers.move;
 
-import com.yao.douban.douban.entity.move.MoveDeprecated;
+import com.yao.douban.douban.entity.move.Move;
 import com.yao.douban.douban.parsers.DoubanPageParser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -14,11 +14,11 @@ import java.util.List;
  * Created by 单耀 on 2018/1/30.
  */
 @Deprecated
-public class MoveParserDeprecated implements DoubanPageParser<MoveDeprecated>{
-    public  List<MoveDeprecated> parser(String html) {
-        List<MoveDeprecated> list = new ArrayList<MoveDeprecated>();
+public class MoveParserDeprecated implements DoubanPageParser<Move>{
+    public  List<Move> parser(String html) {
+        List<Move> list = new ArrayList<Move>();
 //        System.out.println(html);
-        MoveDeprecated move = new MoveDeprecated();
+        Move move = new Move();
         try {
             Document document = Jsoup.parse(html);
             Elements elements = document.select("div#info");
@@ -36,7 +36,7 @@ public class MoveParserDeprecated implements DoubanPageParser<MoveDeprecated>{
             //编剧
             Elements eAttrs = elements.select("span.attrs");
             Elements screenWriters = eAttrs.get(1).select("a");
-            String _screenW = move.getScreenWriter();
+            String _screenW = move.getScreenwriter();
             for (Element element : screenWriters) {
                 if (_screenW != null) {
                     _screenW += "/" + element.text();
@@ -46,7 +46,7 @@ public class MoveParserDeprecated implements DoubanPageParser<MoveDeprecated>{
             }
             //z主演
             Elements mainaActors = elements.select("[rel=v:starring]");
-            String _actors = move.getMainaActors();
+            String _actors = move.getMainaactors();
             for (Element element : mainaActors) {
                 if (_actors != null) {
                     _actors += "/" + element.text();
@@ -54,7 +54,7 @@ public class MoveParserDeprecated implements DoubanPageParser<MoveDeprecated>{
                     _actors = element.text();
                 }
             }
-            move.setMainaActors(_actors);
+            move.setMainaactors(_actors);
             //z类型
             Elements types = elements.select("[property=v:genre]");
             String _type = move.getType();
@@ -74,7 +74,7 @@ public class MoveParserDeprecated implements DoubanPageParser<MoveDeprecated>{
 
             //上映日期
             Elements showDates = elements.select("[property=v:initialReleaseDate]");
-            String _showdate = move.getMainaActors();
+            String _showdate = move.getMainaactors();
             for (Element element : showDates) {
                 if (_showdate != null) {
                     _showdate += "/" + element.text();
@@ -82,17 +82,17 @@ public class MoveParserDeprecated implements DoubanPageParser<MoveDeprecated>{
                     _showdate = element.text();
                 }
             }
-            move.setShowDate(_showdate);
+            move.setShowdate(_showdate);
             //片长 // TODO: 2018/2/4
             Elements runtime = elements.select("[property=v:runtime]");
-            move.setRunTime(runtime.first().text());
+            move.setRuntime(runtime.first().text());
             //IMD连接
             Elements imdb = elements.select("[rel=nofollow]");
             move.setImdb(imdb.first().text());
 
             //评价人数
             Elements rating_sum = document.select("[property=v:votes]");
-            move.setVoteCount(Integer.valueOf(rating_sum.get(0).text()));
+            move.setVotecount(Integer.valueOf(rating_sum.get(0).text()));
         } catch (Exception e) {
 
         }

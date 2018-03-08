@@ -5,7 +5,7 @@ import com.yao.douban.douban.DoubanHttpClient;
 import com.yao.douban.douban.entity.move.Move;
 import com.yao.douban.douban.parsers.DoubanPageParser;
 import com.yao.douban.douban.parsers.DoubanParserFactory;
-import com.yao.douban.douban.parsers.move.MoveListParser;
+import com.yao.douban.douban.parsers.move.MoveParser;
 import com.yao.douban.proxytool.ProxyPool;
 import com.yao.douban.proxytool.entity.Page;
 import com.yao.douban.proxytool.entity.Proxy;
@@ -91,8 +91,13 @@ public class DouBanInfoListPageTask implements Runnable{
         if (page.getHtml() == null || "".equals(page.getHtml())) {
             return;
         }
-        DoubanPageParser parser = DoubanParserFactory.getDoubanParserFactory(MoveListParser.class);
+        DoubanPageParser parser = DoubanParserFactory.getDoubanParserFactory(MoveParser.class);
         List<Move> moveList = parser.parser(page.getHtml());
+        if (moveList != null && moveList.size() > 0) {
+            for (Move move : moveList) {
+                logger.info(move.toString());
+            }
+        }
         //深度爬虫获取电影详细信息
         if (Constants.ISDEEP) {
             if (moveList != null && moveList.size() > 0) {

@@ -2,7 +2,6 @@ package com.yao.douban.douban.task;
 
 import com.yao.douban.douban.DoubanHttpClient;
 import com.yao.douban.douban.entity.move.Move;
-import com.yao.douban.douban.entity.move.MoveDeprecated;
 import com.yao.douban.douban.parsers.DoubanPageParser;
 import com.yao.douban.douban.parsers.DoubanParserFactory;
 import com.yao.douban.douban.parsers.move.MoveParserDeprecated;
@@ -77,12 +76,12 @@ public class DouBanDetailInfoDownLoadTask implements Runnable {
 
     private void handle(Page page) {
         DoubanPageParser parser = DoubanParserFactory.getDoubanParserFactory(MoveParserDeprecated.class);
-        List<MoveDeprecated> list = parser.parser(page.getHtml());
+        List<Move> list = parser.parser(page.getHtml());
         if (list != null && list.size() > 0) {
-            MoveDeprecated _move = list.get(0);
-            _move.setName(move.getTitle());
-            _move.setId(move.getId());
-            _move.setScore(move.getRate());
+            Move _move = list.get(0);
+//            _move.setName(move.getTitle());
+//            _move.setId(move.getId());
+//            _move.setScore(move.getRate());
             //保存到数据库
 //            logger.info(_move.toString());
         }

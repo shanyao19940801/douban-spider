@@ -27,6 +27,8 @@ public class SpiderWithTypeTask extends AbstractTask implements Runnable {
     }
 
     public SpiderWithTypeTask(String typeName, String typeValue, int currentPersent, int currentStart, boolean isUseProxy, int retryTimes) {
+        logger.info("retryTime:"+retryTimes+"currentPersent:"+currentPersent);
+        this.currentPersent = currentPersent;
         this.typeName = typeName;
         this.typeValue = typeValue;
         super.isUseProxy = isUseProxy;
