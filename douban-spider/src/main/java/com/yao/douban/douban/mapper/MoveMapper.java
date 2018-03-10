@@ -1,4 +1,4 @@
-package com.yao.douban.douban.dao;
+package com.yao.douban.douban.mapper;
 
 import com.yao.douban.douban.entity.Move;
 

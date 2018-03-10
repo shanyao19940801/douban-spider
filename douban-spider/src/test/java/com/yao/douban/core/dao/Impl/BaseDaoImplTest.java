@@ -1,0 +1,20 @@
+package com.yao.douban.core.dao.Impl;
+
+import com.yao.douban.douban.dao.IMoveDao;
+import com.yao.douban.douban.dao.Impl.MoveDaoImpl;
+import com.yao.douban.douban.entity.Move;
+import org.junit.Test;
+
+/**
+ * Created by shanyao on 2018/3/10.
+ */
+public class BaseDaoImplTest {
+    @Test
+    public void insert() throws Exception {
+        Move move = new Move();
+        move.setId("111");
+        IMoveDao dao = new MoveDaoImpl();
+        dao.insert(move);
+    }
+
+}
