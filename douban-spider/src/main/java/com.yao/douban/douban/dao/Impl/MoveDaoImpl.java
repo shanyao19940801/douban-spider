@@ -1,15 +1,51 @@
 package com.yao.douban.douban.dao.Impl;
 
 import com.yao.douban.core.dao.Impl.BaseDaoImpl;
+import com.yao.douban.core.util.MyBatiesUtils;
 import com.yao.douban.douban.dao.IMoveDao;
-import com.yao.douban.douban.entity.Move;
+import com.yao.douban.douban.entity.move.Move;
+import com.yao.douban.douban.mapper.MoveMapper;
+import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 /**
  * Created by shanyao on 2018/3/10.
  */
 public class MoveDaoImpl extends BaseDaoImpl<Move> implements IMoveDao{
 
+    private static Logger logger = LoggerFactory.getLogger(MoveDaoImpl.class);
+
     public void insert(Move move) {
         super.insert(move);
+    }
+
+    public void inserSelective(Move move) {
+        SqlSession session = MyBatiesUtils.getSqlSession(true);
+        try {
+            MoveMapper moveMapper = session.getMapper(MoveMapper.class);
+            Move m = moveMapper.selectByPrimaryKey(move.getId());
+            if (m == null)
+                moveMapper.insertSelective(move);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            session.rollback();
+        } finally {
+
+        }
+    }
+
+    public void insertList(List<Move> moveList) {
+        for (Move move : moveList) {
+            inserSelective(move);
+        }
+    }
+
+    public Move selectByPrimaryKey(String id) {
+        SqlSession session = MyBatiesUtils.getSqlSession(true);
+        MoveMapper moveMapper = session.getMapper(MoveMapper.class);
+        return moveMapper.selectByPrimaryKey(id);
     }
 }

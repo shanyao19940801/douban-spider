@@ -2,6 +2,8 @@ package com.yao.douban.douban.task;
 
 import com.yao.douban.core.util.Constants;
 import com.yao.douban.douban.DoubanHttpClient;
+import com.yao.douban.douban.dao.IMoveDao;
+import com.yao.douban.douban.dao.Impl.MoveDaoImpl;
 import com.yao.douban.douban.entity.move.Move;
 import com.yao.douban.douban.parsers.DoubanPageParser;
 import com.yao.douban.douban.parsers.DoubanParserFactory;
@@ -94,8 +96,11 @@ public class DouBanInfoListPageTask implements Runnable{
         DoubanPageParser parser = DoubanParserFactory.getDoubanParserFactory(MoveParser.class);
         List<Move> moveList = parser.parser(page.getHtml());
         if (moveList != null && moveList.size() > 0) {
+            IMoveDao moveDao = new MoveDaoImpl();
+            moveDao.insertList(moveList);
             for (Move move : moveList) {
                 logger.info(move.toString());
+
             }
         }
         //深度爬虫获取电影详细信息

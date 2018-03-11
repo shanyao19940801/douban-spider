@@ -2,7 +2,6 @@ package com.yao.douban.core.dao.Impl;
 
 import com.yao.douban.core.dao.IBaseDao;
 import com.yao.douban.core.util.MyBatiesUtils;
-import com.yao.douban.douban.entity.Move;
 import org.apache.ibatis.session.SqlSession;
 
 import java.lang.reflect.ParameterizedType;

@@ -1,6 +1,7 @@
 package com.yao.douban.douban.mapper;
 
-import com.yao.douban.douban.entity.Move;
+
+import com.yao.douban.douban.entity.move.Move;
 
 public interface MoveMapper {
     int deleteByPrimaryKey(String id);

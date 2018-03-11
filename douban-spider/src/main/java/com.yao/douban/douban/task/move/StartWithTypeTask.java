@@ -18,7 +18,7 @@ public class StartWithTypeTask implements Runnable{
             Map<String,String> mapTpe = DBUtil.getType("move");
             for (String name : mapTpe.keySet()) {
                 doubanHttpClient.getDownLoadMoveListExector().execute(new SpiderWithTypeTask(name, mapTpe.get(name), true));
-                break;
+//                break;
             }
 //        }
     }

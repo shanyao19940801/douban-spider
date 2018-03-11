@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yao.douban.douban.mapper.MoveMapper">
-  <resultMap id="BaseResultMap" type="com.yao.douban.douban.entity.Move">
+  <resultMap id="BaseResultMap" type="com.yao.douban.douban.entity.move.Move">
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="url" jdbcType="VARCHAR" property="url" />
@@ -33,7 +33,7 @@
     delete from move
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.yao.douban.douban.entity.Move">
+  <insert id="insert" parameterType="com.yao.douban.douban.entity.move.Move">
     insert into move (id, name, url, 
       othername, director, screenwriter, 
       mainaactors, type, region, 
@@ -47,7 +47,7 @@
       #{imdb,jdbcType=VARCHAR}, #{score,jdbcType=DOUBLE}, #{votecount,jdbcType=DOUBLE}, 
       #{evaluationtotal,jdbcType=DOUBLE})
   </insert>
-  <insert id="insertSelective" parameterType="com.yao.douban.douban.entity.Move">
+  <insert id="insertSelective" parameterType="com.yao.douban.douban.entity.move.Move">
     insert into move
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -150,7 +150,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yao.douban.douban.entity.Move">
+  <update id="updateByPrimaryKeySelective" parameterType="com.yao.douban.douban.entity.move.Move">
     update move
     <set>
       <if test="name != null">
@@ -201,7 +201,7 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.yao.douban.douban.entity.Move">
+  <update id="updateByPrimaryKey" parameterType="com.yao.douban.douban.entity.move.Move">
     update move
     set name = #{name,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR},

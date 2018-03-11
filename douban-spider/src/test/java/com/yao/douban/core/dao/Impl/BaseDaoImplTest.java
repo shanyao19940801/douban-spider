@@ -2,7 +2,7 @@ package com.yao.douban.core.dao.Impl;
 
 import com.yao.douban.douban.dao.IMoveDao;
 import com.yao.douban.douban.dao.Impl.MoveDaoImpl;
-import com.yao.douban.douban.entity.Move;
+import com.yao.douban.douban.entity.move.Move;
 import org.junit.Test;
 
 /**
@@ -15,6 +15,14 @@ public class BaseDaoImplTest {
         move.setId("111");
         IMoveDao dao = new MoveDaoImpl();
         dao.insert(move);
+    }
+
+    @Test
+    public void insertSelective() throws Exception {
+        Move move = new Move();
+        move.setId("001");
+        IMoveDao dao = new MoveDaoImpl();
+        dao.inserSelective(move);
     }
 
 }

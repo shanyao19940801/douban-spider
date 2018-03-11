@@ -10,7 +10,7 @@
     </default-config>
 
     <!-- This app is massive! -->
-    <named-config name="zhihuspider">
+    <named-config name="douban">
         <property name="acquireIncrement">50</property>
         <property name="initialPoolSize">100</property>
         <property name="minPoolSize">50</property>
