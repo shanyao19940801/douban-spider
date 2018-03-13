@@ -85,5 +85,17 @@ public class DoubanHttpClient extends AbstractHttpClient{
         new Thread(new StartWithTypeTask()).start();
     }
 
+    public void stopSpiderDouban(boolean isNoew) {
+        if (isNoew) {
+            this.downLoadMoveListExector.shutdownNow();
+            this.downLoadMoveInfoExector.shutdownNow();
+        } else {
+            this.downLoadMoveListExector.shutdown();
+            while (downLoadMoveListExector.isTerminated()) {
+                downLoadMoveInfoExector.shutdown();
+            }
+        }
+    }
+
 
 }

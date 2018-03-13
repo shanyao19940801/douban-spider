@@ -14,7 +14,7 @@
                 <property name="jdbcUrl" value="${url}"/>
                 <property name="user" value="${username}"/>
                 <property name="password" value="${password}"/>
-                <property name="checkoutTimeout" value="30000"/>
+                <property name="checkoutTimeout" value="10000"/>
                 <property name="idleConnectionTestPeriod" value="30"/>
                 <property name="initialPoolSize" value="100"/>
                 <property name="maxIdleTime" value="30"/>

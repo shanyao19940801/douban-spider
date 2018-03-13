@@ -112,4 +112,17 @@ public class ProxyHttpClient extends AbstractHttpClient {
             }
         }).start();*/
     }
+
+    public void shutStopSpiderProxy(boolean isNow) {
+        if (isNow) {
+            this.proxyDoloadThreadExector.shutdownNow();
+            this.proxyProxyTestExector.shutdownNow();
+        } else {
+            this.proxyDoloadThreadExector.shutdown();
+            while (proxyDoloadThreadExector.isTerminated()) {
+                this.proxyDoloadThreadExector.shutdown();
+            }
+        }
+    }
+
 }

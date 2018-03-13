@@ -96,12 +96,11 @@ public class DouBanInfoListPageTask implements Runnable{
         DoubanPageParser parser = DoubanParserFactory.getDoubanParserFactory(MoveParser.class);
         List<Move> moveList = parser.parser(page.getHtml());
         if (moveList != null && moveList.size() > 0) {
-            IMoveDao moveDao = new MoveDaoImpl();
-            moveDao.insertList(moveList);
             for (Move move : moveList) {
                 logger.info(move.toString());
-
             }
+            IMoveDao moveDao = new MoveDaoImpl();
+            moveDao.insertList(moveList);
         }
         //深度爬虫获取电影详细信息
         if (Constants.ISDEEP) {

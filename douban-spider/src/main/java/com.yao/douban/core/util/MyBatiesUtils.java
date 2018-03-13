@@ -14,6 +14,13 @@ import java.io.InputStream;
 public class MyBatiesUtils {
     private static Logger logger = LoggerFactory.getLogger(MyBatiesUtils.class);
 
+    public static SqlSessionFactory sqlSessionFactory;
+
+    static {
+        InputStream inputStream = MyBatiesUtils.class.getResourceAsStream("/mybatis-config.xml");
+        sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+    }
+
     public static SqlSessionFactory getSqlSessionFactory() {
         InputStream inputStream = MyBatiesUtils.class.getResourceAsStream("/mybatis-config.xml");
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
@@ -23,8 +30,10 @@ public class MyBatiesUtils {
     public static SqlSession getSqlSession(){
         SqlSession session = null;
         try {
-
-            session = getSqlSessionFactory().openSession();
+            //是个坑，不能每次都创建一个SessionFactory，会导致错误Too many connection的error
+            //具体可以看http://blog.csdn.net/u013412772/article/details/73648537
+//            session = getSqlSessionFactory().openSession();
+            session = sqlSessionFactory.openSession();
         } catch (Exception e) {
             logger.error(e.getMessage(),e);
         }
@@ -39,6 +48,6 @@ public class MyBatiesUtils {
      * @return
      */
     public static SqlSession getSqlSession(boolean isAutocommit) {
-        return getSqlSessionFactory().openSession(isAutocommit);
+        return sqlSessionFactory.openSession(isAutocommit);
     }
 }
