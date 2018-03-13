@@ -27,13 +27,16 @@ public class MoveDaoImpl extends BaseDaoImpl<Move> implements IMoveDao{
         try {
             MoveMapper moveMapper = session.getMapper(MoveMapper.class);
             Move m = moveMapper.selectByPrimaryKey(move.getId());
-            if (m == null)
+            if (m == null) {
                 moveMapper.insertSelective(move);
+                session.commit();
+            }
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             session.rollback();
         } finally {
-
+            //这里并不是断开连接而是将连接池还给连接池，解除占用
+            session.close();
         }
     }
 
