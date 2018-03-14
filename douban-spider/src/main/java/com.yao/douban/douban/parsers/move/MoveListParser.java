@@ -12,6 +12,7 @@ import java.util.List;
 /**
  * Created by 单耀 on 2018/2/4.
  */
+@Deprecated
 public class MoveListParser implements DoubanPageParser<MoveList>{
     private static Logger logger = LoggerFactory.getLogger(MoveListParser.class);
     public List<MoveList> parser(String html) {

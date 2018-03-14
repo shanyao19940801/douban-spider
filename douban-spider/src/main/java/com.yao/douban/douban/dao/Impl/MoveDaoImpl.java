@@ -51,4 +51,19 @@ public class MoveDaoImpl extends BaseDaoImpl<Move> implements IMoveDao{
         MoveMapper moveMapper = session.getMapper(MoveMapper.class);
         return moveMapper.selectByPrimaryKey(id);
     }
+
+    public void update(Move move) {
+        SqlSession session = MyBatiesUtils.getSqlSession(true);
+        try {
+            MoveMapper moveMapper = session.getMapper(MoveMapper.class);
+            moveMapper.updateByPrimaryKey(move);
+            session.commit();
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            session.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
 }

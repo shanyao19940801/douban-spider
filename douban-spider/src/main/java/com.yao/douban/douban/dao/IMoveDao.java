@@ -16,4 +16,6 @@ public interface IMoveDao{
     void insertList(List<Move> moveList);
 
     Move selectByPrimaryKey(String id);
+
+    void update(Move move);
 }

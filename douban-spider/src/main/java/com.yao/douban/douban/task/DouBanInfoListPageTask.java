@@ -107,7 +107,7 @@ public class DouBanInfoListPageTask implements Runnable{
             if (moveList != null && moveList.size() > 0) {
                 for (Move move : moveList) {
                     logger.info(move.toString());
-//                doubanHttpClient.getDownLoadMoveInfoExector().execute(new DouBanDetailInfoDownLoadTask(move, true));
+                    doubanHttpClient.getDownLoadMoveInfoExector().execute(new DouBanDetailInfoDownLoadTask(move, true));
                 }
             }
         }
