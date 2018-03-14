@@ -30,14 +30,14 @@ public class DBUtil {
                         Page page = DoubanHttpClient.getInstance().getPage(url);
                         if (page != null && page.getStatusCode() == 200 && !"".equals(page.getHtml())) {
                             return getTypeMap(type, page.getHtml());
-                        } else {
-                            //TODO 返回错误类型
                         }
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                } else if("people".equals(type)) {
+                    //爬取其他信息
                 } else {
                     SUCCESS = false;
                 }
