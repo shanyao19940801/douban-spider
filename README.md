@@ -10,6 +10,7 @@
 ### 开发工具以及框架
  * java开发工具：IntelliJ IDEA
  * 项目管理：Maven
+ * 版本管理：GitHub
  * 使用数据库： MYSQL5.7
  * 持久层框架：Mybatis
  * 第三方库
