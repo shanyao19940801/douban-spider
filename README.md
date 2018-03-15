@@ -26,6 +26,5 @@
     <br>Jsoup-html标签解析
     <br>c3p0 数据库连接池
 ### 持久化配置
- * 本项目使用MYSQL数据库来保存数据，运行项目之前请自行安装mysql，并在[数据库配置](https://github.com/shanyao19940801/douban-spider/blob/master/douban-spider/src/main/resources/jdbc.properties)中配置自己的数据库信息
- <br>
- [百度](http://baidu.com)
+ * 本项目使用MYSQL数据库来保存数据，运行项目之前请自行安装mysql，并在[jdbc.properties](https://github.com/shanyao19940801/douban-spider/blob/master/douban-spider/src/main/resources/jdbc.properties)中配置自己的数据库信息
+ 
