@@ -7,4 +7,8 @@
 ### 爬取的数据
  * 下面是爬取的电影信息（部分信息需要深度爬虫才能获取，本项目中该功能已实现，但暂时未去爬取）
 ![电影](https://github.com/shanyao19940801/douban-spider/blob/master/douban-spider/src/main/resources/img/movedata.PNG "豆瓣电影数据示例")
+### 开发工具以及使用的jar包
+ * java开发工具：IntelliJ IDEA
+ * 项目管理：Maven
+ * 使用数据库： MYSQL5.7
  
