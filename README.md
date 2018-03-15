@@ -13,5 +13,6 @@
  * 使用数据库： MYSQL5.7
  * 持久层框架：Mybatis
  * 第三方库
- >>>HttpClient4.5-网络请求
- 
+    <br>HttpClient4.5-网络请求
+    <br>Jsoup-html标签解析
+    <br>c3p0 数据库连接池
