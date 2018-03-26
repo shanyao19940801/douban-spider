@@ -1,24 +1,33 @@
 package com.yao.douban.proxytool.entity;
 
+import java.io.ObjectOutputStream;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
+import java.io.Serializable;
 
 /**
  * Created by 单耀 on 2018/1/26.
+ * 在一些字段前面加上 transient关键字，目的是为了序列化时忽略该字段，因为序列化时这些null的字段会占用不必要的空间
+ * 可以查看ArrayList源码中就是采用这种技术避免null被序列化
+ *
  */
-public class Proxy implements Delayed {
+public class Proxy implements Delayed,Serializable {
+
+    private static final long serialVersionUID = -3231293936247728930L;
 
     private String ip;
-
-    private int port;
-
+    private Integer port;
     private long lastSuccessTime;
     //来源
     private String dataSource;
+    transient private long timeIntervsl;//任务间隔时间
+    transient private int failureTimes;//请求失败次数
+    transient private int successfulTimes;//请求成功次数
 
-    private long timeIntervsl;//任务间隔时间
-    private int failureTimes;//请求失败次数
-    private int successfulTimes;//请求成功次数
+    public Proxy(String ip, int port) {
+        this.ip = ip;
+        this.port = port;
+    }
 
     public Proxy(String ip, Integer port, long delayTime, String dataSource) {
         this.ip = ip;
