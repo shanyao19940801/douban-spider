@@ -18,5 +18,8 @@ public class ArraySerializable {
         Proxy proxy = new Proxy("1",1);
         list.add(proxy);
         MyIOutils.serializeObject(list,"test.ser");
+
+        List<Proxy> proxies = (List<Proxy>) MyIOutils.deserializeObject("test.ser");
+        System.out.println(proxies.size());
     }
 }
