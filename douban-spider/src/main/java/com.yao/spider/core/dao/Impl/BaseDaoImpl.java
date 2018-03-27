@@ -19,7 +19,7 @@ public class BaseDaoImpl<T> implements IBaseDao<T>{
     public SqlSession getSession() {
         return MyBatiesUtils.getSqlSession();
     }
-
+    //TODO 不能用
     public void insert(T extity) {
         try {
             getSession().insert(extity.getClass().getName() + ".insert", extity);
