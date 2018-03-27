@@ -32,4 +32,10 @@
 ### Quick Start
 Run With [StartClass](https://github.com/shanyao19940801/douban-spider/blob/master/douban-spider/src/main/java/com.yao/douban/StartClass.java)
 
+## V0.0.2 添加序列化代理功能
+ 为了避免每次启动都要重新爬取代理，添加一个序列化代理的功能，当下次启动时先从本地文件中获取已经序列化的代理
+ * 实现技术：
+   1.在ProxyPool中添加一个Set属性，每当一个代理测试通过可用后存入到set中，没十分钟进行一次序列化
+   2.因为读取和写入ProxyPool有竞态所以采用了lock技术，读取和写入不可同时发生
+
 ### 流程图
