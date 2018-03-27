@@ -49,9 +49,10 @@ public class ProxyTestTask implements Runnable {
                 ProxyPool.proxyQueue.add(proxy);
                 logger.debug(proxy.getProxyStr() + "-----代理可用-----");
                 logger.debug(proxy.toString() + "--------" + page.toString());
-                System.out.println("目前可用代理数量:"+ProxyPool.proxyQueue.size());
-
-
+                ProxyPool.lock.writeLock().lock();
+                ProxyPool.proxySet.add(proxy);
+                ProxyPool.lock.writeLock().unlock();
+//                System.out.println("目前可用代理数量:"+ProxyPool.proxyQueue.size());
             }
         } catch (IOException e) {
             logger.debug("IOException", e);
