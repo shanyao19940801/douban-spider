@@ -7,13 +7,20 @@ import com.yao.douban.proxytool.parses.mimiip.MimiipProxyListPageParser;
 import com.yao.douban.proxytool.parses.xicidaili.XicidailiProxyListPageParser;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.DelayQueue;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * Created by 单耀 on 2018/1/27.
  */
 public class ProxyPool {
+
+    public final static ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+    public final static Set<Proxy> proxySet = new HashSet<Proxy>();
 
     public static final DelayQueue<Proxy> proxyQueue = new DelayQueue<Proxy>();
 

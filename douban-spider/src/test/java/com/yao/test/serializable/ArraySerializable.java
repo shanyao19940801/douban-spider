@@ -1,6 +1,8 @@
 package com.yao.test.serializable;
 
+import com.yao.douban.proxytool.ProxyHttpClient;
 import com.yao.douban.proxytool.entity.Proxy;
+import com.yao.douban.proxytool.proxyutil.MyIOutils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,5 +15,8 @@ import java.util.List;
 public class ArraySerializable {
     public static void main(String[] args) {
         List<Proxy> list = new ArrayList<Proxy>();
+        Proxy proxy = new Proxy("1",1);
+        list.add(proxy);
+        MyIOutils.serializeObject(list,"test.ser");
     }
 }

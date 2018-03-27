@@ -11,6 +11,8 @@ public class ProxyConstants {
     public static String INDEX_URL = "https://movie.douban.com";
 //    public static String INDEX_URL = "https://www.zhihu.com";
     public static final long TIME_INTERVAL = 1000;
+    //文件路劲地址
+    public static final String FILE_PATH= "src/main/resources/file";
 
     public final static String[] userAgentArray = new String[]{
             "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36",

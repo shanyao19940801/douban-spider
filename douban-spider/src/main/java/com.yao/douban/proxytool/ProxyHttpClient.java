@@ -95,24 +95,13 @@ public class ProxyHttpClient extends AbstractHttpClient {
                 }
             }
         }).start();
-        /*new Thread(new Runnable() {
-            public void run() {
-                while (true) {
-                    //TODO 后期改成可拓展，即可以查询其他信息
-                    try {
-                        String url = String.format(Constants.STRTY_URL_MOVE, Constants.TYPE, URLEncoder.encode(Constants.TAG, "UTF-8"), Constants.LIMIT, 0);
-                        proxyDoloadThreadExector.execute(new DouBanInfoListPageTask(url, true));
-//                        MOVE_START += Constants.LIMIT;
-                        Thread.sleep(2000);
 
-                    } catch (Exception e) {
-                        logger.error(e.getMessage(), e);
-                    }
-                }
-            }
-        }).start();*/
     }
 
+    /**
+     * 停止爬取代理，isNow:true采用shutdonwNow，isNow:false 采用shutdown
+     * @param isNow
+     */
     public void shutStopSpiderProxy(boolean isNow) {
         if (isNow) {
             this.proxyDoloadThreadExector.shutdownNow();
@@ -123,6 +112,7 @@ public class ProxyHttpClient extends AbstractHttpClient {
                 this.proxyDoloadThreadExector.shutdown();
             }
         }
+        this.isContinue = false;
     }
 
 }
