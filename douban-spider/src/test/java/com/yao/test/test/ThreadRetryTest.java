@@ -1,7 +1,6 @@
 package com.yao.test.test;
 
-import com.yao.douban.douban.task.SpiderDouBanInfo;
-import com.yao.douban.proxytool.http.client.AbstractHttpClient;
+import com.yao.spider.proxytool.http.client.AbstractHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

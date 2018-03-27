@@ -1,6 +1,6 @@
 package com.yao.test.jsontest;
 
-import com.yao.douban.douban.entity.move.Move;
+import com.yao.spider.douban.entity.move.Move;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;

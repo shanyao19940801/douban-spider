@@ -1,8 +1,9 @@
 package com.yao.douban.douban.task.move;
 
 import com.yao.TestConsants;
-import com.yao.douban.douban.task.AbstractTask;
-import com.yao.douban.douban.utils.DBUtil;
+import com.yao.spider.douban.task.AbstractTask;
+import com.yao.spider.douban.task.move.SpiderWithTypeTask;
+import com.yao.spider.douban.utils.DBUtil;
 import junit.framework.TestCase;
 
 import java.util.Map;

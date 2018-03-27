@@ -1,14 +1,11 @@
 package com.yao.test.parserTest;
 
-import com.yao.douban.douban.DoubanHttpClient;
-import com.yao.douban.douban.parsers.DoubanPageParser;
-import com.yao.douban.douban.parsers.DoubanParserFactory;
-import com.yao.douban.douban.parsers.move.MoveDetailInfoParser;
-import com.yao.douban.douban.parsers.move.MoveParserDeprecated;
-import com.yao.douban.proxytool.entity.Page;
+import com.yao.spider.douban.DoubanHttpClient;
+import com.yao.spider.douban.parsers.DoubanPageParser;
+import com.yao.spider.douban.parsers.DoubanParserFactory;
+import com.yao.spider.douban.parsers.move.MoveDetailInfoParser;
+import com.yao.spider.proxytool.entity.Page;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by shanyao on 2018/3/14.

@@ -1,6 +1,7 @@
 package com.yao.douban.douban.utils;
 
 import com.yao.TestConsants;
+import com.yao.spider.douban.utils.DBUtil;
 import junit.framework.TestCase;
 import org.junit.Test;
 

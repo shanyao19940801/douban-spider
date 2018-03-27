@@ -1,7 +1,5 @@
 package com.yao.test.test;
 
-import com.yao.douban.core.util.Constants;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;

@@ -1,8 +1,9 @@
 package com.yao.douban.douban.parsers.move;
 
-import com.yao.douban.douban.entity.move.MoveList;
-import com.yao.douban.douban.parsers.DoubanPageParser;
-import com.yao.douban.douban.parsers.DoubanParserFactory;
+import com.yao.spider.douban.entity.move.MoveList;
+import com.yao.spider.douban.parsers.DoubanPageParser;
+import com.yao.spider.douban.parsers.DoubanParserFactory;
+import com.yao.spider.douban.parsers.move.MoveListParser;
 import org.junit.Test;
 
 /**

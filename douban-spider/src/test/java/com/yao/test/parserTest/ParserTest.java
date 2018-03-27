@@ -1,13 +1,13 @@
 package com.yao.test.parserTest;
 
-import com.yao.douban.douban.DoubanHttpClient;
-import com.yao.douban.douban.entity.move.Move;
-import com.yao.douban.douban.parsers.DoubanPageParser;
-import com.yao.douban.douban.parsers.DoubanParserFactory;
-import com.yao.douban.douban.parsers.move.MoveParser;
-import com.yao.douban.douban.parsers.move.MoveParserDeprecated;
+import com.yao.spider.douban.DoubanHttpClient;
+import com.yao.spider.douban.entity.move.Move;
+import com.yao.spider.douban.parsers.DoubanPageParser;
+import com.yao.spider.douban.parsers.DoubanParserFactory;
+import com.yao.spider.douban.parsers.move.MoveParser;
+import com.yao.spider.douban.parsers.move.MoveParserDeprecated;
 import com.yao.douban.douban.parsers.move.TestConsant;
-import com.yao.douban.proxytool.entity.Page;
+import com.yao.spider.proxytool.entity.Page;
 
 import java.io.IOException;
 import java.util.List;

@@ -9,7 +9,7 @@
         <environment id="development">
             <transactionManager type="JDBC"/>
 
-            <dataSource type="com.yao.douban.core.util.C3P0DataSourceFactory">
+            <dataSource type="com.yao.spider.core.util.C3P0DataSourceFactory">
                 <property name="driverClass" value="${driver}"/>
                 <property name="jdbcUrl" value="${url}"/>
                 <property name="user" value="${username}"/>
@@ -27,7 +27,7 @@
     </environments>
 
     <mappers>
-        <mapper resource="com/yao/douban/douban/mapper/MoveMapper.xml"/>
+        <mapper resource="com/yao/spider/douban/mapper/MoveMapper.xml"/>
 
     </mappers>
 </configuration>

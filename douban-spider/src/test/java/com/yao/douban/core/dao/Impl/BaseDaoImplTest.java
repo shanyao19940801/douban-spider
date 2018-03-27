@@ -1,8 +1,8 @@
 package com.yao.douban.core.dao.Impl;
 
-import com.yao.douban.douban.dao.IMoveDao;
-import com.yao.douban.douban.dao.Impl.MoveDaoImpl;
-import com.yao.douban.douban.entity.move.Move;
+import com.yao.spider.douban.dao.IMoveDao;
+import com.yao.spider.douban.dao.Impl.MoveDaoImpl;
+import com.yao.spider.douban.entity.move.Move;
 import org.junit.Test;
 
 /**

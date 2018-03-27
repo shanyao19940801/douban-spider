@@ -1,14 +1,14 @@
 package com.yao.test.doubantest;
 
-import com.yao.douban.douban.DoubanHttpClient;
-import com.yao.douban.douban.entity.move.Move;
-import com.yao.douban.douban.parsers.DoubanPageParser;
-import com.yao.douban.douban.parsers.DoubanParserFactory;
-import com.yao.douban.douban.parsers.move.MoveListParser;
-import com.yao.douban.proxytool.ProxyPool;
-import com.yao.douban.proxytool.entity.Page;
-import com.yao.douban.proxytool.entity.Proxy;
-import com.yao.douban.proxytool.http.util.HttpClientUtil;
+import com.yao.spider.douban.DoubanHttpClient;
+import com.yao.spider.douban.entity.move.Move;
+import com.yao.spider.douban.parsers.DoubanPageParser;
+import com.yao.spider.douban.parsers.DoubanParserFactory;
+import com.yao.spider.douban.parsers.move.MoveListParser;
+import com.yao.spider.proxytool.ProxyPool;
+import com.yao.spider.proxytool.entity.Page;
+import com.yao.spider.proxytool.entity.Proxy;
+import com.yao.spider.proxytool.http.util.HttpClientUtil;
 import org.apache.http.HttpHost;
 import org.apache.http.client.methods.HttpGet;
 
