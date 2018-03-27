@@ -3,6 +3,8 @@ package com.yao.douban.proxytool.task;
 import com.yao.douban.proxytool.ProxyHttpClient;
 import com.yao.douban.proxytool.ProxyPool;
 import com.yao.douban.proxytool.entity.Proxy;
+import com.yao.douban.proxytool.proxyutil.MyIOutils;
+import com.yao.douban.proxytool.proxyutil.ProxyConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +32,7 @@ public class ProxySerializeTask implements Runnable{
                 for (Proxy proxy : ProxyPool.proxySet) {
                     proxyArray.add(proxy);
                 }
+                MyIOutils.serializeObject(proxyArray, ProxyConstants.PROXYSER_FILE_NMAE);
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);
             } finally {

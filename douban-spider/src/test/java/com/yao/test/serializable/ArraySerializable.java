@@ -1,11 +1,14 @@
 package com.yao.test.serializable;
 
 import com.yao.douban.proxytool.ProxyHttpClient;
+import com.yao.douban.proxytool.ProxyPool;
 import com.yao.douban.proxytool.entity.Proxy;
 import com.yao.douban.proxytool.proxyutil.MyIOutils;
+import com.yao.douban.proxytool.proxyutil.ProxyConstants;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.DelayQueue;
 
 /**
  * Created by shanyao on 2018/3/26.
@@ -19,7 +22,7 @@ public class ArraySerializable {
         list.add(proxy);
         MyIOutils.serializeObject(list,"test.ser");
 
-        List<Proxy> proxies = (List<Proxy>) MyIOutils.deserializeObject("test.ser");
-        System.out.println(proxies.size());
+        List<Proxy> proxyList = (List<Proxy>) MyIOutils.deserializeObject(ProxyConstants.PROXYSER_FILE_NMAE);
+        ProxyPool.proxyQueue = new DelayQueue<Proxy>(proxyList);
     }
 }

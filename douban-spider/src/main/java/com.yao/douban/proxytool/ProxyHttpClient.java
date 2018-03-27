@@ -2,16 +2,18 @@ package com.yao.douban.proxytool;
 
 import com.yao.douban.core.util.Constants;
 import com.yao.douban.douban.task.DouBanInfoListPageTask;
+import com.yao.douban.proxytool.entity.Proxy;
 import com.yao.douban.proxytool.http.client.AbstractHttpClient;
+import com.yao.douban.proxytool.proxyutil.MyIOutils;
+import com.yao.douban.proxytool.proxyutil.ProxyConstants;
 import com.yao.douban.proxytool.task.ProxyPageTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URLEncoder;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.*;
 
 /**
  * Created by 单耀 on 2018/1/27.
@@ -76,6 +78,14 @@ public class ProxyHttpClient extends AbstractHttpClient {
     }
 
     public void startProxy() {
+        List<Proxy> proxyList = (List<Proxy>) MyIOutils.deserializeObject(ProxyConstants.PROXYSER_FILE_NMAE);
+        if (proxyList != null) {
+            ProxyPool.proxyQueue = new DelayQueue<Proxy>(proxyList);
+            while (true) {
+                if (ProxyPool.proxyQueue.size() < 100)
+                    break;
+            }
+        }
         new Thread(new Runnable() {
             public void run() {
                 while(isContinue) {

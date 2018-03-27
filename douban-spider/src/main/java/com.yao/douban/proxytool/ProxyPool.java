@@ -18,11 +18,11 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * Created by 单耀 on 2018/1/27.
  */
 public class ProxyPool {
-
+    //这里也可以简单粗暴的使用sychronized，因为写操作次数远大于读操作，读写锁的意义并不是特别大
     public final static ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
     public final static Set<Proxy> proxySet = new HashSet<Proxy>();
 
-    public static final DelayQueue<Proxy> proxyQueue = new DelayQueue<Proxy>();
+    public static DelayQueue<Proxy> proxyQueue = new DelayQueue<Proxy>();
 
     public static final Map<String,Class> proxyMap = new HashMap<String, Class>();
 

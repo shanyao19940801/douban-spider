@@ -14,6 +14,9 @@ public class ProxyConstants {
     //文件路劲地址
     public static final String FILE_PATH= "src/main/resources/file";
 
+    //保存序列化代理的文件名
+    public static String PROXYSER_FILE_NMAE = "proxy.ser";
+
     public final static String[] userAgentArray = new String[]{
             "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36",
             "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2623.110 Safari/537.36",
