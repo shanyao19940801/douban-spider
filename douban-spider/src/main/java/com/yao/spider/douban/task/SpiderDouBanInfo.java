@@ -20,7 +20,7 @@ public class SpiderDouBanInfo implements Runnable {
         while (isContinue) {
             //TODO 后期改成可拓展，即可以查询其他信息
             try {
-                String url = String.format(Constants.STRTY_URL_MOVE,Constants.TYPE, URLEncoder.encode(Constants.TAG,"UTF-8"), Constants.LIMIT, MOVE_START);
+                String url = String.format(Constants.STRTY_URL_MOVE, Constants.TYPE, URLEncoder.encode(Constants.TAG,"UTF-8"), Constants.LIMIT, MOVE_START);
                 logger.info("开始条数：" + MOVE_START);
                 //TODO 改成future 放回结果
                 doubanHttpClient.getDownLoadMoveListExector().execute(new DouBanInfoListPageTask( url, true, 0, MOVE_START));

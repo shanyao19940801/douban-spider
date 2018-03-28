@@ -1,9 +1,8 @@
 package com.yao.spider.proxytool.entity;
 
-import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
-import java.io.Serializable;
 
 /**
  * Created by 单耀 on 2018/1/26.

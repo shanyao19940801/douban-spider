@@ -1,5 +1,6 @@
 package com.yao.spider.douban.task;
 
+import com.yao.spider.core.config.CommonConfig;
 import com.yao.spider.core.util.Constants;
 import com.yao.spider.douban.DoubanHttpClient;
 import com.yao.spider.douban.dao.IMoveDao;
@@ -85,7 +86,7 @@ public class DouBanInfoListPageTask implements Runnable{
 
 
     private void retry() {
-        logger.info("电影列表重试次数=" + retryTime + "--开始编号：" + startNumber + "---重试代理：" + currentProxy.getProxyStr() + "---代理失败/成功次数：" + currentProxy.getFailureTimes()+ "/" + currentProxy.getSuccessfulTimes());
+//        logger.info("电影列表重试次数=" + retryTime + "--开始编号：" + startNumber + "---重试代理：" + currentProxy.getProxyStr() + "---代理失败/成功次数：" + currentProxy.getFailureTimes()+ "/" + currentProxy.getSuccessfulTimes());
         doubanHttpClient.getDownLoadMoveListExector().execute(new DouBanInfoListPageTask(url, true, retryTime + 1, startNumber));
     }
 
@@ -99,8 +100,10 @@ public class DouBanInfoListPageTask implements Runnable{
             for (Move move : moveList) {
                 logger.info(move.toString());
             }
-            IMoveDao moveDao = new MoveDaoImpl();
-            moveDao.insertList(moveList);
+            if (CommonConfig.dbEnable) {
+                IMoveDao moveDao = new MoveDaoImpl();
+                moveDao.insertList(moveList);
+            }
         }
         //深度爬虫获取电影详细信息
         if (Constants.ISDEEP) {

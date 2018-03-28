@@ -1,8 +1,8 @@
 package com.yao.spider.proxytool;
 
 import com.yao.spider.proxytool.entity.Proxy;
-import com.yao.spider.proxytool.parses.ip66.Ip66ProxyListPageParser;
 import com.yao.spider.proxytool.parses.ip181.Ip181ProxyListPageParser;
+import com.yao.spider.proxytool.parses.ip66.Ip66ProxyListPageParser;
 import com.yao.spider.proxytool.parses.mimiip.MimiipProxyListPageParser;
 import com.yao.spider.proxytool.parses.xicidaili.XicidailiProxyListPageParser;
 

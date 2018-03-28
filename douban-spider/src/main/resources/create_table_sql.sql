@@ -1,3 +1,4 @@
+#豆瓣电影爬虫建表sql
 CREATE TABLE `move` (
   `id` varchar(8) NOT NULL,
   `name` varchar(200) DEFAULT NULL,
