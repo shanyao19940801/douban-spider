@@ -5,3 +5,4 @@ douban-spider/target/classes
 douban-spider/douban-spider.iml
 douban-spider/src/main/java/com.yao/spider/log/
 douban-spider/src/main/java/com/yao/spider/log/
+douban-spider/src/main/java/com.yao/douban/log/info.log
