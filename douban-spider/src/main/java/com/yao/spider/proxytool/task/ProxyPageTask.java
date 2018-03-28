@@ -1,13 +1,13 @@
 package com.yao.spider.proxytool.task;
 
+import com.yao.spider.core.factory.ParserFactory;
+import com.yao.spider.core.parser.IPageParser;
 import com.yao.spider.proxytool.ProxyHttpClient;
 import com.yao.spider.proxytool.ProxyPool;
-import com.yao.spider.proxytool.entity.Page;
+import com.yao.spider.core.entity.Page;
 import com.yao.spider.proxytool.entity.Proxy;
-import com.yao.spider.proxytool.http.util.HttpClientUtil;
-import com.yao.spider.proxytool.parses.ParserFactory;
-import com.yao.spider.proxytool.parses.ProxyListPageParser;
-import com.yao.spider.proxytool.proxyutil.ProxyUtil;
+import com.yao.spider.core.http.util.HttpClientUtil;
+import com.yao.spider.core.util.ProxyUtil;
 import org.apache.http.HttpHost;
 import org.apache.http.client.methods.HttpGet;
 import org.slf4j.Logger;
@@ -85,8 +85,8 @@ public class ProxyPageTask implements Runnable{
         if (page.getHtml() == null || "".equals(page.getHtml())) {
             return;
         }
-        ProxyListPageParser parser = ParserFactory.getProxyListPageParser(ProxyPool.proxyMap.get(url));
-        List<Proxy> proxyList =  parser.parse(page.getHtml());
+        IPageParser parser = ParserFactory.getParserClass(ProxyPool.proxyMap.get(url));
+        List<Proxy> proxyList =  parser.parser(page.getHtml());
         if (isContinueDownProxy) {
             for (Proxy proxy : proxyList) {
                 //测试代理是否可用

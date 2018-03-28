@@ -1,19 +1,19 @@
 package com.yao.spider.douban.task;
 
-import com.yao.spider.core.config.CommonConfig;
-import com.yao.spider.core.util.Constants;
+import com.yao.spider.common.config.CommonConfig;
+import com.yao.spider.common.constants.Constants;
 import com.yao.spider.douban.DoubanHttpClient;
 import com.yao.spider.douban.dao.IMoveDao;
 import com.yao.spider.douban.dao.Impl.MoveDaoImpl;
 import com.yao.spider.douban.entity.move.Move;
-import com.yao.spider.douban.parsers.DoubanPageParser;
-import com.yao.spider.douban.parsers.DoubanParserFactory;
+import com.yao.spider.core.parser.IPageParser;
+import com.yao.spider.core.factory.ParserFactory;
 import com.yao.spider.douban.parsers.move.MoveParser;
 import com.yao.spider.proxytool.ProxyPool;
-import com.yao.spider.proxytool.entity.Page;
+import com.yao.spider.core.entity.Page;
 import com.yao.spider.proxytool.entity.Proxy;
-import com.yao.spider.proxytool.http.util.HttpClientUtil;
-import com.yao.spider.proxytool.proxyutil.ProxyUtil;
+import com.yao.spider.core.http.util.HttpClientUtil;
+import com.yao.spider.core.util.ProxyUtil;
 import org.apache.http.HttpHost;
 import org.apache.http.client.methods.HttpGet;
 import org.slf4j.Logger;
@@ -94,7 +94,7 @@ public class DouBanInfoListPageTask implements Runnable{
         if (page.getHtml() == null || "".equals(page.getHtml())) {
             return;
         }
-        DoubanPageParser parser = DoubanParserFactory.getDoubanParserFactory(MoveParser.class);
+        IPageParser parser = ParserFactory.getParserClass(MoveParser.class);
         List<Move> moveList = parser.parser(page.getHtml());
         if (moveList != null && moveList.size() > 0) {
             for (Move move : moveList) {

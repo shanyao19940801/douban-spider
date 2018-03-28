@@ -1,6 +1,6 @@
 package com.yao.spider.douban.task;
 
-import com.yao.spider.core.util.Constants;
+import com.yao.spider.common.constants.Constants;
 import com.yao.spider.douban.DoubanHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,6 +1,6 @@
 package com.yao.spider.douban.dao.Impl;
 
-import com.yao.spider.core.dao.Impl.BaseDaoImpl;
+import com.yao.spider.common.dao.Impl.BaseDaoImpl;
 import com.yao.spider.core.util.MyBatiesUtils;
 import com.yao.spider.douban.dao.IMoveDao;
 import com.yao.spider.douban.entity.move.Move;

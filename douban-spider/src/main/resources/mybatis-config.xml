@@ -9,7 +9,7 @@
         <environment id="development">
             <transactionManager type="JDBC"/>
 
-            <dataSource type="com.yao.spider.core.util.C3P0DataSourceFactory">
+            <dataSource type="com.yao.spider.core.factory.C3P0DataSourceFactory">
                 <property name="driverClass" value="${driver}"/>
                 <property name="jdbcUrl" value="${url}"/>
                 <property name="user" value="${username}"/>

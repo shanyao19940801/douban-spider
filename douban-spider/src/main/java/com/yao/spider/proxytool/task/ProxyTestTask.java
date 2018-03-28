@@ -2,11 +2,11 @@ package com.yao.spider.proxytool.task;
 
 import com.yao.spider.proxytool.ProxyHttpClient;
 import com.yao.spider.proxytool.ProxyPool;
-import com.yao.spider.proxytool.entity.Page;
+import com.yao.spider.core.entity.Page;
 import com.yao.spider.proxytool.entity.Proxy;
-import com.yao.spider.proxytool.http.util.HttpClientUtil;
-import com.yao.spider.proxytool.proxyutil.ProxyConstants;
-import com.yao.spider.proxytool.proxyutil.ProxyUtil;
+import com.yao.spider.core.http.util.HttpClientUtil;
+import com.yao.spider.core.constants.ProxyConstants;
+import com.yao.spider.core.util.ProxyUtil;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
@@ -29,7 +29,7 @@ public class ProxyTestTask implements Runnable {
     }
 
     public void run() {
-        HttpGet request = new HttpGet(ProxyConstants.INDEX_URL);
+        HttpGet request = new HttpGet(ProxyConstants.PROXYTEST_URL);
         try {
             HttpHost proxyHost = new HttpHost(proxy.getIp(), proxy.getPort());
             RequestConfig requestConfig = HttpClientUtil.getRequestConfigBuilder().setProxy(proxyHost).build();

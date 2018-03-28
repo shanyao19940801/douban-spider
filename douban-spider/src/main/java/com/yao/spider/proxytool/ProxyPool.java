@@ -1,10 +1,12 @@
 package com.yao.spider.proxytool;
 
 import com.yao.spider.proxytool.entity.Proxy;
-import com.yao.spider.proxytool.parses.ip181.Ip181ProxyListPageParser;
-import com.yao.spider.proxytool.parses.ip66.Ip66ProxyListPageParser;
-import com.yao.spider.proxytool.parses.mimiip.MimiipProxyListPageParser;
-import com.yao.spider.proxytool.parses.xicidaili.XicidailiProxyListPageParser;
+import com.yao.spider.proxytool.parses.ip181.Ip181ProxyListParser;
+import com.yao.spider.proxytool.parses.ip66.Ip66ProxyListParser;
+import com.yao.spider.proxytool.parses.kuaidaili.KuaidailiProxyListParser;
+import com.yao.spider.proxytool.parses.mimiip.MimiipProxyListParser;
+import com.yao.spider.proxytool.parses.xicidaili.XicidailiProxyListParser;
+import com.yao.spider.core.constants.ProxyConstants;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -26,18 +28,24 @@ public class ProxyPool {
     public static final Map<String,Class> proxyMap = new HashMap<String, Class>();
 
     static {
+        for (int i = 1; i <= 66; i++) {
+            proxyMap.put("https://www.kuaidaili.com/free/intr/"+ i +"/", KuaidailiProxyListParser.class);
+            if (!ProxyConstants.anonymousFlag) {
+                proxyMap.put("https://www.kuaidaili.com/free/inha/" + i + "/", KuaidailiProxyListParser.class);//高匿
+            }
+        }
         int pages = 8;
         for (int i = 1; i <= pages; i++) {
-            proxyMap.put("http://www.xicidaili.com/wt/" + i + ".html", XicidailiProxyListPageParser.class);
-            proxyMap.put("http://www.xicidaili.com/nn/" + i + ".html", XicidailiProxyListPageParser.class);
-            proxyMap.put("http://www.xicidaili.com/wn/" + i + ".html", XicidailiProxyListPageParser.class);
-            proxyMap.put("http://www.xicidaili.com/nt/" + i + ".html", XicidailiProxyListPageParser.class);
-            proxyMap.put("http://www.ip181.com/daili/" + i + ".html", Ip181ProxyListPageParser.class);
-            proxyMap.put("http://www.mimiip.com/gngao/" + i, MimiipProxyListPageParser.class);//高匿
-            proxyMap.put("http://www.mimiip.com/gnpu/" + i, MimiipProxyListPageParser.class);//普匿
-            proxyMap.put("http://www.66ip.cn/" + i + ".html", Ip66ProxyListPageParser.class);
+            proxyMap.put("http://www.xicidaili.com/wt/" + i + ".html", XicidailiProxyListParser.class);
+            proxyMap.put("http://www.xicidaili.com/nn/" + i + ".html", XicidailiProxyListParser.class);
+            proxyMap.put("http://www.xicidaili.com/wn/" + i + ".html", XicidailiProxyListParser.class);
+            proxyMap.put("http://www.xicidaili.com/nt/" + i + ".html", XicidailiProxyListParser.class);
+            proxyMap.put("http://www.ip181.com/daili/" + i + ".html", Ip181ProxyListParser.class);
+            proxyMap.put("http://www.mimiip.com/gngao/" + i, MimiipProxyListParser.class);//高匿
+            proxyMap.put("http://www.mimiip.com/gnpu/" + i, MimiipProxyListParser.class);//普匿
+            proxyMap.put("http://www.66ip.cn/" + i + ".html", Ip66ProxyListParser.class);
             for (int j = 1; j < 34; j++) {
-                proxyMap.put("http://www.66ip.cn/areaindex_" + j + "/" + i + ".html", Ip66ProxyListPageParser.class);
+                proxyMap.put("http://www.66ip.cn/areaindex_" + j + "/" + i + ".html", Ip66ProxyListParser.class);
             }
         }
     }

@@ -1,7 +1,7 @@
 package com.yao.spider.douban.parsers.move;
 
 import com.yao.spider.douban.entity.move.Move;
-import com.yao.spider.douban.parsers.DoubanPageParser;
+import com.yao.spider.core.parser.IPageParser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -14,7 +14,7 @@ import java.util.List;
  * Created by 单耀 on 2018/1/30.
  */
 @Deprecated
-public class MoveParserDeprecated implements DoubanPageParser<Move> {
+public class MoveParserDeprecated implements IPageParser<Move> {
     public  List<Move> parser(String html) {
         List<Move> list = new ArrayList<Move>();
 //        System.out.println(html);

@@ -23,6 +23,8 @@ public class Proxy implements Delayed,Serializable {
     transient private int failureTimes;//请求失败次数
     transient private int successfulTimes;//请求成功次数
 
+    public Proxy() {}
+
     public Proxy(String ip, int port) {
         this.ip = ip;
         this.port = port;

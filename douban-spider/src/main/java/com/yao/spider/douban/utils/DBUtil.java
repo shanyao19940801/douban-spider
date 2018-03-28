@@ -2,7 +2,7 @@ package com.yao.spider.douban.utils;
 
 import com.yao.spider.douban.DoubanHttpClient;
 import com.yao.spider.douban.constants.DBConstants;
-import com.yao.spider.proxytool.entity.Page;
+import com.yao.spider.core.entity.Page;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

@@ -3,7 +3,7 @@ package com.yao.spider.douban.task.move;
 import com.yao.spider.douban.constants.DBConstants;
 import com.yao.spider.douban.task.AbstractTask;
 import com.yao.spider.douban.task.DouBanInfoListPageTask;
-import com.yao.spider.proxytool.entity.Page;
+import com.yao.spider.core.entity.Page;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

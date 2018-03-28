@@ -1,7 +1,7 @@
 package com.yao.spider.douban.parsers.move;
 
 import com.yao.spider.douban.entity.move.Move;
-import com.yao.spider.douban.parsers.DoubanPageParser;
+import com.yao.spider.core.parser.IPageParser;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
 import org.slf4j.Logger;
@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by user on 2018/2/9.
  */
-public class MoveParser implements DoubanPageParser {
+public class MoveParser implements IPageParser {
     private static Logger logger = LoggerFactory.getLogger(MoveParser.class);
 
     public List<Move> parser(String html) {
