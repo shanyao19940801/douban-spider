@@ -35,7 +35,7 @@ Run With [StartClass](https://github.com/shanyao19940801/douban-spider/blob/mast
 ## V0.0.2 添加序列化代理功能
  为了避免每次启动都要重新爬取代理，添加一个序列化代理的功能，当下次启动时先从本地文件中获取已经序列化的代理
  * 实现技术：
-   1.在ProxyPool中添加一个Set属性，每当一个代理测试通过可用后存入到set中，没十分钟进行一次序列化
+   1.在ProxyPool中添加一个Set属性，每当一个代理测试通过可用后存入到set中，没十分钟进行一次序列化<br>
    2.采用了一个读写锁技术，这里的情景是写操作远多于读操作所以使用sychronized或者ReentrantLock对效率的影响并不是特别大
 
 ### 流程图
