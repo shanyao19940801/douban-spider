@@ -1,9 +1,9 @@
 package com.yao.test.serializable;
 
+import com.yao.spider.core.constants.ProxyConstants;
+import com.yao.spider.core.util.MyIOutils;
 import com.yao.spider.proxytool.ProxyPool;
 import com.yao.spider.proxytool.entity.Proxy;
-import com.yao.spider.proxytool.proxyutil.MyIOutils;
-import com.yao.spider.proxytool.proxyutil.ProxyConstants;
 
 import java.util.ArrayList;
 import java.util.List;

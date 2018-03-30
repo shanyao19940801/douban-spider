@@ -26,21 +26,21 @@ import java.util.List;
  * 下载电影信息列表页面
  */
 public class DouBanInfoListPageTask implements Runnable{
-    private String url;
-    private boolean isUserProxy;
-    private Proxy currentProxy;
-    private DoubanHttpClient doubanHttpClient = DoubanHttpClient.getInstance();
     private static Logger logger = LoggerFactory.getLogger(DouBanInfoListPageTask.class);
+    private String url;
+    private boolean enableProxy;
+    private Proxy proxy;
+    private DoubanHttpClient doubanHttpClient = DoubanHttpClient.getInstance();
     private int retryTime;
     private int startNumber;
 
-    public DouBanInfoListPageTask(String url, boolean isUserProxy) {
+    public DouBanInfoListPageTask(String url, boolean enableProxy) {
         this.url = url;
-        this.isUserProxy = isUserProxy;
+        this.enableProxy = enableProxy;
     }
-    public DouBanInfoListPageTask(String url, boolean isUserProxy, int retryTime, int startNumber) {
+    public DouBanInfoListPageTask(String url, boolean enableProxy, int retryTime, int startNumber) {
         this.url = url;
-        this.isUserProxy = isUserProxy;
+        this.enableProxy = enableProxy;
         this.startNumber = startNumber;
         this.retryTime = retryTime;
     }
@@ -51,42 +51,40 @@ public class DouBanInfoListPageTask implements Runnable{
         try {
             Page page = null;
             //下面这段代码是一段重复代码，之所以没有抽离出来是因为我发现多线程运行下代码过分重用会导致很难排查出错点
-            if (isUserProxy) {
-                currentProxy = ProxyPool.proxyQueue.take();
-                HttpHost proxy =new HttpHost(currentProxy.getIp(), currentProxy.getPort());
-                request.setConfig(HttpClientUtil.getRequestConfigBuilder().setProxy(proxy).build());
+            if (enableProxy) {
+                proxy = ProxyPool.proxyQueue.take();
+                HttpHost host =new HttpHost(this.proxy.getIp(), this.proxy.getPort());
+                request.setConfig(HttpClientUtil.getRequestConfigBuilder().setProxy(host).build());
                 page = doubanHttpClient.getPage(request);
             } else {
                page = doubanHttpClient.getPage(url);
             }
             if (page != null && page.getStatusCode() == 200) {
-                currentProxy.setSuccessfulTimes(currentProxy.getSuccessfulTimes() + 1);
+                proxy.setSuccessfulTimes(proxy.getSuccessfulTimes() + 1);
                 handle(page);
             } else {
-                currentProxy.setFailureTimes(currentProxy.getFailureTimes() + 1);
+                proxy.setFailureTimes(proxy.getFailureTimes() + 1);
                 retry();
             }
         } catch (Exception e) {
-            currentProxy.setFailureTimes(currentProxy.getFailureTimes() + 1);
-//            e.printStackTrace();
-//            logger.error(e.getMessage(), e);
+            proxy.setFailureTimes(proxy.getFailureTimes() + 1);
             retry();
         } finally {
             if (request != null) {
                 request.releaseConnection();
             }
 
-            if (currentProxy != null && !ProxyUtil.isDiscardProxy(currentProxy)){
-                ProxyPool.proxyQueue.add(currentProxy);
+            if (proxy != null && !ProxyUtil.isDiscardProxy(proxy)){
+                ProxyPool.proxyQueue.add(proxy);
             } else {
-                logger.info("丢弃代理：" + currentProxy.getProxyStr());
+                logger.info("丢弃代理：" + proxy.getProxyStr());
             }
         }
     }
 
 
     private void retry() {
-//        logger.info("电影列表重试次数=" + retryTime + "--开始编号：" + startNumber + "---重试代理：" + currentProxy.getProxyStr() + "---代理失败/成功次数：" + currentProxy.getFailureTimes()+ "/" + currentProxy.getSuccessfulTimes());
+//        logger.info("电影列表重试次数=" + retryTime + "--开始编号：" + startNumber + "---重试代理：" + proxy.getProxyStr() + "---代理失败/成功次数：" + proxy.getFailureTimes()+ "/" + proxy.getSuccessfulTimes());
         doubanHttpClient.getDownLoadMoveListExector().execute(new DouBanInfoListPageTask(url, true, retryTime + 1, startNumber));
     }
 

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yao.spider.zhihu.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.yao.spider.zhihu.entity.User" >
+    <id column="user_token" property="userToken" jdbcType="VARCHAR" />
+    <result column="location" property="location" jdbcType="VARCHAR" />
+    <result column="business" property="business" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="company" property="company" jdbcType="VARCHAR" />
+    <result column="education" property="education" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="agrees" property="agrees" jdbcType="INTEGER" />
+    <result column="thanks" property="thanks" jdbcType="INTEGER" />
+    <result column="asks" property="asks" jdbcType="INTEGER" />
+    <result column="answers" property="answers" jdbcType="INTEGER" />
+    <result column="articles" property="articles" jdbcType="INTEGER" />
+    <result column="followees" property="followees" jdbcType="INTEGER" />
+    <result column="followers" property="followers" jdbcType="INTEGER" />
+    <result column="userId" property="userId" jdbcType="VARCHAR" />
+  </resultMap>
+
+
+  <sql id="Base_Column_List" >
+    user_token, location, business, sex, company, education, username, url, agrees, 
+    thanks, asks, answers, articles, followees, followers, userId
+  </sql>
+   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where user_token = #{userToken,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user
+    where user_token = #{userToken,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.yao.spider.zhihu.entity.User" >
+    insert into user (user_token, location, business, 
+      sex, company, education, 
+      username, url, agrees, 
+      thanks, asks, answers, 
+      articles, followees, followers, 
+      userId)
+    values (#{userToken,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR}, #{business,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, 
+      #{username,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{agrees,jdbcType=INTEGER}, 
+      #{thanks,jdbcType=INTEGER}, #{asks,jdbcType=INTEGER}, #{answers,jdbcType=INTEGER}, 
+      #{articles,jdbcType=INTEGER}, #{followees,jdbcType=INTEGER}, #{followers,jdbcType=INTEGER}, 
+      #{userId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yao.spider.zhihu.entity.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userToken != null" >
+        user_token,
+      </if>
+      <if test="location != null" >
+        location,
+      </if>
+      <if test="business != null" >
+        business,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="company != null" >
+        company,
+      </if>
+      <if test="education != null" >
+        education,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="agrees != null" >
+        agrees,
+      </if>
+      <if test="thanks != null" >
+        thanks,
+      </if>
+      <if test="asks != null" >
+        asks,
+      </if>
+      <if test="answers != null" >
+        answers,
+      </if>
+      <if test="articles != null" >
+        articles,
+      </if>
+      <if test="followees != null" >
+        followees,
+      </if>
+      <if test="followers != null" >
+        followers,
+      </if>
+      <if test="userId != null" >
+        userId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userToken != null" >
+        #{userToken,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="business != null" >
+        #{business,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null" >
+        #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="agrees != null" >
+        #{agrees,jdbcType=INTEGER},
+      </if>
+      <if test="thanks != null" >
+        #{thanks,jdbcType=INTEGER},
+      </if>
+      <if test="asks != null" >
+        #{asks,jdbcType=INTEGER},
+      </if>
+      <if test="answers != null" >
+        #{answers,jdbcType=INTEGER},
+      </if>
+      <if test="articles != null" >
+        #{articles,jdbcType=INTEGER},
+      </if>
+      <if test="followees != null" >
+        #{followees,jdbcType=INTEGER},
+      </if>
+      <if test="followers != null" >
+        #{followers,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+   <update id="updateByPrimaryKeySelective" parameterType="com.yao.spider.zhihu.entity.User" >
+    update user
+    <set >
+      <if test="location != null" >
+        location = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="business != null" >
+        business = #{business,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null" >
+        education = #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="agrees != null" >
+        agrees = #{agrees,jdbcType=INTEGER},
+      </if>
+      <if test="thanks != null" >
+        thanks = #{thanks,jdbcType=INTEGER},
+      </if>
+      <if test="asks != null" >
+        asks = #{asks,jdbcType=INTEGER},
+      </if>
+      <if test="answers != null" >
+        answers = #{answers,jdbcType=INTEGER},
+      </if>
+      <if test="articles != null" >
+        articles = #{articles,jdbcType=INTEGER},
+      </if>
+      <if test="followees != null" >
+        followees = #{followees,jdbcType=INTEGER},
+      </if>
+      <if test="followers != null" >
+        followers = #{followers,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        userId = #{userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_token = #{userToken,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yao.spider.zhihu.entity.User" >
+    update user
+    set location = #{location,jdbcType=VARCHAR},
+      business = #{business,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      company = #{company,jdbcType=VARCHAR},
+      education = #{education,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      agrees = #{agrees,jdbcType=INTEGER},
+      thanks = #{thanks,jdbcType=INTEGER},
+      asks = #{asks,jdbcType=INTEGER},
+      answers = #{answers,jdbcType=INTEGER},
+      articles = #{articles,jdbcType=INTEGER},
+      followees = #{followees,jdbcType=INTEGER},
+      followers = #{followers,jdbcType=INTEGER},
+      userId = #{userId,jdbcType=VARCHAR}
+    where user_token = #{userToken,jdbcType=VARCHAR}
+  </update>
+</mapper>

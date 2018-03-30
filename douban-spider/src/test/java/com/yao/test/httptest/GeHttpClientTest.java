@@ -1,6 +1,6 @@
 package com.yao.test.httptest;
 
-import com.yao.spider.core.util.Constants;
+import com.yao.spider.common.constants.Constants;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.config.RequestConfig;

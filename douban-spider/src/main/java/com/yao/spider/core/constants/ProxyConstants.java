@@ -15,6 +15,7 @@ public class ProxyConstants {
 
     public static final long TIME_INTERVAL = 1000;
     //文件路劲地址
+//    public static final String FILE_PATH= "src/main/resources/file";
     public static final String FILE_PATH= "src/main/resources/file";
 
     //保存序列化代理的文件名

@@ -1,10 +1,10 @@
 package com.yao.test.parserTest;
 
+import com.yao.spider.core.entity.Page;
+import com.yao.spider.core.factory.ParserFactory;
+import com.yao.spider.core.parser.IPageParser;
 import com.yao.spider.douban.DoubanHttpClient;
-import com.yao.spider.douban.parsers.DoubanPageParser;
-import com.yao.spider.douban.parsers.DoubanParserFactory;
 import com.yao.spider.douban.parsers.move.MoveDetailInfoParser;
-import com.yao.spider.proxytool.entity.Page;
 import org.junit.Test;
 
 /**
@@ -14,7 +14,7 @@ public class MoveDetailInfoParserTest {
     @Test
     public void parser() throws Exception {
         String url = "https://movie.douban.com/subject/26346327/";
-        DoubanPageParser parser = DoubanParserFactory.getDoubanParserFactory(MoveDetailInfoParser.class);
+        IPageParser parser = ParserFactory.getParserClass(MoveDetailInfoParser.class);
         Page page = DoubanHttpClient.getInstance().getPage(url);
         parser.parser(page.getHtml());
     }

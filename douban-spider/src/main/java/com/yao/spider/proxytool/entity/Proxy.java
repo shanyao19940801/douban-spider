@@ -102,7 +102,7 @@ public class Proxy implements Delayed,Serializable {
     }
 
     public String getProxyStr() {
-        return ip + ":" + port;
+        return ip + ":" + port + "--datasource:" + dataSource + "---failureTimes:" + failureTimes;
     }
 
 }

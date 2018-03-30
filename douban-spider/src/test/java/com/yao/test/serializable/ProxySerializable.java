@@ -1,7 +1,7 @@
 package com.yao.test.serializable;
 
+import com.yao.spider.core.util.MyIOutils;
 import com.yao.spider.proxytool.entity.Proxy;
-import com.yao.spider.proxytool.proxyutil.MyIOutils;
 
 import java.io.*;
 
