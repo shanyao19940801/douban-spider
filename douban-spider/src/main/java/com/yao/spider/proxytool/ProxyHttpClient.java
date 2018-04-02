@@ -75,35 +75,29 @@ public class ProxyHttpClient extends AbstractHttpClient {
     }
 
     public void startProxy() {
-        try {
-            List<Proxy> proxyList = (List<Proxy>) MyIOutils.deserializeObject(ProxyConstants.PROXYSER_FILE_NMAE);
-            if (proxyList != null) {
-                ProxyPool.proxyQueue = new DelayQueue<Proxy>(proxyList);
-            }
-        } catch (Exception e) {
-        }
+        //是否爬取新的代理
         new Thread(new Runnable() {
             public void run() {
 //                while(isContinue) {
-                    for (String url : ProxyPool.proxyMap.keySet()) {
-                        proxyDoloadThreadExector.execute(new ProxyPageTask(url, false));
-                        try {
-                            Thread.sleep(5000);
-                        } catch (InterruptedException e) {
-                            logger.error(e.getMessage(),e);
-                        }
-                    }
+                for (String url : ProxyPool.proxyMap.keySet()) {
+                    proxyDoloadThreadExector.execute(new ProxyPageTask(url, false));
                     try {
-                        Thread.sleep(1000*60*60);
+                        Thread.sleep(5000);
                     } catch (InterruptedException e) {
                         logger.error(e.getMessage(), e);
                     }
+                }
+                try {
+                    Thread.sleep(1000 * 60 * 60);
+                } catch (InterruptedException e) {
+                    logger.error(e.getMessage(), e);
+                }
 //                }
             }
         }).start();
 
         //序列化代理线程
-//        new Thread(new ProxySerializeTask()).start();
+        new Thread(new ProxySerializeTask()).start();
 
     }
 

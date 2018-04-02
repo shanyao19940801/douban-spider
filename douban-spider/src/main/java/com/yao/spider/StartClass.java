@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 public class StartClass {
     private static Logger logger = LoggerFactory.getLogger(StartClass.class);
     public static void main(String[] args) {
-        logger.info("ttttt");
         ProxyHttpClient.getInstance().startProxy();
         try {
             Thread.sleep(10000);

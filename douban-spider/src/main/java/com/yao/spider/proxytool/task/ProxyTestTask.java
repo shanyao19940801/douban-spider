@@ -34,26 +34,25 @@ public class ProxyTestTask implements Runnable {
             HttpHost proxyHost = new HttpHost(proxy.getIp(), proxy.getPort());
             RequestConfig requestConfig = HttpClientUtil.getRequestConfigBuilder().setProxy(proxyHost).build();
             request.setConfig(requestConfig);
-//            CloseableHttpResponse response = HttpClientUtil.getResponse(request);
             Page page = ProxyHttpClient.getInstance().getPage(request);
             String logStr = Thread.currentThread().getName() + " " + proxy.getProxyStr() +
                     "  executing request " + page.getUrl()  + " response statusCode:" + page.getStatusCode();
 
             if (page == null || page.getStatusCode() != 200) {
-                logger.warn("该代理不可用：" + logStr);
+//                logger.warn("该代理不可用：" + logStr);
                 return;
             }
             if (page.getStatusCode() == 200) {
                 ProxyPool.proxyQueue.add(proxy);
-                logger.debug(proxy.getProxyStr() + "-----代理可用-----");
-                logger.debug(proxy.toString() + "--------" + page.toString());
+//                logger.debug(proxy.getProxyStr() + "-----代理可用-----");
+//                logger.debug(proxy.toString() + "--------" + page.toString());
                 ProxyPool.lock.writeLock().lock();
                 ProxyPool.proxySet.add(proxy);
                 ProxyPool.lock.writeLock().unlock();
 //                System.out.println("目前可用代理数量:"+ProxyPool.proxyQueue.size());
             }
         } catch (IOException e) {
-            logger.debug("IOException", e);
+//            logger.debug("IOException", e);
         } finally {
             if (request != null) {
                 request.releaseConnection();

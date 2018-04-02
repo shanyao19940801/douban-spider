@@ -4,8 +4,6 @@ package com.yao.spider.core.constants;
  * Created by 单耀 on 2018/1/26.
  */
 public class ProxyConstants {
-    //是否只需要匿名代理
-    public static final boolean anonymousFlag = false;
     public static final String STANDARD = "standard";
     public static int SocketTimeout = 10000;
     public static int ConnectionTimeout = 10000;

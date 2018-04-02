@@ -58,6 +58,7 @@ public class ZhiHuUserListTask implements Runnable{
         HttpGet request = new HttpGet(url);
         request.setHeader("authorization","oauth " + ZhiHuConfig.authorization);
         Page page = null;
+        long requestTime = System.currentTimeMillis();
         try {
             if (ebableProxy) {
                 proxy = ProxyPool.proxyQueue.take();
@@ -88,37 +89,42 @@ public class ZhiHuUserListTask implements Runnable{
 
     public void handPage(Page page) {
         IPageParser pageParser = ParserFactory.getParserClass(ZhiHuUserParser.class);
-        List<User> list = pageParser.parser(page.getHtml());
-        if (list != null && list.size() > 0) {
-            for (User user : list) {
-                logger.info(user.toString());
-            }
-            for (User user : list) {
-                //TODO 先查询usertoken是否已经爬过
-                if ( !ZhiHuHttpClient.getInstance().getUserListDownTask().isShutdown()) {
-                    for (int i = 0; i < user.getFollowees() / 20; i++) {
-                        if (ZhiHuHttpClient.getInstance().getUserListDownTask().getQueue().size() > 888) {
-                            continue;
+        if (pageParser != null) {
+            List<User> list = pageParser.parser(page.getHtml());
+            if (list != null && list.size() > 0) {
+                int listSize = list.size();
+                User user = null;
+                for (int i = 0; i < listSize; i ++) {
+                    logger.info(list.get(i).toString());
+                }
+                for (int i = 0; i < listSize; i++) {
+                    user = list.get(i);
+                    //TODO 先查询usertoken是否已经爬过
+                    if (!ZhiHuHttpClient.getInstance().getUserListDownTask().isShutdown()) {
+                        for (int j = 0, len = user.getFollowees(); j < len / 20; j++) {
+                            if (ZhiHuHttpClient.getInstance().getUserListDownTask().getQueue().size() > 888) {
+                                continue;
+                            }
+                            String nextUrl = String.format(ZhiHuConfig.FOLLOWEES_API, user.getUserToken(), j * 20);
+                            ZhiHuHttpClient.getInstance().getUserListDownTask().execute(new ZhiHuUserListTask(nextUrl, true, user.getUserToken()));
                         }
-                        String nextUrl = String.format(ZhiHuConfig.FOLLOWEES_API, user.getUserToken(), i * 20);
-                        ZhiHuHttpClient.getInstance().getUserListDownTask().execute(new ZhiHuUserListTask(nextUrl, true, user.getUserToken()));
+                    }
+                    // TODO 将usertoken保存到数据库，避免大量重复查询
+
+                }
+                if (CommonConfig.dbEnable) {
+                    IUserDao dao = new UserDaoImpl();
+                    for (int i = 0; i < listSize; i ++) {
+                        dao.inserSelective(list.get(i));
                     }
                 }
-                // TODO 将usertoken保存到数据库，避免大量重复查询
 
             }
-            if (CommonConfig.dbEnable) {
-                IUserDao dao = new UserDaoImpl();
-                for (User user : list) {
-                    dao.inserSelective(user);
-                }
-            }
-
         }
     }
 
     public void retry() {
-        logger.info("重试" + this.userToken + "---重试次数：" + retryTimes + "---代理：" + proxy.getProxyStr());
+//        logger.info("重试" + this.userToken + "---重试次数：" + retryTimes + "---代理：" + proxy.getProxyStr());
         if (retryTimes < 5 || ZhiHuConfig.startUserToken.equals(this.userToken)) {
             ZhiHuHttpClient.getInstance().getUserListDownTask().execute(new ZhiHuUserListTask(this.url, true, this.userToken, this.retryTimes + 1));
         }

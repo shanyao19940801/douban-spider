@@ -17,7 +17,7 @@ import java.util.List;
 public class ProxySerializeTask implements Runnable{
     private static final Logger logger = LoggerFactory.getLogger(ProxySerializeTask.class);
     public void run() {
-        while (ProxyHttpClient.isContinue) {
+        while (true) {
             try {
                 //每一分钟进行一次序列化
                 Thread.sleep(10000);

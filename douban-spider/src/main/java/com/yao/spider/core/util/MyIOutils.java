@@ -24,7 +24,7 @@ public class MyIOutils {
      */
     public static void serializeObject(Object object, String fileName) {
         ObjectOutputStream oos = null;
-        String path = ProxyConstants.FILE_PATH + "/" + fileName;
+        String path = ProxyConstants.RESOURCES__FILE_PATH + "/" + fileName;
         try {
             oos = new ObjectOutputStream(new FileOutputStream(path));
             oos.writeObject(object);
@@ -41,7 +41,7 @@ public class MyIOutils {
      * @param fileName 文件名，改名称必须在resources/file下面
      */
     public static Object deserializeObject(String fileName) {
-        String path = ProxyConstants.FILE_PATH + "/" + fileName;
+        String path = ProxyConstants.RESOURCES__FILE_PATH + "/" + fileName;
         return deserializeObjectByPath(path);
     }
     /**
@@ -50,6 +50,9 @@ public class MyIOutils {
      */
     public static Object deserializeObjectByPath(String filePath) {
         File file = new File(filePath);
+        if (!file.exists()) {
+            file.mkdir();
+        }
         ObjectInputStream ois =null;
         Object object = null;
         try {

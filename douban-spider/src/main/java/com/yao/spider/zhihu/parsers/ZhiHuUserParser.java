@@ -10,6 +10,7 @@ import org.jsoup.select.Elements;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+
 import java.util.List;
 
 /**
@@ -19,10 +20,14 @@ public class ZhiHuUserParser implements IPageParser<User>{
     public List<User> parser(String html) {
         JSONObject object = JSONObject.fromObject(html);
         JSONArray jsonArray = object.getJSONArray("data");
-        List<User> userList = new ArrayList<User>();
-        for (int i = 0; i < jsonArray.size(); i++) {
-            User user = new User();
-            JSONObject jsonObject = jsonArray.getJSONObject(i);
+        List<User> userList = new ArrayList<User>(20);
+        //将for循环中要建立的对象在外面先创建，这种做法避免内存中有多份Object对象引用存在，对象很大的话，就耗费内存了
+        JSONObject jsonObject = null;
+        User user = null;
+        //TODO 改为不使用放射机制，效率貌似会比较低
+        for (int i = 0,len = jsonArray.size(); i < len; i++) {
+            user = new User();
+            jsonObject = jsonArray.getJSONObject(i);
             setUserPropertyValue(user, "agrees", jsonObject, "voteup_count");
             setUserPropertyValue(user, "answers", jsonObject, "answer_count");
             setUserPropertyValue(user, "asks", jsonObject, "question_count");
@@ -49,49 +54,6 @@ public class ZhiHuUserParser implements IPageParser<User>{
             setUserPropertyValue(user, "url", jsonObject, "url");
             setUserPropertyValue(user, "userToken", jsonObject, "url_token");
             setUserPropertyValue(user, "userId", jsonObject, "id");
-
-            /*Integer voteup_count =  jsonObject.getInt("voteup_count");
-            user.setAgrees(voteup_count);
-            Integer answer_count =  jsonObject.getInt("answer_count");
-            user.setAnswers(answer_count);
-            Integer question_count =  jsonObject.getInt("question_count");
-            user.setAsks(question_count);
-            String name =  jsonObject.getString("name");
-            user.setUsername(name);
-            JSONObject business = jsonObject.getJSONObject("business");
-            String industry = business.getString("name");
-            user.setBusiness(industry);
-            JSONArray educations = jsonObject.getJSONArray("educations");
-            if (educations != null && educations.size() > 1) {
-                String school = educations.getJSONObject(0).getJSONObject("school").getString("name");
-                user.setEducation(school);
-            }
-            JSONArray employments = jsonObject.getJSONArray("employments");
-            if (employments != null && employments.size() > 0) {
-                JSONObject job = employments.getJSONObject(0).getJSONObject("job");
-                user.setPosition(job.getString("name"));
-                JSONObject company = employments.getJSONObject(0).getJSONObject("company");
-                user.setCompany(company.getString("name"));
-            }
-            Integer followwws =  jsonObject.getInt("following_count");
-            user.setFollowees(followwws);
-            Integer follower_count =  jsonObject.getInt("follower_count");
-            user.setFollowers(follower_count);
-            JSONArray locations = jsonObject.getJSONArray("locations");
-            if (educations != null && educations.size() > 1) {
-                String location = locations.getJSONObject(0).getString("name");
-                user.setLocation(location);
-            }
-            Integer articles_count =  jsonObject.getInt("articles_count");
-            user.setArticles(articles_count);
-            Integer thanked_count =  jsonObject.getInt("voteup_count");
-            user.setThanks(thanked_count);
-            String url =  jsonObject.getString("url");
-            user.setUrl(url);
-            String url_token =  jsonObject.getString("url_token");
-            user.setUserToken(url_token);
-            String id =  jsonObject.getString("id");
-            user.setUserId(id);*/
 
             //gender
             Integer gender =  jsonObject.getInt("gender");

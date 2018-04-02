@@ -50,7 +50,7 @@ import java.util.Random;
  *
  */
 public class HttpClientUtil {
-    private static Logger logger = LoggerFactory.getLogger(HttpClientUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(HttpClientUtil.class);
     private static HttpHost proxy;
     private static RequestConfig requestConfig;
     private final static String userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36";

@@ -20,9 +20,8 @@ public class KuaidailiProxyListParser  implements IPageParser<Proxy> {
         Document document = Jsoup.parse(context);
         Elements tbody = document.select("tbody");
         Elements tr = tbody.select("tr");
-        List<Proxy> proxyList = new ArrayList<Proxy>();
+        List<Proxy> proxyList = new ArrayList<Proxy>(tr.size());
         for (Element element : tr) {
-
             String ip = element.select("[data-title=IP]").text();
             String port = element.select("[data-title=PORT]").text();
             if (ip != null && !"".equals(ip) && port != null && !"".equals(port)) {
