@@ -46,7 +46,7 @@ Run With [StartClass](https://github.com/shanyao19940801/douban-spider/blob/mast
    爬取知乎用户
  * 实现方式
   <br>
->1.知乎用户关注列表不需要我们必须登录，这就免去了登录这块麻烦的地方<br>
+  * 知乎用户关注列表不需要我们必须登录，这就免去了登录这块麻烦的地方<br>
 >2.通过fiddler查看获取请求api以及请求头；知乎有一个auth认证这个也可以通过谷歌浏览器来获取，获取方式如下：![获取知乎auth方法](https://github.com/shanyao19940801/douban-spider/blob/master/douban-spider/src/main/resources/img/getauth.PNG "获取知乎auth")<br>
 >3.获取auth后将其放到请求头头中
        >><br>`HttpGet request = new HttpGet(url);`
