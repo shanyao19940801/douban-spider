@@ -46,11 +46,11 @@ Run With [StartClass](https://github.com/shanyao19940801/douban-spider/blob/mast
    爬取知乎用户
  * 实现方式
   <br>
-   1.知乎用户关注列表不需要我们必须登录，这就免去了登录这块麻烦的地方<br>
-   2.通过fiddler查看获取请求api以及请求头；知乎有一个auth认证这个也可以通过谷歌浏览器来获取，获取方式如下：![获取知乎auth方法](https://github.com/shanyao19940801/douban-spider/blob/master/douban-spider/src/main/resources/img/getauth.PNG "获取知乎auth")<br>
-   3.获取auth后将其放到请求头头中
-       <br>HttpGet request = new HttpGet(url);
-       <br>request.setHeader("authorization","oauth " + ZhiHuConfig.authorization);
+>1.知乎用户关注列表不需要我们必须登录，这就免去了登录这块麻烦的地方<br>
+>2.通过fiddler查看获取请求api以及请求头；知乎有一个auth认证这个也可以通过谷歌浏览器来获取，获取方式如下：![获取知乎auth方法](https://github.com/shanyao19940801/douban-spider/blob/master/douban-spider/src/main/resources/img/getauth.PNG "获取知乎auth")<br>
+>3.获取auth后将其放到请求头头中
+       >><br>HttpGet request = new HttpGet(url);
+       >><br>request.setHeader("authorization","oauth " + ZhiHuConfig.authorization);
         <br>
     4.关于代理的获取
      <br>前面有提到过将代理获取功能分离出来的事情，所以这里就没有动态获取代理而是单独启动一个线程去反序列化之前已经获取的代理，具体请看：
