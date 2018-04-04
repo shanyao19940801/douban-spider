@@ -53,5 +53,5 @@ Run With [StartClass](https://github.com/shanyao19940801/douban-spider/blob/mast
    <br>`request.setHeader("authorization","oauth " + ZhiHuConfig.authorization);`<br>
 >4.关于代理的获取
      <br>前面有提到过将代理获取功能分离出来的事情，所以这里就没有动态获取代理而是单独启动一个线程去反序列化之前已经获取的代理，具体请看：
-     [StartClass](https://github.com/shanyao19940801/douban-spider/blob/master/douban-spider/src/main/java/com/yao/spider/zhihu/task/ZhiHuUserListTask.java)
+     [ZhiHuUserListTask](https://github.com/shanyao19940801/douban-spider/blob/master/douban-spider/src/main/java/com/yao/spider/zhihu/task/ZhiHuUserListTask.java)
 ### 流程图
