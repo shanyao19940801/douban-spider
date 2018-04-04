@@ -1,6 +1,5 @@
-package com.yao.spider.proxytool.task;
+package com.yao.spider.core.task;
 
-import com.yao.spider.proxytool.ProxyHttpClient;
 import com.yao.spider.proxytool.ProxyPool;
 import com.yao.spider.proxytool.entity.Proxy;
 import com.yao.spider.core.util.MyIOutils;
