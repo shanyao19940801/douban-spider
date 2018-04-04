@@ -54,6 +54,8 @@ Run With [StartClass](https://github.com/shanyao19940801/douban-spider/blob/mast
 >4.关于代理的获取
      <br>前面有提到过将代理获取功能分离出来的事情，所以这里就没有动态获取代理而是单独启动一个线程去反序列化之前已经获取的代理，具体请看：
      [ProxySerializeTask](https://github.com/shanyao19940801/douban-spider/blob/master/douban-spider/src/main/java/com/yao/spider/core/task/ProxySerializeTask.java)
+## V0.1.1 过滤已经查询过的用户
+  我的爬取逻辑是从某个用户开始爬取，然后再更具关注他的用户列表爬取，这样难免会出现重复爬取用户关注列表的情况，所以新建了一张用于存储用户token的表将已经爬取过的用户token存到表中，每次开始爬取新的用户时先查询是否已经爬过
 ## V1.0.0转成web项目
  公司项目开始用SpringMVC所以最经想要学习一下这个，正好也想把这爬虫项目部署到最经刚买的服务器上所以就转成了web项目，我没有在原来的项目上修改而是重新创建了一个repostory：[爬虫项目Web版](https://github.com/shanyao19940801/Spider-WebApp)
 ### 流程图
