@@ -37,5 +37,12 @@ Run With [StartClass](https://github.com/shanyao19940801/douban-spider/blob/mast
  * 实现技术：
    1.在ProxyPool中添加一个Set属性，每当一个代理测试通过可用后存入到set中，没十分钟进行一次序列化<br>
    2.采用了一个读写锁技术，这里的情景是写操作远多于读操作所以使用sychronized或者ReentrantLock对效率的影响并不是特别大
-
+## v0.0.3 添加爬取知乎用户模块
+ 前面有说过因为豆瓣不论以什么方式只能获取500条记录，所以可爬取的数据还是比较少的，本想爬取豆瓣用户但是需要登陆认证我没有搞定，所以就改知乎了
+ *实现功能
+   爬取知乎用户
+ *实现方式
+  1.知乎用户关注列表不需要我们必须登录，这就免去了登录这块麻烦的地方；<br>
+  2.通过fiddler查看获取请求api以及请求头；知乎有一个auth认证这个也可以通过谷歌浏览器来获取，获取方式如下：![获取知乎auth方法](https://github.com/shanyao19940801/douban-spider/blob/master/douban-spider/src/main/resources/img/getauth.PNG "获取知乎auth")<br>
+  3.获取auth后将其放到请求头头中
 ### 流程图
