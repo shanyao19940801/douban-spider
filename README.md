@@ -39,7 +39,7 @@ Run With [StartClass](https://github.com/shanyao19940801/douban-spider/blob/mast
    2.采用了一个读写锁技术，这里的情景是写操作远多于读操作所以使用sychronized或者ReentrantLock对效率的影响并不是特别大 <br>
 ### 解耦
    今天爬虫是发现，如何爬取代理和其他爬虫功能同时运行会导致同一时间过多线程在运行，正好之前也完成了代理序列化功能所以计划后面讲爬取代理功能模块分离出来，这样也可以单独拿出来用。所以今天将代理爬取和其他功能解耦
-## v0.1.0 添加爬取知乎用户模块
+## V0.1.0 添加爬取知乎用户模块
  前面有说过因为豆瓣不论以什么方式只能获取500条记录，所以可爬取的数据还是比较少的，本想爬取豆瓣用户但是需要登陆认证我没有搞定，所以就改知乎了
  
  * 实现功能
@@ -54,5 +54,5 @@ Run With [StartClass](https://github.com/shanyao19940801/douban-spider/blob/mast
 >4.关于代理的获取
      <br>前面有提到过将代理获取功能分离出来的事情，所以这里就没有动态获取代理而是单独启动一个线程去反序列化之前已经获取的代理，具体请看：
      [ProxySerializeTask](https://github.com/shanyao19940801/douban-spider/blob/master/douban-spider/src/main/java/com/yao/spider/core/task/ProxySerializeTask.java)
-## v1.0.0转成web项目
+## V1.0.0转成web项目
 ### 流程图
