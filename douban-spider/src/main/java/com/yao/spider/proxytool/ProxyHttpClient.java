@@ -1,11 +1,15 @@
 package com.yao.spider.proxytool;
 
+import com.yao.spider.proxytool.entity.Proxy;
 import com.yao.spider.core.http.client.AbstractHttpClient;
+import com.yao.spider.core.util.MyIOutils;
+import com.yao.spider.core.constants.ProxyConstants;
 import com.yao.spider.proxytool.task.ProxyPageTask;
-import com.yao.spider.core.task.ProxySerializeTask;
+import com.yao.spider.proxytool.task.ProxySerializeTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
 import java.util.concurrent.*;
 
 /**
