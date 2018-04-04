@@ -35,22 +35,26 @@ Run With [StartClass](https://github.com/shanyao19940801/douban-spider/blob/mast
 ## V0.0.2 添加序列化代理功能
  为了避免每次启动都要重新爬取代理，添加一个序列化代理的功能，当下次启动时先从本地文件中获取已经序列化的代理
  * 实现技术：
+  <br>
    1.在ProxyPool中添加一个Set属性，每当一个代理测试通过可用后存入到set中，没十分钟进行一次序列化<br>
    2.采用了一个读写锁技术，这里的情景是写操作远多于读操作所以使用sychronized或者ReentrantLock对效率的影响并不是特别大
+   <br>
   ### 解耦
    今天爬虫是发现，如何爬取代理和其他爬虫功能同时运行会导致同一时间过多线程在运行，正好之前也完成了代理序列化功能所以计划后面讲爬取代理功能模块分离出来，这样也可以单独拿出来用。所以今天将代理爬取和其他功能解耦
 ## v0.0.3 添加爬取知乎用户模块
  前面有说过因为豆瓣不论以什么方式只能获取500条记录，所以可爬取的数据还是比较少的，本想爬取豆瓣用户但是需要登陆认证我没有搞定，所以就改知乎了
- *实现功能
+ 
+ * 实现功能
    爬取知乎用户
- *实现方式
+ * 实现方式
   <br>
    1.知乎用户关注列表不需要我们必须登录，这就免去了登录这块麻烦的地方；<br>
    2.通过fiddler查看获取请求api以及请求头；知乎有一个auth认证这个也可以通过谷歌浏览器来获取，获取方式如下：![获取知乎auth方法](https://github.com/shanyao19940801/douban-spider/blob/master/douban-spider/src/main/resources/img/getauth.PNG "获取知乎auth")<br>
    3.获取auth后将其放到请求头头中
-        HttpGet request = new HttpGet(url);
-        request.setHeader("authorization","oauth " + ZhiHuConfig.authorization);
+        <br>HttpGet request = new HttpGet(url);
+        <br>request.setHeader("authorization","oauth " + ZhiHuConfig.authorization);
     <br>
     4.关于代理的获取
-      
+     前面有提到过将代理获取功能分离出来的事情，所以这里就没有动态获取代理而是单独启动一个线程去反序列化之前已经获取的代理，具体请看：
+     [StartClass](https://github.com/shanyao19940801/douban-spider/blob/master/douban-spider/src/main/java/com/yao/spider/zhihu/task/ZhiHuUserListTask.java)
 ### 流程图
