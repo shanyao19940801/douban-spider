@@ -11,8 +11,11 @@ import com.yao.spider.proxytool.entity.Proxy;
 import com.yao.spider.zhihu.ZhiHuHttpClient;
 import com.yao.spider.zhihu.config.ZhiHuConfig;
 import com.yao.spider.zhihu.dao.IUserDao;
+import com.yao.spider.zhihu.dao.IUserTokenDao;
 import com.yao.spider.zhihu.dao.Impl.UserDaoImpl;
+import com.yao.spider.zhihu.dao.Impl.UserTokenDaoImpl;
 import com.yao.spider.zhihu.entity.User;
+import com.yao.spider.zhihu.entity.UserToken;
 import com.yao.spider.zhihu.parsers.ZhiHuUserParser;
 import org.apache.http.HttpHost;
 import org.apache.http.client.methods.HttpGet;
@@ -61,6 +64,7 @@ public class ZhiHuUserListTask implements Runnable{
         long requestTime = System.currentTimeMillis();
         try {
             if (ebableProxy) {
+//                logger.info("当前可用代理:" + ProxyPool.proxyQueue.size());
                 proxy = ProxyPool.proxyQueue.take();
                 HttpHost host = new HttpHost(this.proxy.getIp(),this.proxy.getPort());
                 request.setConfig(HttpClientUtil.getRequestConfigBuilder().setProxy(host).build());
@@ -69,8 +73,10 @@ public class ZhiHuUserListTask implements Runnable{
                 page = ZhiHuHttpClient.getInstance().getPage(this.url);
             }
             if (page != null && page.getStatusCode() == 200) {
+//                logger.info("Request SuccessFully：" + (requestTime - System.currentTimeMillis())/1000 + "s");
                 handPage(page);
             } else {
+//                logger.info("Request failly：" + (System.currentTimeMillis() - requestTime)/1000 + "s");
                 this.proxy.setFailureTimes(proxy.getFailureTimes() + 1);
                 retry();
             }
@@ -97,26 +103,30 @@ public class ZhiHuUserListTask implements Runnable{
                 for (int i = 0; i < listSize; i ++) {
                     logger.info(list.get(i).toString());
                 }
+                IUserTokenDao userTokenDao = new UserTokenDaoImpl();
                 for (int i = 0; i < listSize; i++) {
                     user = list.get(i);
-                    //TODO 先查询usertoken是否已经爬过
-                    if (!ZhiHuHttpClient.getInstance().getUserListDownTask().isShutdown()) {
-                        for (int j = 0, len = user.getFollowees(); j < len / 20; j++) {
-                            if (ZhiHuHttpClient.getInstance().getUserListDownTask().getQueue().size() > 888) {
-                                continue;
+                    // 先查询usertoken是否已经爬过
+                    if (userTokenDao.judgeAndInsert(new UserToken(user.getUserToken()))) {
+                        if (!ZhiHuHttpClient.getInstance().getUserListDownTask().isShutdown()) {
+                            for (int j = 0, len = user.getFollowees(); j < len / 20; j++) {
+                                if (ZhiHuHttpClient.getInstance().getUserListDownTask().getQueue().size() > 888) {
+                                    continue;
+                                }
+                                String nextUrl = String.format(ZhiHuConfig.FOLLOWEES_API, user.getUserToken(), j * 20);
+                                ZhiHuHttpClient.getInstance().getUserListDownTask().execute(new ZhiHuUserListTask(nextUrl, true, user.getUserToken()));
                             }
-                            String nextUrl = String.format(ZhiHuConfig.FOLLOWEES_API, user.getUserToken(), j * 20);
-                            ZhiHuHttpClient.getInstance().getUserListDownTask().execute(new ZhiHuUserListTask(nextUrl, true, user.getUserToken()));
                         }
                     }
-                    // TODO 将usertoken保存到数据库，避免大量重复查询
-
                 }
+                long dbstart = System.currentTimeMillis();
                 if (CommonConfig.dbEnable) {
                     IUserDao dao = new UserDaoImpl();
+                    int count = 0;
                     for (int i = 0; i < listSize; i ++) {
-                        dao.inserSelective(list.get(i));
+                        count += dao.inserSelective(list.get(i));
                     }
+                    logger.info("保存到数据库消耗时间："+ (dbstart - System.currentTimeMillis())/ 1000 + " 保存了" + count + "条");
                 }
 
             }
@@ -124,6 +134,7 @@ public class ZhiHuUserListTask implements Runnable{
     }
 
     public void retry() {
+//        logger.info("当前活跃线程数：" + ZhiHuHttpClient.getInstance().getUserListDownTask().getActiveCount());
 //        logger.info("重试" + this.userToken + "---重试次数：" + retryTimes + "---代理：" + proxy.getProxyStr());
         if (retryTimes < 5 || ZhiHuConfig.startUserToken.equals(this.userToken)) {
             ZhiHuHttpClient.getInstance().getUserListDownTask().execute(new ZhiHuUserListTask(this.url, true, this.userToken, this.retryTimes + 1));

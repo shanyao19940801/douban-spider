@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  */
 public class UserDaoImpl implements IUserDao{
     private static Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
-    public void inserSelective(User user) {
+    public int inserSelective(User user) {
         SqlSession session = MyBatiesUtils.getSqlSession();
         try {
             UserMapper mapper = session.getMapper(UserMapper.class);
@@ -22,6 +22,7 @@ public class UserDaoImpl implements IUserDao{
                 if (u == null) {
                     mapper.insertSelective(user);
                     session.commit();
+                    return 1;
                 } else {
                     mapper.updateByPrimaryKey(user);
                 }
@@ -31,5 +32,6 @@ public class UserDaoImpl implements IUserDao{
         } finally {
             session.close();
         }
+        return 0;
     }
 }

@@ -30,7 +30,7 @@ public class DoubanHttpClient extends AbstractHttpClient {
 
         downLoadMoveListExector = new ThreadPoolExecutor(100, 100, 0L,
                 TimeUnit.SECONDS,
-                new LinkedBlockingQueue<Runnable>(),
+                new LinkedBlockingQueue<Runnable>(1000),
                 new ThreadFactory() {
                     public Thread newThread(Runnable r) {
                         return new Thread(r, "downLoadMoveListExector " + r.hashCode());
@@ -39,12 +39,15 @@ public class DoubanHttpClient extends AbstractHttpClient {
 
         downLoadMoveInfoExector = new ThreadPoolExecutor(100, 100, 0L,
                 TimeUnit.SECONDS,
-                new LinkedBlockingQueue<Runnable>(),
+                new LinkedBlockingQueue<Runnable>(1000),
                 new ThreadFactory() {
                     public Thread newThread(Runnable r) {
                         return new Thread(r, "downLoadMoveInfoExector " + r.hashCode());
                     }
                 });
+        //设置baohecelve
+        downLoadMoveInfoExector.setRejectedExecutionHandler(new ThreadPoolExecutor.DiscardPolicy());
+        downLoadMoveListExector.setRejectedExecutionHandler(new ThreadPoolExecutor.DiscardPolicy());
 
     }
 

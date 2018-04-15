@@ -4,6 +4,7 @@ import com.yao.spider.core.constants.ProxyConstants;
 import com.yao.spider.core.util.MyIOutils;
 import com.yao.spider.proxytool.ProxyPool;
 import com.yao.spider.proxytool.entity.Proxy;
+import com.yao.spider.zhihu.ZhiHuHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,10 +17,16 @@ import java.util.concurrent.DelayQueue;
 public class GetProxyTask implements Runnable {
     private static Logger logger = LoggerFactory.getLogger(GetProxyTask.class);
     public void run() {
+        int wokerQueueCount = 0;
+        long finishedTaskCount = 0;
         while (true) {
+            wokerQueueCount = ZhiHuHttpClient.getInstance().getUserListDownTask().getQueue().size();
+            finishedTaskCount = ZhiHuHttpClient.getInstance().getUserListDownTask().getCompletedTaskCount();
             logger.info("进入代理管理线程");
+            logger.info("当前队列中任务数量：" + wokerQueueCount + "--- 已经完成task数量：" + finishedTaskCount);
             try {
                 Thread.currentThread().sleep(30000);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
