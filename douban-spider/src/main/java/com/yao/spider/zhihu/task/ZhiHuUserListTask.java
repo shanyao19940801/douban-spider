@@ -110,9 +110,6 @@ public class ZhiHuUserListTask implements Runnable{
                     if (userTokenDao.judgeAndInsert(new UserToken(user.getUserToken()))) {
                         if (!ZhiHuHttpClient.getInstance().getUserListDownTask().isShutdown()) {
                             for (int j = 0, len = user.getFollowees(); j < len / 20; j++) {
-                                if (ZhiHuHttpClient.getInstance().getUserListDownTask().getQueue().size() > 888) {
-                                    continue;
-                                }
                                 String nextUrl = String.format(ZhiHuConfig.FOLLOWEES_API, user.getUserToken(), j * 20);
                                 ZhiHuHttpClient.getInstance().getUserListDownTask().execute(new ZhiHuUserListTask(nextUrl, true, user.getUserToken()));
                             }
