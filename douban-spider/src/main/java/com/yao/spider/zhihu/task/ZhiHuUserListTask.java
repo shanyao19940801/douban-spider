@@ -5,6 +5,7 @@ import com.yao.spider.core.entity.Page;
 import com.yao.spider.core.factory.ParserFactory;
 import com.yao.spider.core.http.util.HttpClientUtil;
 import com.yao.spider.core.parser.IPageParser;
+import com.yao.spider.core.task.AbstractTask;
 import com.yao.spider.core.util.ProxyUtil;
 import com.yao.spider.proxytool.ProxyPool;
 import com.yao.spider.proxytool.entity.Proxy;
@@ -25,7 +26,7 @@ import java.util.List;
 /**
  * Created by user on 2018/3/28.
  */
-public class ZhiHuUserListTask implements Runnable{
+public class ZhiHuUserListTask extends AbstractTask<ZhiHuUserListTask> implements Runnable{
     private static final Logger logger = LoggerFactory.getLogger(ZhiHuUserListTask.class);
     private String url;
     private Proxy proxy;
@@ -36,14 +37,15 @@ public class ZhiHuUserListTask implements Runnable{
     private int retryTimes;
 
 
+/*    private ZhiHuUserListTask() {
+        super.httpClient =  ZhiHuHttpClient.getInstance();
+    }*/
+
     public ZhiHuUserListTask(String url, boolean enableProxy) {
-        this.url = url;
-        this.ebableProxy = enableProxy;
+        this(url,enableProxy,null);
     }
     public ZhiHuUserListTask(String url, boolean enableProxy, String userToken) {
-        this.url = url;
-        this.ebableProxy = enableProxy;
-        this.userToken = userToken;
+        this(url, enableProxy, userToken, 0);
     }
 
     public ZhiHuUserListTask(String url, boolean enableProxy, String userToken, int retryTimes) {
@@ -51,6 +53,7 @@ public class ZhiHuUserListTask implements Runnable{
         this.ebableProxy = enableProxy;
         this.userToken = userToken;
         this.retryTimes = retryTimes;
+        super.httpClient = ZhiHuHttpClient.getInstance();
     }
 
 
@@ -69,7 +72,7 @@ public class ZhiHuUserListTask implements Runnable{
                 page = ZhiHuHttpClient.getInstance().getPage(this.url);
             }
             if (page != null && page.getStatusCode() == 200) {
-                handPage(page);
+                handle(page);
             } else {
                 this.proxy.setFailureTimes(proxy.getFailureTimes() + 1);
                 retry();
@@ -87,7 +90,7 @@ public class ZhiHuUserListTask implements Runnable{
         }
     }
 
-    public void handPage(Page page) {
+    public void handle(Page page) {
         IPageParser pageParser = ParserFactory.getParserClass(ZhiHuUserParser.class);
         if (pageParser != null) {
             List<User> list = pageParser.parser(page.getHtml());
@@ -129,4 +132,6 @@ public class ZhiHuUserListTask implements Runnable{
             ZhiHuHttpClient.getInstance().getUserListDownTask().execute(new ZhiHuUserListTask(this.url, true, this.userToken, this.retryTimes + 1));
         }
     }
+
+
 }
