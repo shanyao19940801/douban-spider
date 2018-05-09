@@ -11,7 +11,19 @@ import java.io.IOException;
 /**
  * Created by 单耀 on 2018/1/27.
  */
-public abstract class AbstractHttpClient {
+public class BaseHttpClient {
+    private static BaseHttpClient instance;
+
+    public static BaseHttpClient getInstance() {
+        if (instance == null) {
+            synchronized (BaseHttpClient.class) {
+                if (instance == null) {
+                    instance = new BaseHttpClient();
+                }
+            }
+        }
+        return instance;
+    }
 
     public Page getPage(String url) throws IOException {
         return getPage(url, "UTF-8");

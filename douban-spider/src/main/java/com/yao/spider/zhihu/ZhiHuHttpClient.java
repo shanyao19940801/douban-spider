@@ -1,9 +1,8 @@
 package com.yao.spider.zhihu;
 
-import com.yao.spider.core.http.client.AbstractHttpClient;
+import com.yao.spider.core.http.client.BaseHttpClient;
 import com.yao.spider.zhihu.config.ZhiHuConfig;
 import com.yao.spider.zhihu.task.ZhiHuUserListTask;
-import org.apache.http.client.methods.HttpGet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by user on 2018/3/28.
  */
-public class ZhiHuHttpClient extends AbstractHttpClient{
+public class ZhiHuHttpClient extends BaseHttpClient {
     private static final Logger logger = LoggerFactory.getLogger(ZhiHuHttpClient.class);
     private static ZhiHuHttpClient zhiHuHttpClient;
 

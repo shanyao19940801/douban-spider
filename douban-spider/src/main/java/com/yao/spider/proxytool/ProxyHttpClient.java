@@ -1,6 +1,6 @@
 package com.yao.spider.proxytool;
 
-import com.yao.spider.core.http.client.AbstractHttpClient;
+import com.yao.spider.core.http.client.BaseHttpClient;
 import com.yao.spider.proxytool.task.ProxyPageTask;
 import com.yao.spider.core.task.ProxySerializeTask;
 import org.slf4j.Logger;
@@ -11,7 +11,7 @@ import java.util.concurrent.*;
 /**
  * Created by 单耀 on 2018/1/27.
  */
-public class ProxyHttpClient extends AbstractHttpClient {
+public class ProxyHttpClient extends BaseHttpClient {
     private static Logger logger = LoggerFactory.getLogger(ProxyHttpClient.class);
     public static volatile boolean isContinue = true;
     private volatile static ProxyHttpClient instance;

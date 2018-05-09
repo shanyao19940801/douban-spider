@@ -56,7 +56,6 @@ public class ZhiHuUserListTask extends AbstractTask<ZhiHuUserListTask> implement
         this.ebableProxy = enableProxy;
         this.userToken = userToken;
         this.retryTimes = retryTimes;
-        super.httpClient = ZhiHuHttpClient.getInstance();
     }
 
 
@@ -76,12 +75,7 @@ public class ZhiHuUserListTask extends AbstractTask<ZhiHuUserListTask> implement
                 page = ZhiHuHttpClient.getInstance().getPage(this.url);
             }
             if (page != null && page.getStatusCode() == 200) {
-<<<<<<< HEAD
-//                logger.info("Request SuccessFully：" + (requestTime - System.currentTimeMillis())/1000 + "s");
-                handPage(page);
-=======
                 handle(page);
->>>>>>> a3dc5c99146786b066e44d6153222c3bffd4568f
             } else {
 //                logger.info("Request failly：" + (System.currentTimeMillis() - requestTime)/1000 + "s");
                 this.proxy.setFailureTimes(proxy.getFailureTimes() + 1);

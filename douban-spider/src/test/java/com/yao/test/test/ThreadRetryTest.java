@@ -1,6 +1,6 @@
 package com.yao.test.test;
 
-import com.yao.spider.core.http.client.AbstractHttpClient;
+import com.yao.spider.core.http.client.BaseHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by 单耀 on 2018/1/30.
  */
-public class ThreadRetryTest extends AbstractHttpClient {
+public class ThreadRetryTest extends BaseHttpClient {
     private static Logger logger = LoggerFactory.getLogger(ThreadRetryTest.class);
     private static ThreadRetryTest instance;
 

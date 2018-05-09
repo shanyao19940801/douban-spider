@@ -1,7 +1,7 @@
 package com.yao.spider.douban;
 
+import com.yao.spider.core.http.client.BaseHttpClient;
 import com.yao.spider.douban.task.move.StartWithTypeTask;
-import com.yao.spider.core.http.client.AbstractHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by 单耀 on 2018/1/30.
  */
-public class DoubanHttpClient extends AbstractHttpClient {
+public class DoubanHttpClient extends BaseHttpClient {
     private static Logger logger = LoggerFactory.getLogger(DoubanHttpClient.class);
     private static DoubanHttpClient instance;
 
