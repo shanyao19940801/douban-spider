@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yao.spider.zhihu.mapper.UserTokenMapper">
+  <resultMap id="BaseResultMap" type="com.yao.spider.zhihu.entity.UserToken">
+    <id column="user_token" jdbcType="VARCHAR" property="userToken" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    user_token
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from usertoken
+    where user_token = #{userToken,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from usertoken
+    where user_token = #{userToken,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yao.spider.zhihu.entity.UserToken">
+    insert into usertoken (user_token)
+    values (#{userToken,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yao.spider.zhihu.entity.UserToken">
+    insert into usertoken
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userToken != null">
+        user_token,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userToken != null">
+        #{userToken,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
