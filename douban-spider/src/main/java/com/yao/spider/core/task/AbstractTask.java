@@ -27,6 +27,10 @@ public abstract class AbstractTask<T> implements Runnable{
         this.getPage(url, isUseProxy);
     }*/
 
+    public AbstractTask() {
+        System.out.println("aaaaa");
+    }
+
     @Deprecated
     public void getPage(RequestParams requestParams) {
 
