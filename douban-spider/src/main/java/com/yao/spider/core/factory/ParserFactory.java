@@ -8,6 +8,7 @@ import com.yao.spider.core.parser.IPageParser;
 public class ParserFactory {
     public static IPageParser getParserClass(Class clzz) {
         try {
+            //利用java放射机制
             return (IPageParser) clzz.newInstance();
         } catch (InstantiationException e) {
             e.printStackTrace();

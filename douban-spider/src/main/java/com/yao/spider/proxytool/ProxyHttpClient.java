@@ -2,7 +2,7 @@ package com.yao.spider.proxytool;
 
 import com.yao.spider.core.http.client.BaseHttpClient;
 import com.yao.spider.proxytool.task.ProxyPageTask;
-import com.yao.spider.core.task.ProxySerializeTask;
+import com.yao.spider.proxytool.task.ProxySerializeTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

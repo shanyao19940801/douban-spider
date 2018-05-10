@@ -23,15 +23,15 @@ public abstract class AbstractTask<T> implements Runnable{
     protected Proxy currentProxy;
     public int retryTimes;
 
-    public void getPage(String url) {
+/*    protected void getPage(String url) {
         this.getPage(url, isUseProxy);
-    }
+    }*/
 
     @Deprecated
     public void getPage(RequestParams requestParams) {
 
     }
-    public void getPage(String url, boolean isUseProxy) {
+    protected void getPage(String url) {
         HttpGet request = new HttpGet(url);
         try {
             Page page = null;

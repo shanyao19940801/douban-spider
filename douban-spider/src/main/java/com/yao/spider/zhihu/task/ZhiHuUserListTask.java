@@ -20,7 +20,6 @@ import com.yao.spider.zhihu.entity.UserToken;
 import com.yao.spider.zhihu.parsers.ZhiHuUserParser;
 import org.apache.http.HttpHost;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpRequestBase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,21 +30,12 @@ import java.util.List;
  */
 public class ZhiHuUserListTask extends AbstractTask<ZhiHuUserListTask> implements Runnable{
     private static final Logger logger = LoggerFactory.getLogger(ZhiHuUserListTask.class);
-    private Proxy proxy;
-    private HttpRequestBase request;
     private String userToken;
-    //同一个token重试次数记录，如果超过五次就放弃不在重试
-
-
-/*    private ZhiHuUserListTask() {
-        super.httpClient =  ZhiHuHttpClient.getInstance();
-    }*/
-
-    public ZhiHuUserListTask(String url, boolean enableProxy) {
-        this(url,enableProxy,null);
+    public ZhiHuUserListTask(String url, boolean isUseProxy) {
+        this(url,isUseProxy,null);
     }
-    public ZhiHuUserListTask(String url, boolean enableProxy, String userToken) {
-        this(url, enableProxy, userToken, 0);
+    public ZhiHuUserListTask(String url, boolean isUseProxy, String userToken) {
+        this(url, isUseProxy, userToken, 0);
     }
 
     public ZhiHuUserListTask(String url, boolean enableProxy, String userToken, int retryTimes) {
@@ -57,15 +47,15 @@ public class ZhiHuUserListTask extends AbstractTask<ZhiHuUserListTask> implement
 
 
     public void run() {
-        HttpGet request = new HttpGet(url);
+        getPage(url);
+        /*HttpGet request = new HttpGet(url);
         request.setHeader("authorization","oauth " + ZhiHuConfig.authorization);
         Page page = null;
-        long requestTime = System.currentTimeMillis();
         try {
             if (isUseProxy) {
 //                logger.info("当前可用代理:" + ProxyPool.proxyQueue.size());
-                proxy = ProxyPool.proxyQueue.take();
-                HttpHost host = new HttpHost(this.proxy.getIp(),this.proxy.getPort());
+                this.currentProxy = ProxyPool.proxyQueue.take();
+                HttpHost host = new HttpHost(this.currentProxy.getIp(),this.currentProxy.getPort());
                 request.setConfig(HttpClientUtil.getRequestConfigBuilder().setProxy(host).build());
                 page = ZhiHuHttpClient.getInstance().getPage(request);
             } else {
@@ -75,20 +65,20 @@ public class ZhiHuUserListTask extends AbstractTask<ZhiHuUserListTask> implement
                 handle(page);
             } else {
 //                logger.info("Request failly：" + (System.currentTimeMillis() - requestTime)/1000 + "s");
-                this.proxy.setFailureTimes(proxy.getFailureTimes() + 1);
+                this.currentProxy.setFailureTimes(currentProxy.getFailureTimes() + 1);
                 retry();
             }
         } catch (Exception e) {
-            proxy.setFailureTimes(proxy.getFailureTimes() + 1);
+            currentProxy.setFailureTimes(currentProxy.getFailureTimes() + 1);
             retry();
         } finally {
             if (request != null) {
                 request.releaseConnection();
             }
-            if (proxy != null && !ProxyUtil.isDiscardProxy(proxy)) {
-                ProxyPool.proxyQueue.add(proxy);
+            if (currentProxy != null && !ProxyUtil.isDiscardProxy(currentProxy)) {
+                ProxyPool.proxyQueue.add(currentProxy);
             }
-        }
+        }*/
     }
 
     public void handle(Page page) {
@@ -104,7 +94,7 @@ public class ZhiHuUserListTask extends AbstractTask<ZhiHuUserListTask> implement
                 IUserTokenDao userTokenDao = new UserTokenDaoImpl();
                 for (int i = 0; i < listSize; i++) {
                     user = list.get(i);
-                    // 先查询usertoken是否已经爬过
+                    // 先查询usertoken是否已经爬过 //TODO 改为redis存储
                     if (userTokenDao.judgeAndInsert(new UserToken(user.getUserToken()))) {
                         if (!ZhiHuHttpClient.getInstance().getUserListDownTask().isShutdown()) {
                             for (int j = 0, len = user.getFollowees(); j < len / 20; j++) {
@@ -130,7 +120,7 @@ public class ZhiHuUserListTask extends AbstractTask<ZhiHuUserListTask> implement
 
     public void retry() {
 //        logger.info("当前活跃线程数：" + ZhiHuHttpClient.getInstance().getUserListDownTask().getActiveCount());
-//        logger.info("重试" + this.userToken + "---重试次数：" + retryTimes + "---代理：" + proxy.getProxyStr());
+//        logger.info("重试" + this.userToken + "---重试次数：" + retryTimes + "---代理：" + currentProxy.getProxyStr());
         if (retryTimes < 5 || ZhiHuConfig.startUserToken.equals(this.userToken)) {
             ZhiHuHttpClient.getInstance().getUserListDownTask().execute(new ZhiHuUserListTask(this.url, true, this.userToken, this.retryTimes + 1));
         }
