@@ -31,13 +31,10 @@ import java.util.List;
  */
 public class ZhiHuUserListTask extends AbstractTask<ZhiHuUserListTask> implements Runnable{
     private static final Logger logger = LoggerFactory.getLogger(ZhiHuUserListTask.class);
-    private String url;
     private Proxy proxy;
-    private boolean ebableProxy;
     private HttpRequestBase request;
     private String userToken;
     //同一个token重试次数记录，如果超过五次就放弃不在重试
-    private int retryTimes;
 
 
 /*    private ZhiHuUserListTask() {
@@ -53,7 +50,7 @@ public class ZhiHuUserListTask extends AbstractTask<ZhiHuUserListTask> implement
 
     public ZhiHuUserListTask(String url, boolean enableProxy, String userToken, int retryTimes) {
         this.url = url;
-        this.ebableProxy = enableProxy;
+        this.isUseProxy = enableProxy;
         this.userToken = userToken;
         this.retryTimes = retryTimes;
     }
@@ -65,7 +62,7 @@ public class ZhiHuUserListTask extends AbstractTask<ZhiHuUserListTask> implement
         Page page = null;
         long requestTime = System.currentTimeMillis();
         try {
-            if (ebableProxy) {
+            if (isUseProxy) {
 //                logger.info("当前可用代理:" + ProxyPool.proxyQueue.size());
                 proxy = ProxyPool.proxyQueue.take();
                 HttpHost host = new HttpHost(this.proxy.getIp(),this.proxy.getPort());

@@ -1,6 +1,7 @@
 package com.yao.spider.core.task;
 
 import com.yao.spider.core.entity.Page;
+import com.yao.spider.core.entity.RequestParams;
 import com.yao.spider.core.http.client.BaseHttpClient;
 import com.yao.spider.core.http.util.HttpClientUtil;
 import com.yao.spider.core.util.ProxyUtil;
@@ -18,19 +19,19 @@ public abstract class AbstractTask<T> implements Runnable{
 
     protected boolean isUseProxy;
     protected String url;
-//    protected BaseHttpClient httpClient; //具体实例化放在子类中 //TODO 这种写法错误，因为子类需要拓展新的方法这样些就无法使用拓展的方法了
     private BaseHttpClient httpClient = BaseHttpClient.getInstance();
     protected Proxy currentProxy;
-    public AtomicInteger retryTimes;
+    public int retryTimes;
 
     public void getPage(String url) {
         this.getPage(url, isUseProxy);
     }
 
-    public void getPage(String url, boolean isUseProxy) {
-        this.url = url;
-        this.isUseProxy = isUseProxy;
+    @Deprecated
+    public void getPage(RequestParams requestParams) {
 
+    }
+    public void getPage(String url, boolean isUseProxy) {
         HttpGet request = new HttpGet(url);
         try {
             Page page = null;
