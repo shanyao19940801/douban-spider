@@ -14,6 +14,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class AbstractTask<T> implements Runnable{
@@ -30,7 +31,9 @@ public abstract class AbstractTask<T> implements Runnable{
     }*/
 
     public AbstractTask() {
-        logger = LoggerFactory.getLogger(ZhiHuUserListTask.class);
+        //通过反射获取泛型的类类型
+        Class<T> entityClass = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        logger = LoggerFactory.getLogger(entityClass);
         System.out.println("aaaaa");
     }
 
