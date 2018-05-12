@@ -5,8 +5,10 @@ import com.yao.spider.core.entity.RequestParams;
 import com.yao.spider.core.http.client.BaseHttpClient;
 import com.yao.spider.core.http.util.HttpClientUtil;
 import com.yao.spider.core.util.ProxyUtil;
+import com.yao.spider.douban.task.DouBanInfoListPageTask;
 import com.yao.spider.proxytool.ProxyPool;
 import com.yao.spider.proxytool.entity.Proxy;
+import com.yao.spider.zhihu.task.ZhiHuUserListTask;
 import org.apache.http.HttpHost;
 import org.apache.http.client.methods.HttpGet;
 import org.slf4j.Logger;
@@ -15,7 +17,7 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class AbstractTask<T> implements Runnable{
-    Logger logger = LoggerFactory.getLogger(AbstractTask.class);//TODO 想办法实现用子类的名称打印log
+    private static Logger logger = null;//TODO 想办法实现用子类的名称打印log
 
     protected boolean isUseProxy;
     protected String url;
@@ -28,6 +30,7 @@ public abstract class AbstractTask<T> implements Runnable{
     }*/
 
     public AbstractTask() {
+        logger = LoggerFactory.getLogger(ZhiHuUserListTask.class);
         System.out.println("aaaaa");
     }
 
@@ -35,6 +38,11 @@ public abstract class AbstractTask<T> implements Runnable{
     public void getPage(RequestParams requestParams) {
 
     }
+
+    public void test() {
+        logger.info("ceshi");
+    }
+
     protected void getPage(String url) {
         HttpGet request = new HttpGet(url);
         try {
