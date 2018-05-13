@@ -89,6 +89,8 @@ Run With [StartClass](https://github.com/shanyao19940801/douban-spider/blob/mast
 以其中一个任务类为例，画出结构图
 ![任务类结构图](https://github.com/shanyao19940801/douban-spider/blob/master/douban-spider/image/spider01.PNG) 
 
+具体类：[AbstractTask](https://github.com/shanyao19940801/douban-spider/blob/master/douban-spider/src/main/java/com/yao/spider/core/task/AbstractTask.java)、[ZhiHuUserListTask](https://github.com/shanyao19940801/douban-spider/blob/master/douban-spider/src/main/java/com/yao/spider/zhihu/task/ZhiHuUserListTask.java)
+
 ### 流程图
 
 ## 每天必须有产出，哪怕只是一行代码，半页书
