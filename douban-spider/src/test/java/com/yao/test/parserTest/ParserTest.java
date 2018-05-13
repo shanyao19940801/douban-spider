@@ -2,6 +2,7 @@ package com.yao.test.parserTest;
 
 import com.yao.spider.core.entity.Page;
 import com.yao.spider.core.factory.ParserFactory;
+import com.yao.spider.core.http.client.BaseHttpClient;
 import com.yao.spider.core.parser.IPageParser;
 import com.yao.spider.douban.DoubanHttpClient;
 import com.yao.spider.douban.entity.move.Move;
@@ -22,7 +23,7 @@ public class ParserTest {
         url += "?tag=%E7%83%AD%E9%97%A8&from=gaia";
         try {
             IPageParser parser = ParserFactory.getParserClass(MoveParserDeprecated.class);
-            Page page = DoubanHttpClient.getInstance().getPage(url);
+            Page page = BaseHttpClient.getInstance().getPage(url);
             parser.parser(page.getHtml());
         } catch (IOException e) {
             e.printStackTrace();

@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
 
         ZhiHuUserListTask task = new ZhiHuUserListTask("",true);
-        task.test();
+//        task.test();
     }
 
 }
