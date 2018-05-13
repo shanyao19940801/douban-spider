@@ -91,6 +91,18 @@ Run With [StartClass](https://github.com/shanyao19940801/douban-spider/blob/mast
 
 具体类：[AbstractTask](https://github.com/shanyao19940801/douban-spider/blob/master/douban-spider/src/main/java/com/yao/spider/core/task/AbstractTask.java)、[ZhiHuUserListTask](https://github.com/shanyao19940801/douban-spider/blob/master/douban-spider/src/main/java/com/yao/spider/zhihu/task/ZhiHuUserListTask.java)
 
+* 重构过程中遇到的问题以及解决方式
+
+  **问题：**在抽象类中打印日志，如何确定是哪个子任务出错以便排查错误？<br>
+  **解决方法：**利用泛型将子类出入抽象类，然后通过放射机制获取子类类型，在通过这个类型来生成日志打印类实例<br>
+具体实现代码请看[AbstractTask](https://github.com/shanyao19940801/douban-spider/blob/master/douban-spider/src/main/java/com/yao/spider/core/task/AbstractTask.java)类中的代码段
+    
+
+            //通过反射获取泛型的类类型
+        Class<T> entityClass = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        //这里是为了在抽象类中打印日志时可以显示其子类名，这样有利于错误排查
+        logger = LoggerFactory.getLogger(entityClass);
+
 ### 流程图
 
 ## 每天必须有产出，哪怕只是一行代码，半页书
