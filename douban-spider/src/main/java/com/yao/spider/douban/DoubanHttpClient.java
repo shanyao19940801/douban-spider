@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by 单耀 on 2018/1/30.
  */
-public class DoubanHttpClient extends BaseHttpClient {
+public class DoubanHttpClient  {
     private static Logger logger = LoggerFactory.getLogger(DoubanHttpClient.class);
     private static DoubanHttpClient instance;
 

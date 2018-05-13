@@ -16,8 +16,8 @@ import org.slf4j.LoggerFactory;
  * TODO
  */
 @Deprecated
-public abstract class AbstractTask implements Runnable {//TODO 改成泛型，这样打印日志会更佳明显有助排查错误
-    private static Logger logger = LoggerFactory.getLogger(AbstractTask.class);
+public abstract class AbstractTaskDeprecated implements Runnable {//TODO 改成泛型，这样打印日志会更佳明显有助排查错误
+    private static Logger logger = LoggerFactory.getLogger(AbstractTaskDeprecated.class);
     protected static DoubanHttpClient doubanHttpClient = DoubanHttpClient.getInstance();
     protected boolean isUseProxy;
     protected String url;
@@ -39,9 +39,9 @@ public abstract class AbstractTask implements Runnable {//TODO 改成泛型，�
                 currentProxy = ProxyPool.proxyQueue.take();
                 HttpHost proxy = new HttpHost(currentProxy.getIp(), currentProxy.getPort());
                 request.setConfig(HttpClientUtil.getRequestConfigBuilder().setProxy(proxy).build());
-                page = doubanHttpClient.getPage(request);
+//                page = doubanHttpClient.getPage(request);
             } else {
-                page = doubanHttpClient.getPage(url);
+//                page = doubanHttpClient.getPage(url);
             }
             if (page != null && page.getStatusCode() == 200) {
                 if (currentProxy != null)

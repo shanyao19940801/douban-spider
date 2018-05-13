@@ -22,7 +22,7 @@ public abstract class AbstractTask<T> implements Runnable{
 
     protected boolean isUseProxy;
     protected String url;
-    private BaseHttpClient httpClient = BaseHttpClient.getInstance();
+    protected BaseHttpClient httpClient = BaseHttpClient.getInstance();
     protected Proxy currentProxy;
     public int retryTimes;
 

@@ -1,7 +1,8 @@
 package com.yao.spider.douban.task.move;
 
+import com.yao.spider.core.task.AbstractTask;
+import com.yao.spider.douban.DoubanHttpClient;
 import com.yao.spider.douban.constants.DBConstants;
-import com.yao.spider.douban.task.AbstractTask;
 import com.yao.spider.douban.task.DouBanInfoListPageTask;
 import com.yao.spider.core.entity.Page;
 import net.sf.json.JSONObject;
@@ -11,13 +12,14 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by user on 2018/2/8.
  */
-public class SpiderWithTypeTask extends AbstractTask implements Runnable {
+public class SpiderWithTypeTask extends AbstractTask<SpiderWithTypeTask> implements Runnable {
     private static Logger logger = LoggerFactory.getLogger(SpiderWithTypeTask.class);
     private String typeName;
     private String typeValue;
     private int currentPersent;
     private int currentStart;
     private Page page;
+    private DoubanHttpClient doubanHttpClient = DoubanHttpClient.getInstance();
 
     public SpiderWithTypeTask(String typeName, String typeValue, boolean isUseProxy) {
         this.typeName = typeName;
