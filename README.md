@@ -66,9 +66,29 @@ Run With [StartClass](https://github.com/shanyao19940801/douban-spider/blob/mast
 
 
 # V2.0.0重构代码
-最近在学习设计模式，所以就想着将之前写的代码重构一遍，提高代码质量，增加其可拓展性，老的版本代码我放到分支了
+最近在学习设计模式，所以就想着将之前写的代码重构一遍，提高代码质量，增加其可拓展性，减少代码冗余老的版本代码我放到分支了
 <br>
-重构代码我会尽量区划一些UML设计图
+重构代码我会尽量区划一些UML设计图<br>
+
+### 设计模式**六个基本原则**
+单一职责原则（Single Responsibility Principle,SRP<br>
+开闭原则（Open-Closed Principle,OCP）<br>
+里氏替换原则（Liskov Substitution Principle,LSP）<br>
+依赖倒置原则（Dependency Inversion Principle,DIP）<br>
+接口隔离原则（Interface Segregation Principle,ISP）<br>
+迪米特法则（Law of Demeter,LoD）
+
+**我目前水平有限只能按照自己的理解尽量把代码质量重构的更高，其中肯定会有很多不合理甚至错误的地方请谅解**
+
+* 重构代码一
+
+**减少代码冗余，减低耦合度**<br>
+对爬取任务代码进行重构，以前的任务代码中有很多重复代码，例如获取任务这段代码每个下载任务都会写一段同样的代码，这里我将重复的代码、属性抽象出来放到抽象类中，同时使用到了**魔板模式**设计模式
+
+* UML结构图
+以其中一个任务类为例，画出结构图
+![任务类结构图](https://github.com/shanyao19940801/douban-spider/blob/master/douban-spider/image/spider01.PNG) 
+
 ### 流程图
 
 ## 每天必须有产出，哪怕只是一行代码，半页书
