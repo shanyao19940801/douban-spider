@@ -1,6 +1,5 @@
 package com.yao.spider.douban;
 
-import com.yao.spider.core.http.client.BaseHttpClient;
 import com.yao.spider.douban.task.move.StartWithTypeTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
