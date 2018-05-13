@@ -33,17 +33,13 @@ public abstract class AbstractTask<T> implements Runnable{
     public AbstractTask() {
         //通过反射获取泛型的类类型
         Class<T> entityClass = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        //这里是为了在抽象类中打印日志时可以显示其子类名，这样有利于错误排查
         logger = LoggerFactory.getLogger(entityClass);
-        System.out.println("aaaaa");
     }
 
     @Deprecated
     public void getPage(RequestParams requestParams) {
 
-    }
-
-    public void test() {
-        logger.info("ceshi");
     }
 
     protected void getPage(String url) {

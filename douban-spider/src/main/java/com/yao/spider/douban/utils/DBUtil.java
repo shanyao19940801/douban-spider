@@ -1,5 +1,6 @@
 package com.yao.spider.douban.utils;
 
+import com.yao.spider.core.http.client.BaseHttpClient;
 import com.yao.spider.douban.DoubanHttpClient;
 import com.yao.spider.douban.constants.DBConstants;
 import com.yao.spider.core.entity.Page;
@@ -27,7 +28,7 @@ public class DBUtil {
                 if ("move".equals(type)) {
                     try {
                         String url = String.format(DBConstants.MOVE_START_URL_TYPE, URLEncoder.encode(DBConstants.MOVE_START_TYPE_NAME, "UTF-8"), DBConstants.MOVE_START_TYPE_VALUE);
-                        Page page = DoubanHttpClient.getInstance().getPage(url);
+                        Page page = BaseHttpClient.getInstance().getPage(url);
                         if (page != null && page.getStatusCode() == 200 && !"".equals(page.getHtml())) {
                             return getTypeMap(type, page.getHtml());
                         }
