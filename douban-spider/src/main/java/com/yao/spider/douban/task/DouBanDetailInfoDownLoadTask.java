@@ -28,9 +28,6 @@ import java.util.List;
 public class DouBanDetailInfoDownLoadTask extends AbstractTask<DouBanInfoListPageTask> implements Runnable {
     private static Logger logger = LoggerFactory.getLogger(DouBanInfoListPageTask.class);
     private Move move;
-    private boolean isUseProxy;
-    private Proxy currentProxy;
-    private DoubanHttpClient doubanHttpClient = DoubanHttpClient.getInstance();
     private IMoveDao dao = new MoveDaoImpl();
 
     public DouBanDetailInfoDownLoadTask(Move move, boolean isUseProxy) {

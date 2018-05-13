@@ -43,38 +43,6 @@ public class DouBanInfoListPageTask extends AbstractTask<DouBanInfoListPageTask>
 
     public void run() {
         getPage(url);
-        /*HttpGet request = new HttpGet(url);
-        try {
-            Page page = null;
-            if (isUseProxy) {
-                currentProxy = ProxyPool.proxyQueue.take();
-                HttpHost host =new HttpHost(this.currentProxy.getIp(), this.currentProxy.getPort());
-                request.setConfig(HttpClientUtil.getRequestConfigBuilder().setProxy(host).build());
-                page = doubanHttpClient.getPage(request);
-            } else {
-               page = doubanHttpClient.getPage(url);
-            }
-            if (page != null && page.getStatusCode() == 200) {
-                currentProxy.setSuccessfulTimes(currentProxy.getSuccessfulTimes() + 1);
-                handle(page);
-            } else {
-                currentProxy.setFailureTimes(currentProxy.getFailureTimes() + 1);
-                retry();
-            }
-        } catch (Exception e) {
-            currentProxy.setFailureTimes(currentProxy.getFailureTimes() + 1);
-            retry();
-        } finally {
-            if (request != null) {
-                request.releaseConnection();
-            }
-
-            if (currentProxy != null && !ProxyUtil.isDiscardProxy(currentProxy)){
-                ProxyPool.proxyQueue.add(currentProxy);
-            } else {
-                logger.info("丢弃代理：" + currentProxy.getProxyStr());
-            }
-        }*/
     }
 
 
