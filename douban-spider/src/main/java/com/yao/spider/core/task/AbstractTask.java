@@ -24,7 +24,7 @@ public abstract class AbstractTask<T> implements Runnable{
     protected String url;
     protected BaseHttpClient httpClient = BaseHttpClient.getInstance();
     protected Proxy currentProxy;
-    public int retryTimes;
+    protected int retryTimes;
 
 /*    protected void getPage(String url) {
         this.getPage(url, isUseProxy);

@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * Created by user on 2018/3/28.
  */
-public class ZhiHuUserListTask extends AbstractTask<ZhiHuUserListTask> implements Runnable{
+public class ZhiHuUserListTask extends AbstractTask<ZhiHuUserListTask> {
     private static final Logger logger = LoggerFactory.getLogger(ZhiHuUserListTask.class);
     private String userToken;
     public ZhiHuUserListTask(String url, boolean isUseProxy) {

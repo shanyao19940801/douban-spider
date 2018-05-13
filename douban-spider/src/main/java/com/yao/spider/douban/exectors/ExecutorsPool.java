@@ -5,7 +5,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 /**
  * Created by shanyao on 2018/5/13.
  */
-public class ExecutorsPool { //TODO 这样写好像不行
+public class ExecutorsPool { //TODO 这样写好像不行？
 
     private ThreadPoolExecutor downLoadMoveListExector;
     private ThreadPoolExecutor downLoadMoveInfoExector;
