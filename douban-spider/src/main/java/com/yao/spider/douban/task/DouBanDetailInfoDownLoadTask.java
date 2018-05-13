@@ -1,6 +1,8 @@
 package com.yao.spider.douban.task;
 
 import com.yao.spider.core.factory.ParserFactory;
+import com.yao.spider.core.task.*;
+import com.yao.spider.core.task.AbstractTask;
 import com.yao.spider.douban.DoubanHttpClient;
 import com.yao.spider.douban.dao.IMoveDao;
 import com.yao.spider.douban.dao.Impl.MoveDaoImpl;
@@ -23,7 +25,7 @@ import java.util.List;
  * Created by 单耀 on 2018/1/28.
  * 电影详细信息下载任务
  */
-public class DouBanDetailInfoDownLoadTask implements Runnable {
+public class DouBanDetailInfoDownLoadTask extends AbstractTask<DouBanInfoListPageTask> implements Runnable {
     private static Logger logger = LoggerFactory.getLogger(DouBanInfoListPageTask.class);
     private Move move;
     private boolean isUseProxy;
@@ -34,50 +36,18 @@ public class DouBanDetailInfoDownLoadTask implements Runnable {
     public DouBanDetailInfoDownLoadTask(Move move, boolean isUseProxy) {
         this.move = move;
         this.isUseProxy = isUseProxy;
+        if (move != null) super.url = move.getUrl();
     }
 
     public void run() {
-        if (move!= null){
-            //组装请求url，通过代理获取信息
-            Page page = new Page();
-            HttpGet request = new HttpGet(move.getUrl());
-            try {
-                if (isUseProxy) {
-                    currentProxy = ProxyPool.proxyQueue.take();
-                    HttpHost proxy = new HttpHost(currentProxy.getIp(), currentProxy.getPort());
-                    request.setConfig(HttpClientUtil.getRequestConfigBuilder().setProxy(proxy).build());
-                    page = doubanHttpClient.getPage(request);
-
-                } else  {
-                    page = doubanHttpClient.getPage(move.getUrl());
-                }
-
-                if (page!= null && page.getStatusCode() == 200) {
-                    currentProxy.setSuccessfulTimes(currentProxy.getSuccessfulTimes() + 1);
-                    handle(page);
-                } else {
-                    currentProxy.setFailureTimes(currentProxy.getFailureTimes() + 1);
-                    retry();
-                }
-            } catch (Exception e) {
-                currentProxy.setFailureTimes(currentProxy.getFailureTimes() + 1);
-            } finally {
-                if (request != null) {
-                    request.releaseConnection();
-                }
-                if (currentProxy != null && !ProxyUtil.isDiscardProxy(currentProxy)) {
-                    ProxyPool.proxyQueue.add(currentProxy);
-                }
-            }
-
-        }
+        getPage(url);
     }
 
-    private void retry() {
+    public void retry() {
 
     }
 
-    private void handle(Page page) {
+    public void handle(Page page) {
         IPageParser parser = ParserFactory.getParserClass(MoveDetailInfoParser.class);
         List<Move> list = parser.parser(page.getHtml());
         if (list != null && list.size() > 0) {
