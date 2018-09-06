@@ -110,7 +110,7 @@ Run With [StartClass](https://github.com/shanyao19940801/douban-spider/blob/mast
 
 这时候就想到了一个设计模式：**策略模式**
 
-
+* UML
 
 
 
