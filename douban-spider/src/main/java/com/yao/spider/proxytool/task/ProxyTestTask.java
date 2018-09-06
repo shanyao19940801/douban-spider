@@ -45,12 +45,12 @@ public class ProxyTestTask implements Runnable {
             }
             if (page.getStatusCode() == 200) {
                 ProxyPool.proxyQueue.add(proxy);
-//                logger.debug(proxy.getProxyStr() + "-----代理可用-----");
+                logger.debug(proxy.getProxyStr() + "-----代理可用-----");
 //                logger.debug(proxy.toString() + "--------" + page.toString());
                 ProxyPool.lock.writeLock().lock();
                 ProxyPool.proxySet.add(proxy);
                 ProxyPool.lock.writeLock().unlock();
-//                System.out.println("目前可用代理数量:"+ProxyPool.proxyQueue.size());
+                System.out.println("目前可用代理数量:"+ProxyPool.proxyQueue.size());
             }
         } catch (IOException e) {
 //            logger.debug("IOException", e);

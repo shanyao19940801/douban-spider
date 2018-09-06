@@ -31,6 +31,7 @@ public class ProxySerializeTask implements Runnable{
                 for (Proxy proxy : ProxyPool.proxySet) {
                     proxyArray.add(proxy);
                 }
+                logger.info("序列化代理：" + proxyArray.size() + "个");
                 MyIOutils.serializeObject(proxyArray, ProxyConstants.PROXYSER_FILE_NMAE);
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);

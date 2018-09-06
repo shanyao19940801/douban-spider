@@ -80,7 +80,7 @@ Run With [StartClass](https://github.com/shanyao19940801/douban-spider/blob/mast
 
 **我目前水平有限只能按照自己的理解尽量把代码质量重构的更高，其中肯定会有很多不合理甚至错误的地方请谅解**
 
-* 重构代码一
+#### 优化代码一
 
 **减少代码冗余，减低耦合度**<br>
 对爬取任务代码进行重构，以前的任务代码中有很多重复代码，例如获取任务这段代码每个下载任务都会写一段同样的代码，这里我将重复的代码、属性抽象出来放到抽象类中，同时使用到了**魔板模式**设计模式
@@ -93,15 +93,26 @@ Run With [StartClass](https://github.com/shanyao19940801/douban-spider/blob/mast
 
 * 重构过程中遇到的问题以及解决方式
 
-  **问题：**在抽象类中打印日志，如何确定是哪个子任务出错以便排查错误？<br>
-  **解决方法：**利用泛型将子类出入抽象类，然后通过放射机制获取子类类型，在通过这个类型来生成日志打印类实例<br>
+  **问题**：在抽象类中打印日志，如何确定是哪个子任务出错以便排查错误？<br>
+  **解决方法**：利用泛型将子类出入抽象类，然后通过放射机制获取子类类型，在通过这个类型来生成日志打印类实例<br>
 具体实现代码请看[AbstractTask](https://github.com/shanyao19940801/douban-spider/blob/master/douban-spider/src/main/java/com/yao/spider/core/task/AbstractTask.java)类中的代码段
     
 
-            //通过反射获取泛型的类类型
-        Class<T> entityClass = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-        //这里是为了在抽象类中打印日志时可以显示其子类名，这样有利于错误排查
-        logger = LoggerFactory.getLogger(entityClass);
+        //通过反射获取泛型的类类型
+    Class<T> entityClass = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+    //这里是为了在抽象类中打印日志时可以显示其子类名，这样有利于错误排查
+    logger = LoggerFactory.getLogger(entityClass);
+
+
+#### 优化代码二
+
+项目中遇到不同的页面我们需要写不同的算法去解析页面信息以便获取到我们需要的信息，那么随着项目扩大需要解析的页面肯定也会变得越来越多这个时候难免就会出现冗余的代码，随之而来的就是如何选择对应的解析算法。
+
+这时候就想到了一个设计模式：**策略模式**
+
+
+
+
 
 ### 流程图
 

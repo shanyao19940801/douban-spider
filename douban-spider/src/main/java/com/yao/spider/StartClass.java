@@ -14,17 +14,17 @@ public class StartClass {
     private static Logger logger = LoggerFactory.getLogger(StartClass.class);
     public static void main(String[] args) {
         ProxyHttpClient.getInstance().startProxy();
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        if (CommonConfig.FUTURE_DOUBAN) {
-            DoubanHttpClient.getInstance().startDouBan();
-        }
-
-        if (CommonConfig.FUTURE_ZHIHU) {
-            ZhiHuHttpClient.getInstance().startZhiHu();
-        }
+//        try {
+//            Thread.sleep(10000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        if (CommonConfig.FUTURE_DOUBAN) {
+//            DoubanHttpClient.getInstance().startDouBan();
+//        }
+//
+//        if (CommonConfig.FUTURE_ZHIHU) {
+//            ZhiHuHttpClient.getInstance().startZhiHu();
+//        }
     }
 }

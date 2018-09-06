@@ -11,7 +11,7 @@ public class ProxyConstants {
     public static int ConnectionTimeout = 10000;
     public static int TIMEOUT = 10000;
     //代理测试地址
-    public static String PROXYTEST_URL = "https://movie.douban.com";
+    public static String PROXYTEST_URL = "http://mcar.cc/forum.php";
 
     public static final long TIME_INTERVAL = 1000;
     //文件路劲地址

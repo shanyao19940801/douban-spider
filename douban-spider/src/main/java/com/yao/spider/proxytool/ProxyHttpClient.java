@@ -93,6 +93,7 @@ public class ProxyHttpClient extends BaseHttpClient {
         }).start();
 
         //序列化代理线程
+        logger.info("启动序列化代理线程");
         new Thread(new ProxySerializeTask()).start();
 
     }
