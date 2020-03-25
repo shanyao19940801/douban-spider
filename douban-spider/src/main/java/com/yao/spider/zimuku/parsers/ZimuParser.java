@@ -19,8 +19,9 @@ import java.util.List;
 public class ZimuParser implements IPageParser<ZimuInfo>{
     public List<ZimuInfo> parser(String html) {
         Document document = Jsoup.parse(html);
-        Elements elements = document.select("div#info");
-        Elements directs = elements.select("[rel=v:directedBy]");
+        Elements oddList =document.select(".odd");
+        Elements evenList =document.select(".even");
+        System.out.println(11);
         /*String _direct = move.getDirector();
         for (Element element : directs) {
             if (_direct != null) {
