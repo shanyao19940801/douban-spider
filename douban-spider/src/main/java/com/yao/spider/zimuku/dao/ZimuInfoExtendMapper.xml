@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yao.spider.zimuku.dao.ZimuInfoExtendMapper">
+  <resultMap id="BaseResultMap" type="com.yao.spider.zimuku.domain.ZimuInfoExtend">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="zimu_info_id" jdbcType="BIGINT" property="zimuInfoId" />
+    <result column="ref_type" jdbcType="TINYINT" property="refType" />
+    <result column="extend_value" jdbcType="VARCHAR" property="extendValue" />
+    <result column="extend_value_type" jdbcType="TINYINT" property="extendValueType" />
+    <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, zimu_info_id, ref_type, extend_value, extend_value_type, is_deleted, create_time, 
+    last_update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_zimu_info_extend
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <insert id="insert" parameterType="com.yao.spider.zimuku.domain.ZimuInfoExtend">
+    insert into t_zimu_info_extend (id, zimu_info_id, ref_type, 
+      extend_value, extend_value_type, is_deleted, 
+      create_time, last_update_time)
+    values (#{id,jdbcType=BIGINT}, #{zimuInfoId,jdbcType=BIGINT}, #{refType,jdbcType=TINYINT}, 
+      #{extendValue,jdbcType=VARCHAR}, #{extendValueType,jdbcType=TINYINT}, #{isDeleted,jdbcType=TINYINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateTime,jdbcType=TIMESTAMP})
+  </insert>
+</mapper>
