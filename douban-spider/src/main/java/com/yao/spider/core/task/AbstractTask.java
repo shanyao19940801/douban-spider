@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public abstract class AbstractTask<T> implements Runnable{
     private static Logger logger = null;//TODO 想办法实现用子类的名称打印log
 
-    protected boolean isUseProxy;
+    protected boolean isUseProxy = false;
     protected String url;
     protected BaseHttpClient httpClient = BaseHttpClient.getInstance();
     protected Proxy currentProxy;
