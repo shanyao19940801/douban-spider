@@ -24,7 +24,7 @@ import java.util.List;
 public class ZimuPageListTask extends AbstractTask<ZimuPageListTask> {
     private static final Logger logger = LoggerFactory.getLogger(ZimuPageListTask.class);
     private String url;
-    private Integer pageIndex = 1;
+    private Integer pageIndex = 3;
     SqlSession session;
     public void run() {
         getPage(url);
@@ -78,7 +78,7 @@ public class ZimuPageListTask extends AbstractTask<ZimuPageListTask> {
                 task.setSession(session);
 //                task.getPage("http://www.zimuku.la/t/HJns0?p=15");
                 task.getPage(url);
-                Thread.sleep(2000);
+                Thread.sleep(10000);
             } catch (Exception e) {
                 logger.error(e.getMessage());
             }
