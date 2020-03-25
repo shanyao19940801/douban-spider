@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yao.spider.zimuku.dao.ZimuInfoMapper">
+  <resultMap id="BaseResultMap" type="com.yao.spider.zimuku.domain.ZimuInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="zimu_id" jdbcType="BIGINT" property="zimuId" />
+    <result column="zimu_title" jdbcType="VARCHAR" property="zimuTitle" />
+    <result column="zimu_translator" jdbcType="TINYINT" property="zimuTranslator" />
+    <result column="zimu_language" jdbcType="INTEGER" property="zimuLanguage" />
+    <result column="zimu_quality" jdbcType="TINYINT" property="zimuQuality" />
+    <result column="zimu_type" jdbcType="INTEGER" property="zimuType" />
+    <result column="detail_url" jdbcType="VARCHAR" property="detailUrl" />
+    <result column="download_page_url" jdbcType="VARCHAR" property="downloadPageUrl" />
+    <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, zimu_id, zimu_title, zimu_translator, zimu_language, zimu_quality, zimu_type, 
+    detail_url, download_page_url, is_deleted, create_time, last_update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_zimu_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <insert id="insert" parameterType="com.yao.spider.zimuku.domain.ZimuInfo">
+    insert into t_zimu_info (id, zimu_id, zimu_title, 
+      zimu_translator, zimu_language, zimu_quality, 
+      zimu_type, detail_url, download_page_url, 
+      is_deleted, create_time, last_update_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{zimuId,jdbcType=BIGINT}, #{zimuTitle,jdbcType=VARCHAR}, 
+      #{zimuTranslator,jdbcType=TINYINT}, #{zimuLanguage,jdbcType=INTEGER}, #{zimuQuality,jdbcType=TINYINT}, 
+      #{zimuType,jdbcType=INTEGER}, #{detailUrl,jdbcType=VARCHAR}, #{downloadPageUrl,jdbcType=VARCHAR}, 
+      #{isDeleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+</mapper>
