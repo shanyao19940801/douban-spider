@@ -16,9 +16,9 @@
 
         <!-- 数据库连接 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://122.112.245.251:3306/douban"
-                        userId="shanyao"
-                        password="shanyao">
+                        connectionURL="jdbc:mysql://47.100.211.121:3306/zimuku"
+                        userId="root"
+                        password="Sy940801..">
         </jdbcConnection>
 
         <javaTypeResolver >
@@ -30,9 +30,17 @@
             <property name="enableSubPackages" value="false" />
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
+        <javaModelGenerator targetPackage="com.yao.spider.zimuku.domain" targetProject="src/main/java">
+            <property name="enableSubPackages" value="false" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
 
         <!-- sql mapper 映射配置文件 -->
         <sqlMapGenerator targetPackage="com.yao.douban.douban.mapper"  targetProject="src/main/java">
+            <property name="enableSubPackages" value="false" />
+        </sqlMapGenerator>
+
+      <sqlMapGenerator targetPackage="com.yao.spider.zimuku.dao"  targetProject="src/main/java">
             <property name="enableSubPackages" value="false" />
         </sqlMapGenerator>
 

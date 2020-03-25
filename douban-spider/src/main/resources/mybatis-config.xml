@@ -28,5 +28,7 @@
 
     <mappers>
         <mapper resource="com/yao/spider/douban/mapper/MoveMapper.xml"/>
+        <mapper resource="com/yao/spider/zimuku/dao/ZimuInfoMapper.xml"/>
+        <mapper resource="com/yao/spider/zimuku/dao/ZimuInfoExtendMapper.xml"/>
     </mappers>
 </configuration>
