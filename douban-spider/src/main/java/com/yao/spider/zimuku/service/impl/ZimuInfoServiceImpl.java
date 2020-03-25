@@ -25,6 +25,7 @@ public class ZimuInfoServiceImpl implements ZimuInfoService {
         try {
             ZimuInfoMapper mapper = session.getMapper(ZimuInfoMapper.class);
             mapper.batchInsert(zimuInfoList);
+            session.commit();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         } finally {
