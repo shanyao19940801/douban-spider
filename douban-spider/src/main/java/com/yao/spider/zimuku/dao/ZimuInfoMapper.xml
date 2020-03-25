@@ -5,36 +5,56 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="zimu_id" jdbcType="BIGINT" property="zimuId" />
     <result column="zimu_title" jdbcType="VARCHAR" property="zimuTitle" />
-    <result column="zimu_translator" jdbcType="TINYINT" property="zimuTranslator" />
+    <result column="zimu_translator" jdbcType="VARCHAR" property="zimuTranslator" />
     <result column="zimu_language" jdbcType="INTEGER" property="zimuLanguage" />
-    <result column="zimu_quality" jdbcType="TINYINT" property="zimuQuality" />
+    <result column="zimu_quality" jdbcType="REAL" property="zimuQuality" />
     <result column="zimu_type" jdbcType="INTEGER" property="zimuType" />
     <result column="detail_url" jdbcType="VARCHAR" property="detailUrl" />
     <result column="download_page_url" jdbcType="VARCHAR" property="downloadPageUrl" />
     <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+    <result column="sub_id" jdbcType="BIGINT" property="subId" />
+    <result column="sub_name" jdbcType="VARCHAR" property="subName" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, zimu_id, zimu_title, zimu_translator, zimu_language, zimu_quality, zimu_type, 
-    detail_url, download_page_url, is_deleted, create_time, last_update_time
+    id, zimu_id, zimu_title, zimu_translator, zimu_language, zimu_quality, zimu_type,
+    detail_url, download_page_url, is_deleted, create_time, last_update_time, sub_id,
+    sub_name
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_zimu_info
     where id = #{id,jdbcType=BIGINT}
   </select>
   <insert id="insert" parameterType="com.yao.spider.zimuku.domain.ZimuInfo">
-    insert into t_zimu_info (id, zimu_id, zimu_title, 
-      zimu_translator, zimu_language, zimu_quality, 
-      zimu_type, detail_url, download_page_url, 
-      is_deleted, create_time, last_update_time
-      )
-    values (#{id,jdbcType=BIGINT}, #{zimuId,jdbcType=BIGINT}, #{zimuTitle,jdbcType=VARCHAR}, 
-      #{zimuTranslator,jdbcType=TINYINT}, #{zimuLanguage,jdbcType=INTEGER}, #{zimuQuality,jdbcType=TINYINT}, 
-      #{zimuType,jdbcType=INTEGER}, #{detailUrl,jdbcType=VARCHAR}, #{downloadPageUrl,jdbcType=VARCHAR}, 
-      #{isDeleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateTime,jdbcType=TIMESTAMP}
-      )
+    insert into t_zimu_info (id, zimu_id, zimu_title,
+      zimu_translator, zimu_language, zimu_quality,
+      zimu_type, detail_url, download_page_url,
+      is_deleted, create_time, last_update_time,
+      sub_id, sub_name)
+    values (#{id,jdbcType=BIGINT}, #{zimuId,jdbcType=BIGINT}, #{zimuTitle,jdbcType=VARCHAR},
+      #{zimuTranslator,jdbcType=VARCHAR}, #{zimuLanguage,jdbcType=INTEGER}, #{zimuQuality,jdbcType=REAL},
+      #{zimuType,jdbcType=INTEGER}, #{detailUrl,jdbcType=VARCHAR}, #{downloadPageUrl,jdbcType=VARCHAR},
+      0, now(), now(),
+      #{subId,jdbcType=BIGINT}, #{subName,jdbcType=VARCHAR})
+  </insert>
+
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into t_zimu_info (id, zimu_id, zimu_title,
+    zimu_translator, zimu_language, zimu_quality,
+    zimu_type, detail_url, download_page_url,
+    is_deleted, create_time, last_update_time,
+    sub_id, sub_name)
+    values
+    <foreach collection="list" item="info" separator=",">
+      (#{id,jdbcType=BIGINT}, #{zimuId,jdbcType=BIGINT}, #{zimuTitle,jdbcType=VARCHAR},
+      #{zimuTranslator,jdbcType=VARCHAR}, #{zimuLanguage,jdbcType=INTEGER}, #{zimuQuality,jdbcType=REAL},
+      #{zimuType,jdbcType=INTEGER}, #{detailUrl,jdbcType=VARCHAR}, #{downloadPageUrl,jdbcType=VARCHAR},
+      0, now(), now(),
+      #{subId,jdbcType=BIGINT}, #{subName,jdbcType=VARCHAR})
+    </foreach>
+
   </insert>
 </mapper>

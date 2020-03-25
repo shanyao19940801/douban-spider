@@ -9,11 +9,11 @@ public class ZimuInfo {
 
     private String zimuTitle;
 
-    private Integer zimuTranslator;
+    private String zimuTranslator;
 
     private Integer zimuLanguage;
 
-    private Integer zimuQuality;
+    private Float zimuQuality;
 
     private Integer zimuType;
 
@@ -26,6 +26,10 @@ public class ZimuInfo {
     private Date createTime;
 
     private Date lastUpdateTime;
+
+    private Long subId;
+
+    private String subName;
 
     public Long getId() {
         return id;
@@ -51,11 +55,11 @@ public class ZimuInfo {
         this.zimuTitle = zimuTitle;
     }
 
-    public Integer getZimuTranslator() {
+    public String getZimuTranslator() {
         return zimuTranslator;
     }
 
-    public void setZimuTranslator(Integer zimuTranslator) {
+    public void setZimuTranslator(String zimuTranslator) {
         this.zimuTranslator = zimuTranslator;
     }
 
@@ -67,11 +71,11 @@ public class ZimuInfo {
         this.zimuLanguage = zimuLanguage;
     }
 
-    public Integer getZimuQuality() {
+    public Float getZimuQuality() {
         return zimuQuality;
     }
 
-    public void setZimuQuality(Integer zimuQuality) {
+    public void setZimuQuality(Float zimuQuality) {
         this.zimuQuality = zimuQuality;
     }
 
@@ -121,5 +125,21 @@ public class ZimuInfo {
 
     public void setLastUpdateTime(Date lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
+    }
+
+    public Long getSubId() {
+        return subId;
+    }
+
+    public void setSubId(Long subId) {
+        this.subId = subId;
+    }
+
+    public String getSubName() {
+        return subName;
+    }
+
+    public void setSubName(String subName) {
+        this.subName = subName;
     }
 }
