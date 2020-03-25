@@ -55,6 +55,8 @@
       0, now(), now(),
       #{info.subId,jdbcType=BIGINT}, #{info.subName,jdbcType=VARCHAR})
     </foreach>
-
+      ON DUPLICATE KEY UPDATE
+      zimu_title=VALUES(zimu_title),
+      detail_url=VALUES(detail_url)
   </insert>
 </mapper>

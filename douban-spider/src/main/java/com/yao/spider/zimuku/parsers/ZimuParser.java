@@ -6,6 +6,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +17,7 @@ import java.util.List;
  * Created by user on 2018/3/28.
  */
 public class ZimuParser implements IPageParser<ZimuInfo> {
-
+    private static final Logger logger = LoggerFactory.getLogger(ZimuParser.class);
     private static final String host = "http://www.zimuku.la/";
 
     public List<ZimuInfo> parser(String html) {
@@ -23,10 +26,18 @@ public class ZimuParser implements IPageParser<ZimuInfo> {
         Elements evenList = document.select(".even");
         List<ZimuInfo> list = new ArrayList<ZimuInfo>(30);
         for (Element element : oddList) {
-            list.add(buildBean(element));
+            try {
+                list.add(buildBean(element));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         for (Element element : evenList) {
-            list.add(buildBean(element));
+            try {
+                list.add(buildBean(element));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return list;
     }
@@ -34,12 +45,10 @@ public class ZimuParser implements IPageParser<ZimuInfo> {
     private static ZimuInfo buildBean( Element element) {
         ZimuInfo info = new ZimuInfo();
         Elements select = element.select("a");
-        Element subElement = select.get(0);
-        info.setSubId(Long.valueOf(getId(subElement)));
-        info.setSubName(subElement.attr("title"));
+        fillSubInfo(info, select);
 
         Element detail = select.get(1);
-        info.setZimuId(Long.valueOf(getId(detail)));
+        info.setZimuId(Long.valueOf(getZimuId(detail)));
         info.setZimuTitle(detail.attr("title"));
         info.setDetailUrl(host + detail.attr("href"));
         info.setZimuType(1);
@@ -49,17 +58,38 @@ public class ZimuParser implements IPageParser<ZimuInfo> {
         return info;
     }
 
+    private static void fillSubInfo(ZimuInfo info, Elements select) {
+        try {
+            Element subElement = select.get(0);
+            info.setSubId(getSubId(subElement));
+            info.setSubName(subElement.attr("title"));
+        } catch (NumberFormatException e) {
+            logger.warn("no sub info");
+        }
+    }
+
     private static String getTranslator(Element element) {
         Elements select = element.select(".label").select(".label-danger");
         return select.get(0).childNode(0).attr("text");
     }
 
-    private static String getId( Element subElement) {
+    private static String getZimuId( Element subElement) {
         String subId = subElement.attr("href");
         int startIndex = subId.lastIndexOf("/");
         int endIndex = subId.indexOf(".");
         String id = subId.substring(startIndex + 1, endIndex);
         return id;
+    }
+
+    private static Long getSubId( Element subElement) {
+        String subId = subElement.attr("href");
+        if (StringUtils.isEmpty(subId)) {
+            return null;
+        }
+        int startIndex = subId.lastIndexOf("/");
+        int endIndex = subId.indexOf(".");
+        String id = subId.substring(startIndex + 1, endIndex);
+        return Long.valueOf(id);
     }
 
     private static float zimuQuality(Element elements) {
@@ -92,6 +122,7 @@ public class ZimuParser implements IPageParser<ZimuInfo> {
     }
 
     public static void main(String[] args) {
+        Long.valueOf("");
         int sum = 0;
         sum += 1 << 0;
         System.out.println(sum);
