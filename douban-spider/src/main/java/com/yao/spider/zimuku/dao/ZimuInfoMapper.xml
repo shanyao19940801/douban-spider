@@ -16,11 +16,12 @@
     <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
     <result column="sub_id" jdbcType="BIGINT" property="subId" />
     <result column="sub_name" jdbcType="VARCHAR" property="subName" />
+    <result column="html_id" jdbcType="BIGINT" property="htmlId" />
   </resultMap>
   <sql id="Base_Column_List">
     id, zimu_id, zimu_title, zimu_translator, zimu_language, zimu_quality, zimu_type,
     detail_url, download_page_url, is_deleted, create_time, last_update_time, sub_id,
-    sub_name
+    sub_name, html_id
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select
@@ -29,31 +30,32 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
   <insert id="insert" parameterType="com.yao.spider.zimuku.domain.ZimuInfo">
-    insert into t_zimu_info (zimu_id, zimu_title,
+    insert into t_zimu_info (id, zimu_id, zimu_title,
       zimu_translator, zimu_language, zimu_quality,
       zimu_type, detail_url, download_page_url,
       is_deleted, create_time, last_update_time,
-      sub_id, sub_name)
-    values (#{zimuId,jdbcType=BIGINT}, #{zimuTitle,jdbcType=VARCHAR},
+      sub_id, sub_name, html_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{zimuId,jdbcType=BIGINT}, #{zimuTitle,jdbcType=VARCHAR},
       #{zimuTranslator,jdbcType=VARCHAR}, #{zimuLanguage,jdbcType=INTEGER}, #{zimuQuality,jdbcType=REAL},
       #{zimuType,jdbcType=INTEGER}, #{detailUrl,jdbcType=VARCHAR}, #{downloadPageUrl,jdbcType=VARCHAR},
       0, now(), now(),
-      #{subId,jdbcType=BIGINT}, #{subName,jdbcType=VARCHAR})
+      #{subId,jdbcType=BIGINT}, #{subName,jdbcType=VARCHAR}, #{htmlId,jdbcType=BIGINT}
+      )
   </insert>
-
   <insert id="batchInsert" parameterType="java.util.List">
     insert into t_zimu_info (zimu_id, zimu_title,
     zimu_translator, zimu_language, zimu_quality,
     zimu_type, detail_url, download_page_url,
     is_deleted, create_time, last_update_time,
-    sub_id, sub_name)
+    sub_id, sub_name, html_id)
     values
     <foreach collection="list" item="info" separator=",">
       (#{info.zimuId,jdbcType=BIGINT}, #{info.zimuTitle,jdbcType=VARCHAR},
       #{info.zimuTranslator,jdbcType=VARCHAR}, #{info.zimuLanguage,jdbcType=INTEGER}, #{info.zimuQuality,jdbcType=REAL},
       #{info.zimuType,jdbcType=INTEGER}, #{info.detailUrl,jdbcType=VARCHAR}, #{info.downloadPageUrl,jdbcType=VARCHAR},
       0, now(), now(),
-      #{info.subId,jdbcType=BIGINT}, #{info.subName,jdbcType=VARCHAR})
+      #{info.subId,jdbcType=BIGINT}, #{info.subName,jdbcType=VARCHAR},#{info.htmlId,jdbcType=BIGINT})
     </foreach>
       ON DUPLICATE KEY UPDATE
       zimu_title=VALUES(zimu_title),

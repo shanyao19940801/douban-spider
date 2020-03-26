@@ -58,11 +58,12 @@ public class ZimuHtmlManager {
             String str;
             ZimuParser parser = new ZimuParser();
             ZimuInfoService zimuInfoService = new ZimuInfoServiceImpl();
-            while (maxId < start) {
+            while (maxId > start) {
                 List<ZimuHtml> zimuHtmls = service.selectByRange(start, end, session);
                 List<ZimuInfo> zimuInfos = new ArrayList<ZimuInfo>(zimuHtmls.size());
                 for (ZimuHtml zimuHtml : zimuHtmls) {
                     ZimuInfo zimuInfo = ZimuParser.getBeanWithHtml(zimuHtml.getHtmlValue());
+                    zimuInfo.setHtmlId(zimuHtml.getId());
                     zimuInfos.add(zimuInfo);
                 }
                 zimuInfoService.batchInsert(zimuInfos, session);
@@ -83,6 +84,7 @@ public class ZimuHtmlManager {
 
     public static void main(String[] args) {
         ZimuHtmlManager manager = new ZimuHtmlManager();
+        manager.jsoupHtml();
 //        manager.batchInsert("F:\\work\\myproject\\douban-spider\\单耀火车头字幕下载.txt");
 
     }

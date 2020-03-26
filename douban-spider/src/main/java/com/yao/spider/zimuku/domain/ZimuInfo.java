@@ -31,6 +31,8 @@ public class ZimuInfo {
 
     private String subName;
 
+    private Long htmlId;
+
     public Long getId() {
         return id;
     }
@@ -141,5 +143,13 @@ public class ZimuInfo {
 
     public void setSubName(String subName) {
         this.subName = subName;
+    }
+
+    public Long getHtmlId() {
+        return htmlId;
+    }
+
+    public void setHtmlId(Long htmlId) {
+        this.htmlId = htmlId;
     }
 }
