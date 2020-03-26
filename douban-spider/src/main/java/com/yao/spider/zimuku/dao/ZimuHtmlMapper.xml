@@ -7,22 +7,35 @@
     <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.yao.spider.zimuku.domain.ZimuHtml">
     <result column="html_value" jdbcType="LONGVARCHAR" property="htmlValue" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, html_type, is_deleted, create_time, last_update_time
+    id, html_type, is_deleted, create_time, last_update_time, html_value
   </sql>
-  <sql id="Blob_Column_List">
-    html_value
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_zimu_html
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="selectMax" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_zimu_html
+    where is_deleted = 0
+    order by id DESC
+    limit 1
+  </select>
+
+  <select id="selectByRange" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_zimu_html
+    where id >= #{startId,jdbcType=BIGINT}
+    and #{endId,jdbcType=BIGINT} > id
+  </select>
+
   <insert id="insert" parameterType="com.yao.spider.zimuku.domain.ZimuHtml">
     insert into t_zimu_html (id, html_type, is_deleted,
       create_time, last_update_time, html_value

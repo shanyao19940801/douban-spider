@@ -4,15 +4,19 @@ import com.yao.spider.core.factory.ParserFactory;
 import com.yao.spider.core.parser.IPageParser;
 import com.yao.spider.core.util.MyBatiesUtils;
 import com.yao.spider.zimuku.domain.ZimuHtml;
+import com.yao.spider.zimuku.domain.ZimuInfo;
 import com.yao.spider.zimuku.parsers.ZimuParser;
 import com.yao.spider.zimuku.service.ZimuHtmlService;
+import com.yao.spider.zimuku.service.ZimuInfoService;
 import com.yao.spider.zimuku.service.impl.ZimuHtmlServiceImpl;
+import com.yao.spider.zimuku.service.impl.ZimuInfoServiceImpl;
 import org.apache.ibatis.session.SqlSession;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ZimuHtmlManager {
@@ -42,6 +46,34 @@ public class ZimuHtmlManager {
         }
     }
 
+    public void jsoupHtml() {
+        try {
+            SqlSession session = MyBatiesUtils.getSqlSession();
+            Long step = 1000L;
+            Long start = 1L;
+            Long end = start + step;
+            ZimuHtmlService service = new ZimuHtmlServiceImpl();
+            Long maxId = service.selectMaxId(session);
+            StringBuilder builder = new StringBuilder();
+            String str;
+            ZimuParser parser = new ZimuParser();
+            ZimuInfoService zimuInfoService = new ZimuInfoServiceImpl();
+            while (maxId < start) {
+                List<ZimuHtml> zimuHtmls = service.selectByRange(start, end, session);
+                List<ZimuInfo> zimuInfos = new ArrayList<ZimuInfo>(zimuHtmls.size());
+                for (ZimuHtml zimuHtml : zimuHtmls) {
+                    ZimuInfo zimuInfo = ZimuParser.getBeanWithHtml(zimuHtml.getHtmlValue());
+                    zimuInfos.add(zimuInfo);
+                }
+                zimuInfoService.batchInsert(zimuInfos, session);
+                start = end;
+                end += start + step;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private static ZimuHtml builderHtml(String string) {
         ZimuHtml html = new ZimuHtml();
         html.setHtmlType(1);
@@ -51,7 +83,8 @@ public class ZimuHtmlManager {
 
     public static void main(String[] args) {
         ZimuHtmlManager manager = new ZimuHtmlManager();
-        manager.batchInsert("F:\\work\\myproject\\douban-spider\\单耀火车头字幕下载.txt");
+//        manager.batchInsert("F:\\work\\myproject\\douban-spider\\单耀火车头字幕下载.txt");
+
     }
 
 }
