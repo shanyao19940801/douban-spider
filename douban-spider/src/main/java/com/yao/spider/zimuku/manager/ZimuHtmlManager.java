@@ -50,7 +50,7 @@ public class ZimuHtmlManager {
         try {
             SqlSession session = MyBatiesUtils.getSqlSession();
             Long step = 1000L;
-            Long start = 1L;
+            Long start = 1000L;
             Long end = start + step;
             ZimuHtmlService service = new ZimuHtmlServiceImpl();
             Long maxId = service.selectMaxId(session);
