@@ -37,6 +37,22 @@ ENGINE=InnoDB
 AUTO_INCREMENT=1
 ;
 
+CREATE TABLE `t_zimu_html` (
+	`id` BIGINT NOT NULL AUTO_INCREMENT,
+	`html_value` text NULL default null,
+	`html_type` TINYINT(4) NOT NULL COMMENT '类型1：列表，2：详情',
+	`is_deleted` TINYINT NOT NULL COMMENT '是否删除',
+	`create_time` DATETIME NOT NULL COMMENT '创建时间',
+	`last_update_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	PRIMARY KEY (`id`)
+
+)
+COMMENT='字幕源码内容'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=0
+;
+
 
 
 
