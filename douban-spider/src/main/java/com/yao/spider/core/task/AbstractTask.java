@@ -2,6 +2,7 @@ package com.yao.spider.core.task;
 
 import com.yao.spider.core.entity.Page;
 import com.yao.spider.core.entity.RequestParams;
+import com.yao.spider.core.http.HttpClientManagerV2;
 import com.yao.spider.core.http.client.BaseHttpClient;
 import com.yao.spider.core.http.util.HttpClientUtil;
 import com.yao.spider.core.util.ProxyUtil;
@@ -15,6 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.Collections;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class AbstractTask<T> implements Runnable{
@@ -25,6 +28,7 @@ public abstract class AbstractTask<T> implements Runnable{
     protected BaseHttpClient httpClient = BaseHttpClient.getInstance();
     protected Proxy currentProxy;
     protected int retryTimes;
+    private HttpClientManagerV2 httpClientManagerV2;
 
 /*    protected void getPage(String url) {
         this.getPage(url, isUseProxy);
@@ -35,6 +39,10 @@ public abstract class AbstractTask<T> implements Runnable{
         Class<T> entityClass = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         //这里是为了在抽象类中打印日志时可以显示其子类名，这样有利于错误排查
         logger = LoggerFactory.getLogger(entityClass);
+        Set<String> excludeProxyHosts = Collections.emptySet();
+        HttpClientManagerV2 httpClientManager = new HttpClientManagerV2(5000, 15000, excludeProxyHosts, null, null);
+        httpClientManager.setMaxTotal(1023);
+        this.httpClientManagerV2 = httpClientManager;
     }
 
     @Deprecated
@@ -78,8 +86,23 @@ public abstract class AbstractTask<T> implements Runnable{
             }
         }
     }
+    protected void getPage(String url, boolean useV2) {
+        try {
+            String res = httpClientManagerV2.execGetRequestWithContent(url);
+            Page page = new Page();
+            page.setHtml(res);
+            page.setStatusCode(200);
+            page.setUrl(url);
+            handle(page);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        } finally {
 
-    public abstract void retry();
+        }
+    }
+
+
+        public abstract void retry();
 
     public abstract void handle(Page page);
 

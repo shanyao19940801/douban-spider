@@ -77,8 +77,8 @@ public class ZimuPageListTask extends AbstractTask<ZimuPageListTask> {
             try {
                 task.setSession(session);
 //                task.getPage("http://www.zimuku.la/t/HJns0?p=15");
-                task.getPage(url);
-                Thread.sleep(10000);
+                task.getPage(url, true);
+                Thread.sleep(2000);
             } catch (Exception e) {
                 logger.error(e.getMessage());
             }

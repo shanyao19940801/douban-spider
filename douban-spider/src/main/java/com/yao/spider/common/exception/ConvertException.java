@@ -1,0 +1,1 @@
+package com.yao.spider.common.exception;public class ConvertException extends RuntimeException {	private static final long serialVersionUID = 969400608685990299L;	public ConvertException(String msg) {		super(msg);	}		public ConvertException(String msg, Exception ex) {		super(msg, ex);	}}
