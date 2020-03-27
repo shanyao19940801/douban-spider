@@ -227,6 +227,50 @@ public class HttpClientManager {
 		}
 	}
 
+	public InputStream execGetRequesIntWithParamsAndHeaders(URI uri, Map<String, String> params, Map<String, String> heads) {
+		HttpGet request = new HttpGet(uri);
+		if (null != params) {
+			for (Entry<String, String> entry : params.entrySet()) {
+				request.getParams().setParameter(entry.getKey(), entry.getValue());
+			}
+		}
+
+		if( heads != null ) {
+			for (Entry<String, String> entry : heads.entrySet()) {
+				request.addHeader(entry.getKey(), entry.getValue());
+			}
+		}
+
+		try {
+			HttpResponse response = httpClient.execute(request);
+			HttpEntity entity = response.getEntity();
+			int status = response.getStatusLine().getStatusCode();
+			if ( status == HttpStatus.SC_OK && entity != null) {
+				return entity.getContent();
+			} else {
+				try {
+					if (entity != null) {
+						logger.error("getInputStreamByURI error, status:{}, resonpse:{}, url:{}", new Object[] { status, EntityUtils.toString(entity, defaultCharset), uri });
+						return null;
+					} else {
+						logger.error("getInputStreamByURI error, status:{}, url:{}", new Object[] {response.getStatusLine().getStatusCode(), uri });
+						return null;
+					}
+				} finally {
+					request.abort();
+				}
+			}
+		} catch (IOException e) {
+			throw new HttpClientException("http get error. url: " + uri, e);
+		} catch (HttpClientException e) {
+			throw e;
+		} catch (RuntimeException e) {
+			throw new HttpClientException("http get error. url: " + uri, e);
+		} finally {
+			request.abort();
+		}
+	}
+
 	public InputStream getInputStreamByURL(String url) {
 		try {
 			logger.debug("getInputStreamByURL, url:{}", url);
