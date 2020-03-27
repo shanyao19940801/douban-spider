@@ -1,8 +1,6 @@
 package com.yao.spider.zimuku.manager;
 
-import com.yao.spider.core.factory.ParserFactory;
 import com.yao.spider.core.http.HttpClientManagerV2;
-import com.yao.spider.core.parser.IPageParser;
 import com.yao.spider.core.util.MyBatiesUtils;
 import com.yao.spider.zimuku.domain.ZimuHtml;
 import com.yao.spider.zimuku.domain.ZimuInfo;
@@ -11,25 +9,11 @@ import com.yao.spider.zimuku.service.ZimuHtmlService;
 import com.yao.spider.zimuku.service.ZimuInfoService;
 import com.yao.spider.zimuku.service.impl.ZimuHtmlServiceImpl;
 import com.yao.spider.zimuku.service.impl.ZimuInfoServiceImpl;
+import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.session.SqlSession;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.zip.ZipFile;
+import java.io.*;
+import java.util.*;
 
 public class ZimuHtmlManager {
 
@@ -95,9 +79,6 @@ public class ZimuHtmlManager {
     }
 
     public static void main(String[] args) {
-       /* ZimuHtmlManager manager = new ZimuHtmlManager();
-        manager.jsoupHtml();*/
-//        manager.batchInsert("F:\\work\\myproject\\douban-spider\\单耀火车头字幕下载.txt");
         Set<String> excludeProxyHosts = Collections.emptySet();
         HttpClientManagerV2 httpClientManager = new HttpClientManagerV2(5000, 15000, excludeProxyHosts, null, null);
         String url = "http://zmk.pw/download/MTMyNjgwfDQ0NWYzZWM4ZDE2MmQ4ZTVjZWFiMWNiZHwxNTg1Mjk2NjgyfGQ5NmY2NWQ1fHJlbW90ZQ%3D%3D/svr/dx1";
@@ -115,18 +96,11 @@ public class ZimuHtmlManager {
         header.put("Cookie","__cfduid=d444be9233f69d023b7072eb6b9164bda1585117374; __gads=ID=050a8933b4c6445e:T=1585117375:S=ALNI_MbwPHLv91M3n0-auRGmR4Psetl7oA; PHPSESSID=e0so1hqf03a8b517gcppu681p4");
 
 //        InputStream inputStream = httpClientManager.execGetInRequestWithHeader(url, header);
-        String stringRes = httpClientManager.execGetRequestWithHeader(url, header);
-        InputStream inputStream = new ByteArrayInputStream(stringRes.getBytes());
-
-
+        byte[] getData = httpClientManager.execGetByteArrayRequestWithParamsAndHeaders(url, header);
         try {
-            //得到输入流
-            //获取自己数组
-            byte[] getData = readInputStream(inputStream);
-            String s = bytesToHexString(getData);
-            System.out.println(s);
+
             //文件保存位置
-            File saveDir = new File("E:\\my_git\\douban-spider");
+            File saveDir = new File("F:\\工具\\火车头");
             if(!saveDir.exists()){
                 saveDir.mkdir();
             }
@@ -136,9 +110,7 @@ public class ZimuHtmlManager {
             if(fos!=null){
                 fos.close();
             }
-            if(inputStream!=null){
-                inputStream.close();
-            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }

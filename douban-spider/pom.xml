@@ -75,6 +75,25 @@
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.github.muff1nman.chameleon/contenttype-filetype -->
+		<dependency>
+			<groupId>com.github.muff1nman.chameleon</groupId>
+			<artifactId>contenttype-filetype</artifactId>
+			<version>1.2.1-RELEASE</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+		<!--<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>28.2-jre</version>
+		</dependency>-->
+		<!-- https://mvnrepository.com/artifact/de.alpharogroup/file-worker -->
+		<dependency>
+			<groupId>de.alpharogroup</groupId>
+			<artifactId>file-worker</artifactId>
+			<version>5.5</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>

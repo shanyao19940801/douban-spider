@@ -531,17 +531,61 @@ public class HttpClientManagerV2 {
             request.abort();
         }
     }
+   public byte[] execGettoByteArrayRequestWithParamsAndHeaders(String url, Map<String, String> params, Map<String, String> headers) {
+
+
+        HttpGet request = null;
+        URI uri = null;
+        try {
+            URIBuilder uriBuilder = new URIBuilder(url);
+            if (params != null && !params.isEmpty()) {
+                for (Entry<String, String> entry : params.entrySet()) {
+                    uriBuilder.setParameter(entry.getKey(), entry.getValue());
+                }
+            }
+            uri = uriBuilder.build();
+            request = new HttpGet(uri);
+
+            if (headers != null && !headers.isEmpty()) {
+                for (Entry<String, String> entry : headers.entrySet()) {
+                    request.addHeader(entry.getKey(), entry.getValue());
+                }
+            }
+        } catch (URISyntaxException e) {
+            throw new HttpClientException("http post error. url: " + url, e);
+        }
+
+        try {
+            HttpResponse response = httpClient.execute(request);
+
+            int status = response.getStatusLine().getStatusCode();
+
+            if (status == HttpStatus.SC_OK) {
+                HttpEntity entity = response.getEntity();
+                return EntityUtils.toByteArray(entity);
+            } else {
+                String resp = null;
+                HttpEntity entity = response.getEntity();
+                if (entity != null) {
+                    resp = EntityUtils.toString(entity, defaultCharset);
+                    logger.warn("get error, status:{}, response:{}, url:{}", status, resp, uri);
+                } else {
+                    logger.warn("get error, status:{}, url:{}", status, uri);
+                }
+                throw new HttpClientException("http get error. url: " + uri, status, resp);
+            }
+        } catch (IOException e) {
+            throw new HttpClientException("http get error. url: " + uri, e);
+        } catch (HttpClientException e) {
+            throw e;
+        } catch (RuntimeException e) {
+            throw new HttpClientException("http get error. url: " + uri, e);
+        } finally {
+            request.abort();
+        }
+    }
 
     public String execGetRequestWithParamsAndHeaders(String url, Map<String, String> params, Map<String, String> headers) {
-
-        if (isV1()) {
-            try {
-                URI uri = new URI(url);
-                return httpClientManager.execGetRequestWithParamsAndHeaders(uri, params, headers);
-            } catch (URISyntaxException e) {
-                throw new HttpClientException(url + " get error", e);
-            }
-        }
 
         HttpGet request = null;
         URI uri = null;
@@ -640,6 +684,11 @@ public class HttpClientManagerV2 {
     public InputStream execGetInRequestWithHeader(String url, Map<String, String> header) {
         Map<String, String> param = Collections.emptyMap();
         return execGetInRequestWithParamsAndHeaders(url, param, header);
+    }
+
+    public byte[] execGetByteArrayRequestWithParamsAndHeaders(String url, Map<String, String> header) {
+        Map<String, String> param = Collections.emptyMap();
+        return execGettoByteArrayRequestWithParamsAndHeaders(url, param, header);
     }
 
 
