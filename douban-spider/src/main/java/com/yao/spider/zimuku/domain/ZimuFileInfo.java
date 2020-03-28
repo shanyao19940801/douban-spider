@@ -92,4 +92,14 @@ public class ZimuFileInfo {
     public void setLastUpdateTime(Date lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
     }
+
+    @Override
+    public String toString() {
+        return "ZimuFileInfo{" +
+                "zimuId=" + zimuId +
+                ", fileName='" + fileName + '\'' +
+                ", fileType='" + fileType + '\'' +
+                ", extendId=" + extendId +
+                '}';
+    }
 }

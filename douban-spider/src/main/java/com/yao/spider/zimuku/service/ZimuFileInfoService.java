@@ -8,4 +8,6 @@ import org.apache.ibatis.session.SqlSession;
  */
 public interface ZimuFileInfoService {
     void insert(ZimuFileInfo fileInfo, SqlSession session);
+
+    void isnert(ZimuFileInfo zimuInfo, SqlSession session);
 }

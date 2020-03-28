@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface ZimuInfoService {
     public void batchInsert(List<ZimuInfo> zimuInfoList, SqlSession session);
+
+    public void isnert(ZimuInfo zimuInfo, SqlSession session);
 }

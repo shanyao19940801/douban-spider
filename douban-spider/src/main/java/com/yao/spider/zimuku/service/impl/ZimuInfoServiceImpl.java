@@ -32,4 +32,16 @@ public class ZimuInfoServiceImpl implements ZimuInfoService {
 
         }
     }
+
+    public void isnert(ZimuInfo zimuInfo, SqlSession session) {
+        try {
+            ZimuInfoMapper mapper = session.getMapper(ZimuInfoMapper.class);
+            mapper.insert(zimuInfo);
+            session.commit();
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        } finally {
+
+        }
+    }
 }

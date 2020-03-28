@@ -21,12 +21,31 @@
     from t_zimu_info_extend
     where id = #{id,jdbcType=BIGINT}
   </select>
+
+  <select id="selectMax" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_zimu_info_extend
+    where is_deleted = 0
+    order by id DESC
+    limit 1
+  </select>
+
+  <select id="selectByRange" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_zimu_info_extend
+    where id >= #{startId,jdbcType=BIGINT}
+    and #{endId,jdbcType=BIGINT} > id
+  </select>
+
+
   <insert id="insert" parameterType="com.yao.spider.zimuku.domain.ZimuInfoExtend">
     insert into t_zimu_info_extend (id, zimu_info_id, ref_type, 
       extend_value, extend_value_type, is_deleted, 
       create_time, last_update_time)
     values (#{id,jdbcType=BIGINT}, #{zimuInfoId,jdbcType=BIGINT}, #{refType,jdbcType=TINYINT}, 
-      #{extendValue,jdbcType=VARCHAR}, #{extendValueType,jdbcType=TINYINT}, 1,
+      #{extendValue,jdbcType=VARCHAR}, #{extendValueType,jdbcType=TINYINT}, 0,
       now(),now())
   </insert>
 </mapper>

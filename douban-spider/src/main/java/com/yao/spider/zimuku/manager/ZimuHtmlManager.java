@@ -6,9 +6,11 @@ import com.yao.spider.zimuku.domain.ZimuHtml;
 import com.yao.spider.zimuku.domain.ZimuInfo;
 import com.yao.spider.zimuku.domain.ZimuInfoExtend;
 import com.yao.spider.zimuku.parsers.ZimuParser;
+import com.yao.spider.zimuku.service.ZimuFileInfoService;
 import com.yao.spider.zimuku.service.ZimuHtmlService;
 import com.yao.spider.zimuku.service.ZimuInfoExtendService;
 import com.yao.spider.zimuku.service.ZimuInfoService;
+import com.yao.spider.zimuku.service.impl.ZimuFileInfoServiceImpl;
 import com.yao.spider.zimuku.service.impl.ZimuHtmlServiceImpl;
 import com.yao.spider.zimuku.service.impl.ZimuInfoExtendServiceImpl;
 import com.yao.spider.zimuku.service.impl.ZimuInfoServiceImpl;
@@ -81,6 +83,9 @@ public class ZimuHtmlManager {
         }
     }
 
+    /**
+     * 根系html获取下载链接
+     */
     public void jsoupHtml() {
         try {
             SqlSession session = MyBatiesUtils.getSqlSession();
@@ -110,6 +115,65 @@ public class ZimuHtmlManager {
         }
     }
 
+    /**
+     * 获取真实的下载链接
+     */
+    public void getRealDownURL() {
+        try {
+            SqlSession session = MyBatiesUtils.getSqlSession();
+            Long step = 10L;
+            Long start = 0L;
+            Long end = start + step;
+            ZimuInfoExtendService service = new ZimuInfoExtendServiceImpl();
+            Long maxId = service.selectMaxId(session);
+            StringBuilder builder = new StringBuilder();
+            ZimuFileInfoService zimuInfoService = new ZimuFileInfoServiceImpl();
+            while (maxId > start) {
+                List<ZimuInfoExtend> zimuInfoExtends = service.selectByRange(start, end, session);
+                for (ZimuInfoExtend zimuInfoExtend : zimuInfoExtends) {
+                    try {
+                        ZimuFileInfo fileInfo = downLoadZimu(zimuInfoExtend.getExtendValue());
+                        if (fileInfo == null) continue;
+                        fileInfo.setZimuId(zimuInfoExtend.getZimuInfoId());
+                        fileInfo.setExtendId(zimuInfoExtend.getId());
+                        zimuInfoService.isnert(fileInfo, session);
+                        System.out.println(fileInfo);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                start = end;
+                end = start + step;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void fixUrl() {
+        try {
+            SqlSession session = MyBatiesUtils.getSqlSession();
+            Long step = 1000L;
+            Long start = 1000L;
+            Long end = start + step;
+            ZimuInfoExtendService service = new ZimuInfoExtendServiceImpl();
+            Long maxId = service.selectMaxId(session);
+            StringBuilder builder = new StringBuilder();
+            ZimuFileInfoService zimuInfoService = new ZimuFileInfoServiceImpl();
+            while (maxId > start) {
+                List<ZimuInfoExtend> zimuInfoExtends = service.selectByRange(start, end, session);
+                for (ZimuInfoExtend zimuInfoExtend : zimuInfoExtends) {
+                   String url = zimuInfoExtend.getExtendValue();
+                   if (url.contains(""));
+                }
+                start = end;
+                end += start + step;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private static ZimuHtml builderHtml(String string) {
         ZimuHtml html = new ZimuHtml();
         html.setHtmlType(1);
@@ -118,8 +182,11 @@ public class ZimuHtmlManager {
     }
 
     public static void main(String[] args) {
+        ZimuHtmlManager manager = new ZimuHtmlManager();
+        manager.getRealDownURL();
+
 //        insertDownloadUrl("F:\\工具\\火车头\\cccc.txt");
-        downLoadZimu("http://zmk.pw/download//download/MTI1MzM2fDAxNWM2YjUyYmY0NTE0YzUyMGFhYzVmOXwxNTg1MzI3ODg1fGEwNGI4MTk4fHJlbW90ZQ%3D%3D/svr/dx1");
+//        downLoadZimu("http://zmk.pw/download/MTI1MzM2fDAxNWM2YjUyYmY0NTE0YzUyMGFhYzVmOXwxNTg1MzI3ODg1fGEwNGI4MTk4fHJlbW90ZQ%3D%3D/svr/dx1");
 
 
     }
@@ -181,7 +248,10 @@ public class ZimuHtmlManager {
         return stringBuilder.toString();
     }
 
-    public static void downLoadZimu(String urlO) {
+    public static ZimuFileInfo downLoadZimu(String urlO) {
+        if (urlO.contains("http:")) {
+            urlO = urlO.replaceAll("http:", "https:");
+        }
         try {
             URL url = new URL(urlO);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -192,7 +262,12 @@ public class ZimuHtmlManager {
             }
             httpURLConnection.setFollowRedirects(false);
             httpURLConnection.connect();
+            int responseCode = httpURLConnection.getResponseCode();
+            if (responseCode != 301) return null;
             String location = httpURLConnection.getHeaderField("Location");
+            if (location.contains("http:")) {
+                location = location.replaceAll("http:", "https:");
+            }
             httpURLConnection.disconnect();
 
             URL urlD = new URL(location);
@@ -203,16 +278,19 @@ public class ZimuHtmlManager {
                 downConn.setRequestProperty(entry.getKey(), entry.getValue());
             }
             downConn.connect();
+            int responseCode2 = downConn.getResponseCode();
+            if (responseCode2 != 200) return null;
             String fileHeader = downConn.getHeaderField("Content-Disposition");
             String[] fileSplit = fileHeader.split("=");
             String fileOriginName = new String(fileSplit[1].getBytes("ISO-8859-1"), "utf-8");
             fileOriginName.replaceAll("[zmk.pw]","");
             String fileRealName = fileOriginName.substring(1, fileOriginName.length() - 1);
             ZimuFileInfo fileInfo = buildFileBean(location, null, null, fileRealName);
-            System.out.println(fileInfo);
+            return fileInfo;
         } catch (IOException e) {
-            e.printStackTrace();
+
         }
+        return null;
     }
 
     private static ZimuFileInfo buildFileBean(String url, Long zimuId, Long zimuExtendId, String fileName) {
@@ -220,7 +298,8 @@ public class ZimuHtmlManager {
         fileInfo.setExtendId(zimuExtendId);
         fileInfo.setZimuId(zimuId);
         fileInfo.setDownloadUrl(url);
-        fileInfo.setFileType(fileName.split(".")[1]);
+        fileName = fileName.replaceAll("\\[zmk.pw\\]","");
+        fileInfo.setFileType(fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length()));
         fileInfo.setFileName(fileName);
         return fileInfo;
     }
