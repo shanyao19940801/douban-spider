@@ -54,7 +54,21 @@ AUTO_INCREMENT=0
 ;
 
 
-
-
-
-
+CREATE TABLE `t_zimu_file_info` (
+	`id` BIGINT NOT NULL AUTO_INCREMENT,
+	`zimu_id` BIGINT NOT NULL,
+	`file_name` VARCHAR(500) NULL COMMENT '名称',
+	`file_type` varchar(10)  null comment '类型',
+	`extend_id` BIGINT UNSIGNED NOT NULL COMMENT '上级地址',
+	`download_url` VARCHAR(500) NULL DEFAULT NULL COMMENT '下载url',
+	`is_deleted` TINYINT NOT NULL COMMENT '是否删除',
+	`create_time` DATETIME NOT NULL COMMENT '创建时间',
+	`last_update_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	PRIMARY KEY (`id`),
+	UNIQUE INDEX `zimu_id` (`zimu_id`)
+)
+COMMENT='字幕'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=1
+;

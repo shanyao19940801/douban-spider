@@ -1,7 +1,7 @@
 package com.yao.spider.zimuku.manager;
 
-import com.yao.spider.core.http.HttpClientManagerV2;
 import com.yao.spider.core.util.MyBatiesUtils;
+import com.yao.spider.zimuku.domain.ZimuFileInfo;
 import com.yao.spider.zimuku.domain.ZimuHtml;
 import com.yao.spider.zimuku.domain.ZimuInfo;
 import com.yao.spider.zimuku.domain.ZimuInfoExtend;
@@ -17,7 +17,6 @@ import org.apache.ibatis.session.SqlSession;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -119,34 +118,9 @@ public class ZimuHtmlManager {
     }
 
     public static void main(String[] args) {
-        insertDownloadUrl("F:\\工具\\火车头\\cccc.txt");
-        /*downLoadZimu();
-        Set<String> excludeProxyHosts = Collections.emptySet();
-        HttpClientManagerV2 httpClientManager = new HttpClientManagerV2(5000, 15000, excludeProxyHosts, null, null);
-        String url = "http://zmk.pw/download/MTMyNjgwfDQ0NWYzZWM4ZDE2MmQ4ZTVjZWFiMWNiZHwxNTg1Mjk2NjgyfGQ5NmY2NWQ1fHJlbW90ZQ%3D%3D/svr/dx1";
-        String res = httpClientManager.execGetRequestWithContent(url, "__gads=ID=216dd2a9751ae704:T=1585279338:S=ALNI_Mb0MDGv4FD5PRGpxQQt3EJBsBlhLg; __cfduid=d992e7b7177c5fbd83f53f414d0c29bb91585279337; PHPSESSID=qsdrehmfpr0jmfsqhi6rf4h1f5");
-        System.out.println(res);
-        Map<String, String> header = getHeaderMap();
+//        insertDownloadUrl("F:\\工具\\火车头\\cccc.txt");
+        downLoadZimu("http://zmk.pw/download//download/MTI1MzM2fDAxNWM2YjUyYmY0NTE0YzUyMGFhYzVmOXwxNTg1MzI3ODg1fGEwNGI4MTk4fHJlbW90ZQ%3D%3D/svr/dx1");
 
-//        InputStream inputStream = httpClientManager.execGetInRequestWithHeader(url, header);
-        byte[] getData = httpClientManager.execGetByteArrayRequestWithParamsAndHeaders(url, header);
-        try {
-
-            //文件保存位置
-            File saveDir = new File("F:\\工具\\火车头");
-            if(!saveDir.exists()){
-                saveDir.mkdir();
-            }
-            File file = new File(saveDir+File.separator+"aaaaa");
-            FileOutputStream fos = new FileOutputStream(file);
-            fos.write(getData);
-            if(fos!=null){
-                fos.close();
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
 
     }
 
@@ -160,7 +134,7 @@ public class ZimuHtmlManager {
         header.put("Referer"," http://zmk.pw/dld/132680.html");
         header.put("Accept-Encoding","gzip, deflate");
         header.put("Accept-Language"," zh-CN,zh;q=0.9");
-        header.put("Cookie","__cfduid=d444be9233f69d023b7072eb6b9164bda1585117374; __gads=ID=050a8933b4c6445e:T=1585117375:S=ALNI_MbwPHLv91M3n0-auRGmR4Psetl7oA; PHPSESSID=e0so1hqf03a8b517gcppu681p4");
+        header.put("Cookie","__cfduid=d87a15e98cef894a2fc39c1d129ce9d431584024960; __gads=ID=8ee10c0beefcb081:T=1584024961:S=ALNI_MbYBMpb46H1agrUzlTV27qheky8zw; PHPSESSID=ne719ju541del00a9qan0nml50");
         return header;
     }
 
@@ -207,17 +181,16 @@ public class ZimuHtmlManager {
         return stringBuilder.toString();
     }
 
-    public static void downLoadZimu() {
+    public static void downLoadZimu(String urlO) {
         try {
-//            URL url = new URL("https://static.zimuku.la/download/MjAyMC0wMy0yNiUyRjVlN2NiNDQ2MzRjOTQuemlwfGNiYmNkYWYxZmU4NjhmNGY0YjA1NmE1MmVmZDQ5OGMzLnppcHwxNTg1MzI2MzE3fDE5MTA3NDdhfA==");
-            URL url = new URL("http://zmk.pw/download/MTMyNjgwfDQ0NWYzZWM4ZDE2MmQ4ZTVjZWFiMWNiZHwxNTg1Mjk2NjgyfGQ5NmY2NWQ1fHJlbW90ZQ%3D%3D/svr/dx1");
+            URL url = new URL(urlO);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             // 设定请求的方法，默认是GET
             httpURLConnection.setRequestMethod("GET");
             for (Entry<String, String> entry : getHeaderMap().entrySet()) {
                 httpURLConnection.setRequestProperty(entry.getKey(), entry.getValue());
             }
-//            httpURLConnection.setFollowRedirects(false);
+            httpURLConnection.setFollowRedirects(false);
             httpURLConnection.connect();
             String location = httpURLConnection.getHeaderField("Location");
             httpURLConnection.disconnect();
@@ -230,11 +203,26 @@ public class ZimuHtmlManager {
                 downConn.setRequestProperty(entry.getKey(), entry.getValue());
             }
             downConn.connect();
-            Map<String, List<String>> headerFields = downConn.getHeaderFields();
-            System.out.println(headerFields);
+            String fileHeader = downConn.getHeaderField("Content-Disposition");
+            String[] fileSplit = fileHeader.split("=");
+            String fileOriginName = new String(fileSplit[1].getBytes("ISO-8859-1"), "utf-8");
+            fileOriginName.replaceAll("[zmk.pw]","");
+            String fileRealName = fileOriginName.substring(1, fileOriginName.length() - 1);
+            ZimuFileInfo fileInfo = buildFileBean(location, null, null, fileRealName);
+            System.out.println(fileInfo);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static ZimuFileInfo buildFileBean(String url, Long zimuId, Long zimuExtendId, String fileName) {
+        ZimuFileInfo fileInfo = new ZimuFileInfo();
+        fileInfo.setExtendId(zimuExtendId);
+        fileInfo.setZimuId(zimuId);
+        fileInfo.setDownloadUrl(url);
+        fileInfo.setFileType(fileName.split(".")[1]);
+        fileInfo.setFileName(fileName);
+        return fileInfo;
     }
 
 }
