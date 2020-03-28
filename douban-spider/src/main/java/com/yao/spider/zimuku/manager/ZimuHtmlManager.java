@@ -4,10 +4,13 @@ import com.yao.spider.core.http.HttpClientManagerV2;
 import com.yao.spider.core.util.MyBatiesUtils;
 import com.yao.spider.zimuku.domain.ZimuHtml;
 import com.yao.spider.zimuku.domain.ZimuInfo;
+import com.yao.spider.zimuku.domain.ZimuInfoExtend;
 import com.yao.spider.zimuku.parsers.ZimuParser;
 import com.yao.spider.zimuku.service.ZimuHtmlService;
+import com.yao.spider.zimuku.service.ZimuInfoExtendService;
 import com.yao.spider.zimuku.service.ZimuInfoService;
 import com.yao.spider.zimuku.service.impl.ZimuHtmlServiceImpl;
+import com.yao.spider.zimuku.service.impl.ZimuInfoExtendServiceImpl;
 import com.yao.spider.zimuku.service.impl.ZimuInfoServiceImpl;
 import org.apache.ibatis.session.SqlSession;
 
@@ -19,6 +22,40 @@ import java.util.*;
 import java.util.Map.Entry;
 
 public class ZimuHtmlManager {
+    private static String downLoadHost = "http://zmk.pw/download/";
+
+    public static void insertDownloadUrl(String path) {
+        try {
+            SqlSession session = MyBatiesUtils.getSqlSession();
+            File file = new File(path);
+            InputStreamReader inputReader = new InputStreamReader(new FileInputStream(file));
+            BufferedReader bf = new BufferedReader(inputReader);
+            // 按行读取字符串
+            String str;
+            ZimuInfoExtendService service = new ZimuInfoExtendServiceImpl();
+            while ((str = bf.readLine()) != null) {
+                String[] split = str.split("@");
+                try {
+                    service.insert(builderZimuInfoExtend(downLoadHost + split[0], Long.valueOf(split[1])), session);
+                } catch (Exception e) {
+
+                }
+            }
+            bf.close();
+            inputReader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static ZimuInfoExtend builderZimuInfoExtend(String value, Long zimuInfoId) {
+        ZimuInfoExtend zimuInfoExtend = new ZimuInfoExtend();
+        zimuInfoExtend.setZimuInfoId(zimuInfoId);
+        zimuInfoExtend.setExtendValue(value);
+        zimuInfoExtend.setExtendValueType(1);
+        zimuInfoExtend.setRefType(1);
+        return zimuInfoExtend;
+    }
 
     public static void batchInsert(String path) {
         try {
@@ -82,7 +119,8 @@ public class ZimuHtmlManager {
     }
 
     public static void main(String[] args) {
-        downLoadZimu();
+        insertDownloadUrl("F:\\工具\\火车头\\cccc.txt");
+        /*downLoadZimu();
         Set<String> excludeProxyHosts = Collections.emptySet();
         HttpClientManagerV2 httpClientManager = new HttpClientManagerV2(5000, 15000, excludeProxyHosts, null, null);
         String url = "http://zmk.pw/download/MTMyNjgwfDQ0NWYzZWM4ZDE2MmQ4ZTVjZWFiMWNiZHwxNTg1Mjk2NjgyfGQ5NmY2NWQ1fHJlbW90ZQ%3D%3D/svr/dx1";
@@ -108,7 +146,7 @@ public class ZimuHtmlManager {
 
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
     }
 

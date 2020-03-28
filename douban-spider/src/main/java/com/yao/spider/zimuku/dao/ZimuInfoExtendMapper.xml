@@ -26,7 +26,7 @@
       extend_value, extend_value_type, is_deleted, 
       create_time, last_update_time)
     values (#{id,jdbcType=BIGINT}, #{zimuInfoId,jdbcType=BIGINT}, #{refType,jdbcType=TINYINT}, 
-      #{extendValue,jdbcType=VARCHAR}, #{extendValueType,jdbcType=TINYINT}, #{isDeleted,jdbcType=TINYINT}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateTime,jdbcType=TIMESTAMP})
+      #{extendValue,jdbcType=VARCHAR}, #{extendValueType,jdbcType=TINYINT}, 1,
+      now(),now())
   </insert>
 </mapper>

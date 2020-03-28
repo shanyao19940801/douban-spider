@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yao.spider.zimuku.dao.ZimuFileInfoMapper">
+  <resultMap id="BaseResultMap" type="com.yao.spider.zimuku.domain.ZimuFileInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="zimu_id" jdbcType="BIGINT" property="zimuId" />
+    <result column="file_name" jdbcType="VARCHAR" property="fileName" />
+    <result column="file_type" jdbcType="VARCHAR" property="fileType" />
+    <result column="extend_id" jdbcType="BIGINT" property="extendId" />
+    <result column="download_url" jdbcType="VARCHAR" property="downloadUrl" />
+    <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, zimu_id, file_name, file_type, extend_id, download_url, is_deleted, create_time, 
+    last_update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_zimu_file_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <insert id="insert" parameterType="com.yao.spider.zimuku.domain.ZimuFileInfo">
+    insert into t_zimu_file_info (id, zimu_id, file_name, 
+      file_type, extend_id, download_url, 
+      is_deleted, create_time, last_update_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{zimuId,jdbcType=BIGINT}, #{fileName,jdbcType=VARCHAR}, 
+      #{fileType,jdbcType=VARCHAR}, #{extendId,jdbcType=BIGINT}, #{downloadUrl,jdbcType=VARCHAR}, 
+      0,now(),now()
+      )
+  </insert>
+</mapper>
