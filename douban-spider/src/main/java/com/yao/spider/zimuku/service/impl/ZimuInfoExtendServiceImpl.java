@@ -29,4 +29,10 @@ public class ZimuInfoExtendServiceImpl implements ZimuInfoExtendService {
         List<ZimuInfoExtend> htmls = mapper.selectByRange(startId, endId);
         return htmls;
     }
+
+    public void update(ZimuInfoExtend builderZimuInfoExtend, SqlSession session) {
+        ZimuInfoExtendMapper mapper = session.getMapper(ZimuInfoExtendMapper.class);
+        mapper.update(builderZimuInfoExtend);
+        session.commit();
+    }
 }

@@ -14,4 +14,6 @@ public interface ZimuInfoExtendService {
     Long selectMaxId(SqlSession session);
 
     List<ZimuInfoExtend> selectByRange(Long startId, Long endId, SqlSession session);
+
+    void update(ZimuInfoExtend builderZimuInfoExtend, SqlSession session);
 }

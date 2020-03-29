@@ -82,4 +82,15 @@ public class ZimuInfoExtend {
     public void setLastUpdateTime(Date lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
     }
+
+    @Override
+    public String toString() {
+        return "ZimuInfoExtend{" +
+                "id=" + id +
+                ", zimuInfoId=" + zimuInfoId +
+                ", refType=" + refType +
+                ", extendValue='" + extendValue + '\'' +
+                ", extendValueType=" + extendValueType +
+                '}';
+    }
 }

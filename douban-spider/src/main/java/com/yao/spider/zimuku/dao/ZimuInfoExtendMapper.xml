@@ -15,6 +15,10 @@
     id, zimu_info_id, ref_type, extend_value, extend_value_type, is_deleted, create_time, 
     last_update_time
   </sql>
+  <update id="update" parameterType="com.yao.spider.zimuku.domain.ZimuInfoExtend">
+    update t_zimu_info_extend set extend_value = #{extendValue,jdbcType=VARCHAR} where zimu_info_id = #{zimuInfoId,jdbcType=BIGINT}
+  </update>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

@@ -15,4 +15,5 @@ public interface ZimuInfoExtendMapper {
 
     List<ZimuInfoExtend> selectByRange(@Param("startId") Long startId, @Param("endId") Long endId);
 
+    void update(ZimuInfoExtend builderZimuInfoExtend);
 }

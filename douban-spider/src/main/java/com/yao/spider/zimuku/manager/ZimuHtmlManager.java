@@ -23,7 +23,7 @@ import java.util.*;
 import java.util.Map.Entry;
 
 public class ZimuHtmlManager {
-    private static String downLoadHost = "http://zmk.pw/download/";
+    private static String downLoadHost = "http://zmk.pw/";
 
     public static void insertDownloadUrl(String path) {
         try {
@@ -37,9 +37,12 @@ public class ZimuHtmlManager {
             while ((str = bf.readLine()) != null) {
                 String[] split = str.split("@");
                 try {
-                    service.insert(builderZimuInfoExtend(downLoadHost + split[0], Long.valueOf(split[1])), session);
+//                    service.insert(builderZimuInfoExtend(downLoadHost + split[0], Long.valueOf(split[1])), session);
+                    ZimuInfoExtend zimuInfoExtend = builderZimuInfoExtend(downLoadHost + split[0], Long.valueOf(split[1]));
+                    service.update(zimuInfoExtend, session);
+                    System.out.println("update:" + zimuInfoExtend);
                 } catch (Exception e) {
-
+                    e.printStackTrace();
                 }
             }
             bf.close();
@@ -122,10 +125,10 @@ public class ZimuHtmlManager {
         try {
             SqlSession session = MyBatiesUtils.getSqlSession();
             Long step = 10L;
-            Long start = 0L;
+            Long start = 7796l;
             Long end = start + step;
             ZimuInfoExtendService service = new ZimuInfoExtendServiceImpl();
-            Long maxId = service.selectMaxId(session);
+            Long maxId = 9999L;
             StringBuilder builder = new StringBuilder();
             ZimuFileInfoService zimuInfoService = new ZimuFileInfoServiceImpl();
             while (maxId > start) {
@@ -184,8 +187,7 @@ public class ZimuHtmlManager {
     public static void main(String[] args) {
         ZimuHtmlManager manager = new ZimuHtmlManager();
         manager.getRealDownURL();
-
-//        insertDownloadUrl("F:\\工具\\火车头\\cccc.txt");
+        insertDownloadUrl("F:\\视频剪辑\\字幕\\字幕文件下载.txt");
 //        downLoadZimu("http://zmk.pw/download/MTI1MzM2fDAxNWM2YjUyYmY0NTE0YzUyMGFhYzVmOXwxNTg1MzI3ODg1fGEwNGI4MTk4fHJlbW90ZQ%3D%3D/svr/dx1");
 
 
@@ -196,12 +198,12 @@ public class ZimuHtmlManager {
         header.put("Proxy-Connection", "keep-alive");
         header.put("Pragma", "no-cache");
         header.put("Upgrade-Insecure-Requests","1");
-        header.put("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36");
-        header.put("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3");
+        header.put("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36");
+        header.put("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9");
         header.put("Referer"," http://zmk.pw/dld/132680.html");
         header.put("Accept-Encoding","gzip, deflate");
-        header.put("Accept-Language"," zh-CN,zh;q=0.9");
-        header.put("Cookie","__cfduid=d87a15e98cef894a2fc39c1d129ce9d431584024960; __gads=ID=8ee10c0beefcb081:T=1584024961:S=ALNI_MbYBMpb46H1agrUzlTV27qheky8zw; PHPSESSID=ne719ju541del00a9qan0nml50");
+        header.put("Accept-Language","zh-CN,zh;q=0.9,en;q=0.8");
+        header.put("Cookie","__cfduid=d87a15e98cef894a2fc39c1d129ce9d431584024960; __gads=ID=8ee10c0beefcb081:T=1584024961:S=ALNI_MbYBMpb46H1agrUzlTV27qheky8zw; PHPSESSID=rs0hlh4dpljnsio3d6053fc2t2");
         return header;
     }
 
@@ -210,11 +212,11 @@ public class ZimuHtmlManager {
         header.put("Accept-Encoding","gzip, deflate, br");
         header.put("Accept-Language","zh-CN,zh;q=0.9,en;q=0.8");
         header.put("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9");
-        header.put("Cookie","_ga=GA1.2.71384916.1584024919; _gid=GA1.2.894825036.1585149901; PHPSESSID=koiqts3t1cm1nmki0tdn4ei381; yunsuo_session_verify=d56051299c79d9dd23502800c732bfa6");
+        header.put("Cookie","_ga=GA1.2.71384916.1584024919; _gid=GA1.2.894825036.1585149901; yunsuo_session_verify=2f6c49771d7181db32e9041c0e599866");
         header.put("Proxy-Connection", "keep-alive");
         header.put("Referer"," http://zmk.pw/dld/132680.html");
         header.put("Upgrade-Insecure-Requests","1");
-        header.put("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36");
+        header.put("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36");
         header.put("sec-fetch-mode","navigate");
         header.put("sec-fetch-site","cross-site");
         header.put("sec-fetch-user","?1");

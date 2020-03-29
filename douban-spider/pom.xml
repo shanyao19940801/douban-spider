@@ -113,6 +113,24 @@
 			<artifactId>c3p0</artifactId>
 			<version>0.9.5.2</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.maven.shared/file-management -->
+		<dependency>
+			<groupId>org.apache.maven.shared</groupId>
+			<artifactId>file-management</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.zeroturnaround/zt-zip -->
+		<dependency>
+			<groupId>org.zeroturnaround</groupId>
+			<artifactId>zt-zip</artifactId>
+			<version>1.14</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.cedarsoft.commons/zip -->
+		<dependency>
+			<groupId>com.cedarsoft.commons</groupId>
+			<artifactId>zip</artifactId>
+			<version>8.9.2</version>
+		</dependency>
 
 		<!--连接池-->
 		<!-- https://mvnrepository.com/artifact/com.mchange/mchange-commons-java -->
@@ -121,11 +139,24 @@
 			<artifactId>mchange-commons-java</artifactId>
 			<version>0.2.14</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.mule.transports/mule-transport-file -->
+		<dependency>
+			<groupId>org.mule.transports</groupId>
+			<artifactId>mule-transport-file</artifactId>
+			<version>3.9.0</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
 			<version>3.4.4</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.github.junrar/junrar -->
+		<dependency>
+			<groupId>com.github.junrar</groupId>
+			<artifactId>junrar</artifactId>
+			<version>4.0.0</version>
 		</dependency>
 
 		<!-- redis cache related.....start -->
