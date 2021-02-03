@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yao.spider.sqkfq.dao.SqkfqBaomingMapper">
+  <resultMap id="BaseResultMap" type="com.yao.spider.sqkfq.domain.SqkfqBaoming">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_mid" jdbcType="BIGINT" property="userMid" />
+    <result column="zpid" jdbcType="INTEGER" property="zpid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="start_appy_time" jdbcType="TIMESTAMP" property="startAppyTime" />
+    <result column="end_appy_time" jdbcType="TIMESTAMP" property="endAppyTime" />
+    <result column="start_pay_time" jdbcType="TIMESTAMP" property="startPayTime" />
+    <result column="end_pay_time" jdbcType="TIMESTAMP" property="endPayTime" />
+    <result column="start_print_time" jdbcType="TIMESTAMP" property="startPrintTime" />
+    <result column="end_print_time" jdbcType="TIMESTAMP" property="endPrintTime" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="bgm" jdbcType="INTEGER" property="bgm" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="opt" jdbcType="BIGINT" property="opt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_mid, zpid, title, start_appy_time, end_appy_time, start_pay_time, end_pay_time, 
+    start_print_time, end_print_time, `state`, bgm, add_time, opt
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_sqkfq_baoming
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_sqkfq_baoming
+  </select>
+  <insert id="insert" parameterType="com.yao.spider.sqkfq.domain.SqkfqBaoming">
+    insert into t_sqkfq_baoming (id, user_mid, zpid, 
+      title, start_appy_time, end_appy_time, 
+      start_pay_time, end_pay_time, start_print_time, 
+      end_print_time, `state`, bgm, 
+      add_time, opt)
+    values (#{id,jdbcType=BIGINT}, #{userMid,jdbcType=BIGINT}, #{zpid,jdbcType=INTEGER}, 
+      #{title,jdbcType=VARCHAR}, #{startAppyTime,jdbcType=TIMESTAMP}, #{endAppyTime,jdbcType=TIMESTAMP}, 
+      #{startPayTime,jdbcType=TIMESTAMP}, #{endPayTime,jdbcType=TIMESTAMP}, #{startPrintTime,jdbcType=TIMESTAMP}, 
+      #{endPrintTime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, #{bgm,jdbcType=INTEGER}, 
+      #{addTime,jdbcType=TIMESTAMP}, #{opt,jdbcType=BIGINT})
+  </insert>
+</mapper>
