@@ -9,4 +9,6 @@ public interface SqkfqBaomingService {
     public void insert(SqkfqBaoming sqkfqBaoming, SqlSession session);
 
     public List<SqkfqBaoming> selectAll(SqlSession session);
+
+    public List<SqkfqBaoming> selectByZipCodeAndOpt(SqlSession session, Integer code, Long opt);
 }

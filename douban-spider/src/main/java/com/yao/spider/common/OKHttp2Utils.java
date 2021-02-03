@@ -4,6 +4,7 @@ package com.yao.spider.common;
 import com.squareup.okhttp.*;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class OKHttp2Utils {
 
@@ -16,10 +17,26 @@ public class OKHttp2Utils {
         RequestBody body = RequestBody.create(MEDIA_TYPE_JSON, param);
         Request request = new Request.Builder().url(url).post(body).build();
         Response response = client.newCall(request).execute();
+
 //		if (response.isSuccessful()) {
 //			String code = String.valueOf(response.code());
 //			return StringUtils.isEmpty(code) ? HTTP_200_STATUS : code;
 //		}
         return response.body().string();
     }
+    public static String sendPostWithHeaders(String url,  Map<String, String> headers) throws IOException {
+
+        OkHttpClient client = new OkHttpClient();
+        RequestBody body = RequestBody.create(MEDIA_TYPE_JSON, "");
+        Request request = new Request.Builder().url(url).headers(Headers.of(headers)).post(body).build();
+        Response response = client.newCall(request).execute();
+
+//		if (response.isSuccessful()) {
+//			String code = String.valueOf(response.code());
+//			return StringUtils.isEmpty(code) ? HTTP_200_STATUS : code;
+//		}
+        return response.body().string();
+    }
+
+
 }

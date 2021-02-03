@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yao.spider.sqkfq.dao.SqkfqUserMapper">
+  <resultMap id="BaseResultMap" type="com.yao.spider.sqkfq.domain.SqkfqUser">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_mid" jdbcType="BIGINT" property="userMid" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="user_sex" jdbcType="VARCHAR" property="userSex" />
+    <result column="user_birthday" jdbcType="VARCHAR" property="userBirthday" />
+    <result column="user_header_url" jdbcType="VARCHAR" property="userHeaderUrl" />
+    <result column="user_id_card" jdbcType="VARCHAR" property="userIdCard" />
+    <result column="user_jiguan" jdbcType="VARCHAR" property="userJiguan" />
+    <result column="user_merage" jdbcType="VARCHAR" property="userMerage" />
+    <result column="user_zzmm" jdbcType="VARCHAR" property="userZzmm" />
+    <result column="user_sg" jdbcType="VARCHAR" property="userSg" />
+    <result column="user_weight" jdbcType="VARCHAR" property="userWeight" />
+    <result column="user_address" jdbcType="VARCHAR" property="userAddress" />
+    <result column="user_phone" jdbcType="VARCHAR" property="userPhone" />
+    <result column="user_work" jdbcType="VARCHAR" property="userWork" />
+    <result column="user_jinji" jdbcType="VARCHAR" property="userJinji" />
+    <result column="user_jinji_phone" jdbcType="VARCHAR" property="userJinjiPhone" />
+    <result column="user_xuli" jdbcType="VARCHAR" property="userXuli" />
+    <result column="user_zhuanye" jdbcType="VARCHAR" property="userZhuanye" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_mid, user_name, user_sex, user_birthday, user_header_url, user_id_card, 
+    user_jiguan, user_merage, user_zzmm, user_sg, user_weight, user_address, user_phone, 
+    user_work, user_jinji, user_jinji_phone, user_xuli, user_zhuanye
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_sqkfq_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <insert id="insert" parameterType="com.yao.spider.sqkfq.domain.SqkfqUser">
+    insert into t_sqkfq_user (id, user_mid, user_name, 
+      user_sex, user_birthday, user_header_url, 
+      user_id_card, user_jiguan, user_merage, 
+      user_zzmm, user_sg, user_weight, 
+      user_address, user_phone, user_work, 
+      user_jinji, user_jinji_phone, user_xuli, 
+      user_zhuanye)
+    values (#{id,jdbcType=BIGINT}, #{userMid,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, 
+      #{userSex,jdbcType=VARCHAR}, #{userBirthday,jdbcType=VARCHAR}, #{userHeaderUrl,jdbcType=VARCHAR}, 
+      #{userIdCard,jdbcType=VARCHAR}, #{userJiguan,jdbcType=VARCHAR}, #{userMerage,jdbcType=VARCHAR}, 
+      #{userZzmm,jdbcType=VARCHAR}, #{userSg,jdbcType=VARCHAR}, #{userWeight,jdbcType=VARCHAR},
+      #{userAddress,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, #{userWork,jdbcType=VARCHAR}, 
+      #{userJinji,jdbcType=VARCHAR}, #{userJinjiPhone,jdbcType=VARCHAR}, #{userXuli,jdbcType=VARCHAR}, 
+      #{userZhuanye,jdbcType=VARCHAR})
+  </insert>
+</mapper>

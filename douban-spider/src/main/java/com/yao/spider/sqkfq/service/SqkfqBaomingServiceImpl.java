@@ -19,4 +19,10 @@ public class SqkfqBaomingServiceImpl implements SqkfqBaomingService{
         SqkfqBaomingMapper mapper = session.getMapper(SqkfqBaomingMapper.class);
         return mapper.selectAll();
     }
+
+    @Override
+    public List<SqkfqBaoming> selectByZipCodeAndOpt(SqlSession session, Integer code, Long opt) {
+        SqkfqBaomingMapper mapper = session.getMapper(SqkfqBaomingMapper.class);
+        return mapper.selectByZipCodeAndOpt(code, opt);
+    }
 }

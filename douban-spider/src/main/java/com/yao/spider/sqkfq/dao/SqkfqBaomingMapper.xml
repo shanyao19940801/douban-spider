@@ -32,6 +32,12 @@
     <include refid="Base_Column_List" />
     from t_sqkfq_baoming
   </select>
+  <select id="selectByZipCodeAndOpt" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_sqkfq_baoming
+    where zpid = #{code} and opt = #{opt}
+  </select>
   <insert id="insert" parameterType="com.yao.spider.sqkfq.domain.SqkfqBaoming">
     insert into t_sqkfq_baoming (id, user_mid, zpid, 
       title, start_appy_time, end_appy_time, 
