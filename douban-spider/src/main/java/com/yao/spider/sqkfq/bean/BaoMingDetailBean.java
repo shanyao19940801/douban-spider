@@ -20,6 +20,10 @@ public class BaoMingDetailBean {
     private Integer State;
     private Integer BGM;
     private Date AddTime;
+    /**
+     * 返回操作状态
+     * -2：重新缴费 -1：审核未通过1:我要报名 100：报名审核中  101：网上缴费 102：支付确认中 103：打印准考证 104：打印准考证 1000：报名未开始 1001：报名已结束 2000：缴费未开始 2001：缴费已截止 3000：打印未开始 3001：打印已截止 3002：查询成绩
+     */
     private Long OPT;
 
     public Integer getZPID() {
