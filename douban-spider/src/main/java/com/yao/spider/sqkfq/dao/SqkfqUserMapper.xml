@@ -27,6 +27,11 @@
     user_jiguan, user_merage, user_zzmm, user_sg, user_weight, user_address, user_phone, 
     user_work, user_jinji, user_jinji_phone, user_xuli, user_zhuanye
   </sql>
+  <update id="updateJiguan">
+    update t_sqkfq_user
+    set user_jiguan = #{jiguan}
+    where user_mid = #{userMid}
+  </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

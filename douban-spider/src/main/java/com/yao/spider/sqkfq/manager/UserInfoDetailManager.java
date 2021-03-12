@@ -39,6 +39,22 @@ public class UserInfoDetailManager {
             System.out.println(parser.toString());
         }
     }
+    public static void updateJiguan() {
+        String idCard = "321321199408017856";
+        SqlSession session = MyBatiesUtils.getSqlSession();
+        SqkfqBaomingService service = new SqkfqBaomingServiceImpl();
+        SqkfqUserService userService = new SqkfqUserServiceImpl();
+        List<SqkfqBaoming> sqkfqBaomings = service.selectByZipCodeAndOpt(session, 57, 3001L);
+        for (SqkfqBaoming baoming : sqkfqBaomings) {
+            SqlSession session1 = MyBatiesUtils.getSqlSession();
+            String s = simpleRequest(baoming.getUserMid(), idCard);
+            SqkfqUser parser = SqkfaUserParser.parser(s);
+            parser.setUserMid(baoming.getUserMid());
+            idCard = parser.getUserIdCard();
+            userService.updateJiguan(session1, parser.getUserJiguan(), parser.getUserMid());
+            System.out.println(parser.toString());
+        }
+    }
 
     public static String simpleRequest(Long mid, String idCard) {
         String result = null;
@@ -65,6 +81,8 @@ public class UserInfoDetailManager {
     }
 
     public static void main(String[] args) {
-        getUserInfo();
+//        simpleRequest(10580L, "321321199310197414");
+//        getUserInfo();
+        updateJiguan();
     }
 }

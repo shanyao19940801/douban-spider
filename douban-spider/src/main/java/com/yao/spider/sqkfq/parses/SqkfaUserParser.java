@@ -28,7 +28,7 @@ public class SqkfaUserParser {
         user.setUserBirthday(td.get(5).text());
         user.setUserHeaderUrl(td.get(6).select("img").attr("src"));
         user.setUserIdCard(td.get(10).text());
-        user.setUserJiguan(td.get(13).text());
+        user.setUserJiguan(td.get(14).text());
         user.setUserMerage(td.get(16).text());
         user.setUserZzmm(td.get(18).text());
         user.setUserSg(td.get(24).text());

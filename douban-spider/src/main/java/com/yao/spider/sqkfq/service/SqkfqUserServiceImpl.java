@@ -18,4 +18,12 @@ public class SqkfqUserServiceImpl implements SqkfqUserService {
         session.commit();
         session.close();
     }
+
+    @Override
+    public void updateJiguan(SqlSession session, String jiguan, Long userMind) {
+        SqkfqUserMapper mapper = session.getMapper(SqkfqUserMapper.class);
+        mapper.updateJiguan(jiguan, userMind);
+        session.commit();
+        session.close();
+    }
 }
